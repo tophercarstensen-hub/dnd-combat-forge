@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combat Forge v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-void:#0a0a0c;--bg-deep:#0d0d10;--bg-panel:#111118;--bg-card:#16161e;
+  --bg-hover:#1c1c26;--bg-input:#0c0c12;
+  --border-dim:#252535;--border-mid:#353550;--border-gold:#7a5d2a;
+  --accent-gold:#c9a84c;--accent-gold-dim:#6a4f1a;--accent-amber:#e8a030;
+  --accent-red:#c04040;--accent-red-dim:#7a1a1a;
+  --accent-teal:#3a8a7a;--accent-green:#40a060;--accent-blue:#4070b0;
+  --accent-purple:#7060a0;--accent-orange:#c06020;
+  --text-primary:#e8e0d0;--text-secondary:#b0a8c0;--text-dim:#706878;
+  --diff-trivial:#6080a0;--diff-low:#40a060;--diff-moderate:#c9a84c;
+  --diff-high:#c07020;--diff-severe:#c04040;--diff-deadly:#8020a0;
+  --hp-full:#40a060;--hp-mid:#c9a84c;--hp-low:#c04040;
+  --ease:.25s cubic-bezier(.4,0,.2,1);
+  --panel-w:300px;--collapsed:36px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg-void);color:var(--text-primary);font-family:'Crimson Pro',Georgia,serif;font-size:16px;line-height:1.5;display:flex;flex-direction:column}
+.topbar{height:44px;background:var(--bg-panel);border-bottom:1px solid var(--border-dim);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0;z-index:20}
+.tb-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--accent-gold);letter-spacing:.1em}
+.tb-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)}
+.tb-orn{color:var(--border-gold);font-size:16px}
+.tb-spacer{flex:1}
+.center-tabs{display:flex;gap:2px;margin:0 12px}
+.ctab{padding:4px 13px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-dim);font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:.07em;cursor:pointer;transition:all var(--ease)}
+.ctab.active{border-color:var(--accent-gold-dim);color:var(--accent-gold);background:rgba(201,168,76,.08)}
+.ruleset-tog{display:flex;gap:2px}
+.ruleset-btn{padding:3px 9px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:all var(--ease)}
+.ruleset-btn.active{border-color:var(--accent-gold-dim);color:var(--accent-gold);background:rgba(201,168,76,.08)}
+.layout{display:flex;flex:1;overflow:hidden}
+.panel{width:var(--panel-w);min-width:var(--panel-w);background:var(--bg-panel);display:flex;flex-direction:column;overflow:hidden;transition:width var(--ease),min-width var(--ease),opacity var(--ease);position:relative;flex-shrink:0}
+.panel.left{border-right:1px solid var(--border-dim)}
+.panel.right{border-left:1px solid var(--border-dim)}
+.panel.collapsed{width:var(--collapsed);min-width:var(--collapsed)}
+.panel.hidden-lib{width:0!important;min-width:0!important;opacity:0;pointer-events:none;overflow:hidden}
+.ptoggle{position:absolute;top:50%;transform:translateY(-50%);width:15px;height:44px;background:var(--bg-card);border:1px solid var(--border-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;color:var(--text-dim);font-size:10px;transition:color var(--ease),background var(--ease)}
+.panel.left .ptoggle{right:-1px;border-left:none;border-radius:0 4px 4px 0}
+.panel.right .ptoggle{left:-1px;border-right:none;border-radius:4px 0 0 4px}
+.ptoggle:hover{color:var(--accent-gold);background:var(--bg-hover)}
+.ptoggle-icon{transition:transform var(--ease);display:inline-block}
+.panel.left.collapsed .ptoggle-icon,.panel.right.collapsed .ptoggle-icon{transform:rotate(180deg)}
+.panel-inner{display:flex;flex-direction:column;height:100%;overflow:hidden;transition:opacity var(--ease)}
+.panel.collapsed .panel-inner{opacity:0;pointer-events:none}
+.pscroll{overflow-y:auto;overflow-x:hidden;flex:1;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
+.pscroll::-webkit-scrollbar{width:4px}
+.pscroll::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:2px}
+.sec{border-bottom:1px solid var(--border-dim);overflow:hidden}
+.sec-hdr{display:flex;align-items:center;gap:6px;padding:7px 10px;cursor:pointer;user-select:none;transition:background var(--ease)}
+.sec-hdr:hover{background:var(--bg-hover)}
+.sec-icon{font-size:11px;width:13px;text-align:center;flex-shrink:0}
+.sec-lbl{font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--text-secondary);text-transform:uppercase;flex:1}
+.sec-arr{color:var(--text-dim);font-size:10px;transition:transform var(--ease)}
+.sec.open .sec-arr{transform:rotate(90deg)}
+.sec-body{padding:5px 10px 9px;display:none}
+.sec.open .sec-body{display:block}
+.flbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-secondary);letter-spacing:.08em;margin-bottom:2px;margin-top:7px;text-transform:uppercase}
+.flbl:first-child{margin-top:0}
+select,input[type="number"],input[type="text"]{width:100%;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-primary);font-family:'Crimson Pro',serif;font-size:13px;padding:4px 7px;outline:none;transition:border-color var(--ease)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2350485a'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;padding-right:22px}
+select option{background:var(--bg-deep)}
+select:focus,input:focus{border-color:var(--accent-gold-dim)}
+.frow{display:flex;gap:4px;align-items:flex-end}
+.frow>*{flex:1;min-width:0}
+.ibtn{width:24px;height:24px;flex-shrink:0;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-dim);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
+.ibtn:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim)}
+.ibtn.red:hover{color:var(--accent-red);border-color:var(--accent-red-dim)}
+.btn{padding:4px 11px;background:transparent;border:1px solid var(--border-mid);border-radius:3px;color:var(--text-secondary);font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all var(--ease);text-transform:uppercase;white-space:nowrap}
+.btn:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim);background:var(--bg-hover)}
+.btn.gold{border-color:var(--border-gold);color:var(--accent-gold)}
+.btn.teal{border-color:rgba(58,138,122,.4);color:var(--accent-teal)}
+.btn.teal:hover{background:rgba(58,138,122,.08)}
+.btn.red{border-color:rgba(192,64,64,.4);color:var(--accent-red)}
+.btn.red:hover{background:rgba(192,64,64,.08)}
+.btn-run{width:100%;padding:9px;background:linear-gradient(135deg,#5a3a0a,#c9a84c 50%,#5a3a0a);background-size:200% 100%;border:none;border-radius:3px;color:#0a0a0c;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:background-position .4s;text-transform:uppercase}
+.btn-run:hover{background-position:100% 0}
+.btn-run:disabled{opacity:.4;cursor:not-allowed}
+.chips{display:flex;flex-wrap:wrap;gap:3px}
+.chip{padding:3px 8px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:2px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:all var(--ease);white-space:nowrap;user-select:none}
+.chip:hover{color:var(--text-primary);border-color:var(--border-mid)}
+.chip.active{border-color:var(--accent-gold-dim);color:var(--accent-gold);background:rgba(201,168,76,.08)}
+.chip.active-purple{border-color:rgba(112,96,160,.5);color:var(--accent-purple);background:rgba(112,96,160,.1)}
+.chip.active-teal{border-color:rgba(58,138,122,.5);color:var(--accent-teal);background:rgba(58,138,122,.08)}
+.chk-row{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;margin-top:5px}
+.chk{width:12px;height:12px;flex-shrink:0;appearance:none;border:1px solid var(--border-mid);border-radius:2px;background:var(--bg-deep);cursor:pointer;position:relative;transition:all var(--ease)}
+.chk:checked{background:var(--accent-gold-dim);border-color:var(--accent-gold)}
+.chk:checked::after{content:'✓';position:absolute;top:-2px;left:1px;font-size:10px;color:var(--accent-gold)}
+.chk-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary)}
+input[type="range"]{-webkit-appearance:none;height:3px;background:var(--border-mid);border-radius:2px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--accent-gold);cursor:pointer}
+input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--accent-gold);cursor:pointer;border:none}
+.pc-card{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;margin-bottom:5px;overflow:hidden}
+.pc-hdr{display:flex;align-items:center;gap:5px;padding:5px 8px;background:var(--bg-deep);border-bottom:1px solid var(--border-dim);cursor:pointer;user-select:none;transition:background var(--ease)}
+.pc-hdr:hover{background:var(--bg-hover)}
+.pc-avatar{font-size:13px;flex-shrink:0}
+.pc-name-in{flex:1;background:transparent;border:none;border-bottom:1px solid var(--border-dim);border-radius:0;color:var(--text-primary);font-family:'Cinzel',serif;font-size:10px;padding:1px 3px;outline:none;min-width:0}
+.pc-name-in::placeholder{color:var(--text-dim);font-style:italic}
+.pc-collapse-icon{font-size:9px;color:var(--text-dim);flex-shrink:0;transition:transform var(--ease)}
+.pc-card.pc-collapsed .pc-collapse-icon{transform:rotate(-90deg)}
+.pc-body{padding:5px 8px}
+.pc-card.pc-collapsed .pc-body{display:none}
+.pc-summary-line{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);margin-left:auto;flex-shrink:0}
+.pc-summary{background:var(--bg-deep);border-top:1px solid var(--border-dim);padding:7px 10px;flex-shrink:0}
+.ps-row{display:flex;gap:8px;flex-wrap:wrap}
+.ps-stat{display:flex;flex-direction:column}
+.ps-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
+.ps-val{font-family:'Cinzel',serif;font-size:13px;color:var(--accent-gold)}
+/* Party section scrolls */
+#sec-party .sec-body{max-height:none!important;overflow:visible!important;padding-bottom:4px}
+.panel.left .panel-inner{overflow:hidden}
+.panel.left .pscroll:last-of-type{display:none}
+.db-bar{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+.db-loaded{background:rgba(58,138,122,.07);color:var(--accent-teal)}
+.db-empty{background:rgba(232,160,48,.06);color:var(--accent-amber)}
+.db-icon{font-size:12px;flex-shrink:0}
+.db-text{flex:1;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.db-count{opacity:.7;white-space:nowrap;font-size:9px}
+.msearch{width:100%;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-primary);font-family:'Crimson Pro',serif;font-size:13px;padding:4px 7px;outline:none;transition:border-color var(--ease)}
+.msearch:focus{border-color:var(--accent-gold-dim)}
+.mresults{max-height:280px;overflow-y:auto;border-bottom:1px solid var(--border-dim);scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
+.mresults::-webkit-scrollbar{width:3px}
+.mresults::-webkit-scrollbar-thumb{background:var(--border-mid)}
+.mresult-row{display:flex;flex-direction:column;transition:background var(--ease)}
+.mr-name{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-primary);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mr-cr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-amber);flex-shrink:0}
+.mr-type{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);flex-shrink:0}
+.mr-leg{color:var(--accent-gold);font-size:9px;flex-shrink:0}
+.kob-baseline{background:var(--bg-deep);border-top:1px solid var(--border-dim);padding:8px 10px;flex-shrink:0}
+.kob-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.kob-diff-row{display:flex;gap:6px;align-items:center}
+.kob-tag{font-family:'Cinzel',serif;font-size:12px;font-weight:700;padding:2px 9px;border-radius:3px}
+.kob-xp{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)}
+.diff-trivial-t{color:var(--diff-trivial);border:1px solid var(--diff-trivial);background:rgba(96,128,160,.08)}
+.diff-low-t{color:var(--diff-low);border:1px solid var(--diff-low);background:rgba(64,160,96,.08)}
+.diff-moderate-t{color:var(--diff-moderate);border:1px solid var(--diff-moderate);background:rgba(201,168,76,.08)}
+.diff-high-t{color:var(--diff-high);border:1px solid var(--diff-high);background:rgba(192,112,32,.08)}
+.diff-severe-t{color:var(--diff-severe);border:1px solid var(--diff-severe);background:rgba(192,64,64,.08)}
+.diff-deadly-t{color:var(--diff-deadly);border:1px solid var(--diff-deadly);background:rgba(128,32,160,.08)}
+.center{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.enc-zone{overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);background:var(--bg-panel);border-bottom:1px solid var(--border-dim);flex-shrink:0}
+.enc-zone.expanded{max-height:600px}
+.enc-zone.zone-collapsed{max-height:0}
+.enc-zone-inner{padding:10px 14px 4px;overflow-y:auto;max-height:540px;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
+.enc-zone-inner::-webkit-scrollbar{width:4px}
+.enc-zone-inner::-webkit-scrollbar-thumb{background:var(--border-mid)}
+.enc-divider{display:flex;align-items:center;gap:10px;padding:6px 14px;background:var(--bg-panel);border-bottom:1px solid var(--border-dim);cursor:pointer;user-select:none;flex-shrink:0;transition:background var(--ease)}
+.enc-divider:hover{background:var(--bg-hover)}
+.enc-div-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;flex-shrink:0}
+.enc-div-summary{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-secondary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.enc-div-kob{font-family:'Cinzel',serif;font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;flex-shrink:0}
+.enc-div-arr{color:var(--text-dim);font-size:10px;flex-shrink:0;transition:transform var(--ease)}
+.enc-ccard{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;margin-bottom:4px;overflow:hidden}
+.enc-ccard-hdr{display:flex;align-items:center;gap:6px;padding:5px 8px}
+.enc-ccard-name{font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.enc-ccard-cr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-amber)}
+.enc-ccard-badge{font-family:'JetBrains Mono',monospace;font-size:7px;padding:1px 4px;border-radius:2px;text-transform:uppercase}
+.badge-full{background:rgba(64,160,96,.12);color:var(--accent-green);border:1px solid rgba(64,160,96,.25)}
+.badge-cr{background:rgba(232,160,48,.09);color:var(--accent-amber);border:1px solid rgba(232,160,48,.2)}
+.cntrow{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.cb{width:18px;height:18px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:2px;color:var(--text-secondary);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
+.cb:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim)}
+.cv{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-primary);width:16px;text-align:center}
+.enc-ccard-expand{cursor:pointer;padding:3px 8px;background:var(--bg-deep);border-top:1px solid var(--border-dim);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);transition:background var(--ease)}
+.enc-ccard-expand:hover{background:var(--bg-hover);color:var(--text-secondary)}
+.enc-ccard-body{display:none;padding:6px 8px;border-top:1px solid var(--border-dim);background:var(--bg-deep)}
+.enc-ccard-body.open{display:block}
+.ext-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.gen-ctrl{padding:10px 14px 12px;border-top:1px solid var(--border-dim);background:var(--bg-deep)}
+.gen-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:7px}
+.gen-row:last-child{margin-bottom:0}
+.gen-grp{display:flex;flex-direction:column;gap:3px}
+.gen-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
+.cr-wrap{display:flex;align-items:center;gap:5px}
+.cr-sl{width:90px}
+.cr-disp{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-gold);white-space:nowrap;min-width:60px}
+.cr-reset{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--accent-teal);cursor:pointer;text-decoration:underline;white-space:nowrap}
+.cr-reset:hover{opacity:.7}
+.btn-gen{padding:7px 16px;background:rgba(112,96,160,.1);border:1px solid rgba(112,96,160,.4);border-radius:3px;color:var(--accent-purple);font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all var(--ease);text-transform:uppercase;white-space:nowrap}
+.btn-gen:hover{background:rgba(112,96,160,.2)}
+.btn-reroll{padding:7px 12px;background:var(--bg-input);border:1px solid var(--border-mid);border-radius:3px;color:var(--text-secondary);font-family:'Cinzel',serif;font-size:10px;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all var(--ease);text-transform:uppercase;white-space:nowrap}
+.btn-reroll:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim)}
+.sim-zone{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.sim-cbar{display:flex;align-items:center;gap:10px;padding:7px 14px;background:var(--bg-panel);border-bottom:1px solid var(--border-dim);flex-shrink:0;flex-wrap:wrap}
+.sim-results{flex:1;overflow-y:auto;padding:14px;scrollbar-width:thin;scrollbar-color:var(--border-dim) transparent}
+.sim-results::-webkit-scrollbar{width:5px}
+.sim-results::-webkit-scrollbar-thumb{background:var(--border-dim)}
+.sim-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:.3}
+.empty-glyph{font-size:52px;filter:grayscale(1)}
+.empty-title{font-family:'Cinzel',serif;font-size:16px;color:var(--text-secondary);letter-spacing:.1em}
+.empty-sub{font-family:'Crimson Pro',serif;font-size:13px;color:var(--text-dim);font-style:italic;text-align:center;max-width:260px}
+.dash-top{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.dash-diff{font-family:'Cinzel',serif;font-size:20px;font-weight:700;padding:7px 16px;border-radius:4px;letter-spacing:.06em}
+.dash-stats{display:flex;gap:14px;flex-wrap:wrap;flex:1}
+.dash-stat{display:flex;flex-direction:column}
+.dash-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em}
+.dash-val{font-family:'Cinzel',serif;font-size:16px;color:var(--accent-gold)}
+.dash-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)}
+.prob-section{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:10px;margin-bottom:12px}
+.prob-title{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.prob-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.prob-row:last-child{margin-bottom:0}
+.prob-lbl{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);width:170px;flex-shrink:0}
+.prob-bar-wrap{flex:1;height:7px;background:var(--bg-deep);border-radius:4px;overflow:hidden}
+.prob-bar{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.prob-pct{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);width:32px;text-align:right;flex-shrink:0}
+.compare-toggle{display:flex;align-items:center;gap:7px;padding:7px 10px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:3px;margin-bottom:12px;cursor:pointer;user-select:none;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);transition:all var(--ease)}
+.compare-toggle:hover{border-color:var(--accent-gold-dim);color:var(--accent-gold)}
+.compare-panel{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:10px;margin-bottom:12px;display:none}
+.compare-panel.open{display:block}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.compare-col-title{font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--text-secondary);letter-spacing:.08em;margin-bottom:6px;text-transform:uppercase}
+.log-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.log-title{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--text-secondary);letter-spacing:.08em;text-transform:uppercase;flex:1}
+.round-block{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;margin-bottom:5px;overflow:hidden}
+.round-hdr{display:flex;align-items:center;gap:7px;padding:6px 9px;cursor:pointer;transition:background var(--ease);user-select:none}
+.round-hdr:hover{background:var(--bg-hover)}
+.round-num{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--accent-gold);width:55px;flex-shrink:0}
+.round-summ{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);flex:1;font-style:italic}
+.round-hprow{display:flex;gap:4px;flex-wrap:wrap}
+.round-arr{color:var(--text-dim);font-size:9px;transition:transform var(--ease);flex-shrink:0}
+.round-block.open .round-arr{transform:rotate(90deg)}
+.round-body{display:none;padding:0 9px 7px;border-top:1px solid var(--border-dim)}
+.round-block.open .round-body{display:block}
+.log-line{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-primary);padding:2px 0;border-bottom:1px solid rgba(37,35,53,.35);line-height:1.4}
+.log-line:last-child{border-bottom:none}
+.log-line.legendary{color:var(--accent-gold);padding-left:8px;border-left:2px solid var(--accent-gold-dim)}
+.log-line.heal{color:var(--accent-teal)}
+.log-line.down{color:var(--accent-red)}
+.log-line.death-save{color:var(--accent-orange)}
+.log-line.conc{color:var(--accent-purple)}
+.log-line.miss{color:var(--text-dim);font-style:italic}
+.log-line.kill{color:var(--accent-amber);font-weight:600}
+.init-track{display:flex;gap:3px;padding:4px 0;margin-bottom:3px;overflow-x:auto;scrollbar-width:none}
+.init-chip{padding:1px 6px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:8px;white-space:nowrap;border:1px solid}
+.init-pc{background:rgba(58,138,122,.1);color:var(--accent-teal);border-color:rgba(58,138,122,.3)}
+.init-monster{background:rgba(192,64,64,.1);color:var(--accent-red);border-color:rgba(192,64,64,.3)}
+.hpbar-wrap{display:flex;align-items:center;gap:4px;margin-bottom:2px}
+.hpbar-name{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);white-space:nowrap;width:65px;overflow:hidden;text-overflow:ellipsis}
+.hpbar-track{flex:1;height:4px;background:var(--bg-deep);border-radius:2px;overflow:hidden;min-width:30px}
+.hpbar-fill{height:100%;border-radius:2px;transition:width .3s ease}
+.hpbar-val{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);white-space:nowrap;width:34px;text-align:right}
+.hpbar-sec{margin-top:5px}
+.hpbar-sec-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.spin-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px}
+.spin{width:28px;height:28px;border:2px solid var(--border-dim);border-top-color:var(--accent-gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-txt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.05em}
+.lib-view{display:none;flex:1;overflow:hidden}
+.lib-view.lib-active{display:flex}
+.lib-layout{display:flex;flex:1;overflow:hidden}
+.lib-col{display:flex;flex-direction:column;overflow:hidden}
+.lib-list-col{width:270px;min-width:270px;border-right:1px solid var(--border-dim)}
+.lib-editor-col{flex:1;border-right:1px solid var(--border-dim)}
+.lib-import-col{width:270px;min-width:270px}
+.lib-col-hdr{padding:7px 12px;background:var(--bg-panel);border-bottom:1px solid var(--border-dim);font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--text-secondary);letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;gap:8px}
+.lib-scroll{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
+.lib-scroll::-webkit-scrollbar{width:4px}
+.lib-scroll::-webkit-scrollbar-thumb{background:var(--border-mid)}
+.lib-mrow{display:flex;align-items:center;gap:5px;padding:4px 8px;cursor:pointer;border-bottom:1px solid rgba(37,35,53,.35);transition:background var(--ease)}
+.lib-mrow:hover{background:var(--bg-hover)}
+.lib-mrow.lib-sel{background:rgba(201,168,76,.07)}
+.lib-mname{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-primary);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lib-mcr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-amber)}
+.lib-msrc{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim)}
+.lib-mbadge{font-family:'JetBrains Mono',monospace;font-size:7px;padding:1px 3px;border-radius:2px}
+.lib-footer{padding:7px 10px;border-top:1px solid var(--border-dim);background:var(--bg-deep);display:flex;gap:5px;align-items:center;flex-shrink:0}
+.lib-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);flex:1}
+.db-stats-block{padding:8px 10px;border-top:1px solid var(--border-dim);background:var(--bg-deep);flex-shrink:0}
+.db-srow{display:flex;align-items:center;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(37,35,53,.3)}
+.db-srow:last-child{border-bottom:none}
+.db-slbl{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary)}
+.db-sval{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-gold)}
+.ed-form{padding:12px}
+.ed-sec{margin-bottom:12px}
+.ed-sec-title{font-family:'Cinzel',serif;font-size:9px;font-weight:600;color:var(--text-secondary);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border-dim)}
+.ed-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.import-area{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-primary);padding:7px;resize:vertical;min-height:100px;outline:none;width:100%;line-height:1.4;transition:border-color var(--ease)}
+.import-area:focus{border-color:var(--accent-gold-dim)}
+.import-preview{background:var(--bg-card);border:1px solid var(--border-dim);border-radius:3px;padding:7px;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);min-height:36px;max-height:120px;overflow-y:auto;line-height:1.5}
+
+/* ── Monster Stat Block in right panel ── */
+.mr-expand{display:none;border-top:1px solid var(--border-dim);background:var(--bg-deep)}
+.mr-expand.open{display:block}
+.mr-tabs{display:flex;border-bottom:1px solid var(--border-dim)}
+.mr-tab{flex:1;padding:4px 0;text-align:center;font-family:'Cinzel',serif;font-size:8px;font-weight:600;letter-spacing:.07em;color:var(--text-dim);cursor:pointer;transition:all var(--ease);border-bottom:2px solid transparent;text-transform:uppercase}
+.mr-tab:hover{color:var(--text-secondary)}
+.mr-tab.active{color:var(--accent-gold);border-bottom-color:var(--accent-gold)}
+.mr-tab-panel{display:none;padding:7px 9px;max-height:300px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent}
+.mr-tab-panel.active{display:block}
+.mr-tab-panel::-webkit-scrollbar{width:3px}
+.mr-tab-panel::-webkit-scrollbar-thumb{background:var(--border-mid)}
+.sb-name{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--text-primary);margin-bottom:1px}
+.sb-meta{font-family:'Crimson Pro',serif;font-size:11px;font-style:italic;color:var(--text-secondary);margin-bottom:5px}
+.sb-divider{border:none;border-top:1px solid var(--border-gold);margin:5px 0}
+.sb-stats-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.sb-stat{display:flex;flex-direction:column;align-items:center;min-width:28px}
+.sb-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em}
+.sb-stat-val{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--text-primary)}
+.sb-stat-mod{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-secondary)}
+.sb-prop-row{font-family:'Crimson Pro',serif;font-size:11px;color:var(--text-secondary);margin-bottom:2px;line-height:1.35}
+.sb-prop-row b{font-weight:600;color:var(--text-primary);font-family:'Crimson Pro',serif}
+.sb-section-lbl{font-family:'Cinzel',serif;font-size:8px;font-weight:700;color:var(--accent-gold);letter-spacing:.1em;text-transform:uppercase;margin:5px 0 3px;border-top:1px solid var(--border-dim);padding-top:4px}
+.sb-action{margin-bottom:4px}
+.sb-action-name{font-family:'Crimson Pro',serif;font-size:11px;font-weight:700;font-style:italic;color:var(--text-primary)}
+.sb-action-text{font-family:'Crimson Pro',serif;font-size:11px;color:var(--text-secondary);line-height:1.35}
+.sb-lore-para{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:7px}
+.sb-lore-bold{font-weight:600;color:var(--text-primary)}
+.sb-no-lore{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-dim);font-style:italic;text-align:center;padding:16px 0}
+.mresult-row{flex-direction:column;align-items:stretch;padding:0;border-bottom:1px solid rgba(37,35,53,.5)}
+.mr-main-row{display:flex;align-items:center;gap:5px;padding:4px 10px;cursor:pointer;transition:background var(--ease)}
+.mr-main-row:hover{background:var(--bg-hover)}
+.mr-name{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-primary);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mr-add-btn{width:20px;height:20px;flex-shrink:0;background:rgba(58,138,122,.1);border:1px solid rgba(58,138,122,.3);border-radius:2px;color:var(--accent-teal);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all var(--ease);line-height:1;font-weight:bold}
+.mr-add-btn:hover{background:rgba(58,138,122,.3);border-color:var(--accent-teal)}
+.mr-toggle-btn{width:16px;height:16px;flex-shrink:0;background:transparent;border:1px solid var(--border-dim);border-radius:2px;color:var(--text-dim);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
+.mr-toggle-btn.open{color:var(--accent-gold);border-color:var(--accent-gold-dim);background:rgba(201,168,76,.08)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="tb-orn">&#9876;</span>
+  <span class="tb-title">Combat Forge</span>
+  <span class="tb-orn">&#10022;</span>
+  <span class="tb-sub">D&amp;D 5e Simulator v4</span>
+  <div class="center-tabs">
+    <button class="ctab active" id="ctab-builder" onclick="switchTab('builder')">&#9876; Builder + Sim</button>
+    <button class="ctab" id="ctab-library" onclick="switchTab('library')">&#128218; Monster Library</button>
+  </div>
+  <span class="tb-spacer"></span>
+  <div class="ruleset-tog">
+    <button class="ruleset-btn" id="rules2014" onclick="setRuleset('2014')">2014</button>
+    <button class="ruleset-btn active" id="rules2024" onclick="setRuleset('2024')">2024</button>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- LEFT — PARTY -->
+<div class="panel left" id="partyPanel">
+  <div class="ptoggle" onclick="togglePanel('party')"><span class="ptoggle-icon">&#9664;</span></div>
+  <div class="panel-inner" style="display:flex;flex-direction:column;overflow:hidden">
+    <div class="pscroll" style="flex:1;display:flex;flex-direction:column">
+      <div class="sec open" id="sec-saved" style="flex-shrink:0">
+        <div class="sec-hdr" onclick="toggleSec('sec-saved')">
+          <span class="sec-icon">&#9876;</span><span class="sec-lbl">Saved Parties</span><span class="sec-arr">&#9658;</span>
+        </div>
+        <div class="sec-body">
+          <div style="display:flex;gap:4px;margin-bottom:4px">
+            <input type="text" id="partyNameInput" placeholder="Party name..." style="flex:1;min-width:0">
+            <button class="btn gold" onclick="saveParty()">Save</button>
+          </div>
+          <div style="display:flex;gap:4px">
+            <select id="partySavedSelect" style="flex:1;min-width:0"><option value="">-- Saved parties --</option></select>
+            <button class="btn" onclick="loadParty()">Load</button>
+            <button class="btn red" onclick="deleteParty()">Del</button>
+          </div>
+        </div>
+      </div>
+      <div class="sec open" id="sec-party" style="flex-shrink:0">
+        <div class="sec-hdr" onclick="toggleSec('sec-party')">
+          <span class="sec-icon">&#129497;</span><span class="sec-lbl">Party Members</span>
+          <button class="ibtn" title="Collapse all" onclick="event.stopPropagation();collapseAllPCs()" style="margin-left:auto;font-size:9px;width:20px;height:20px">&#8801;</button>
+          <button class="ibtn red" title="Clear party" onclick="event.stopPropagation();clearParty()" style="font-size:9px;width:20px;height:20px">&#10006;</button>
+          <span class="sec-arr" style="margin-left:4px">&#9658;</span>
+        </div>
+        <div class="sec-body">
+          <div id="pcList"></div>
+          <button class="btn teal" style="width:100%;margin-top:4px" onclick="addPC()">+ Add Member</button>
+        </div>
+      </div>
+      <div style="flex:1;min-height:8px"></div>
+    </div>
+    <div class="pc-summary" id="partySummary" style="display:none;flex-shrink:0">
+      <div class="ps-row">
+        <div class="ps-stat"><div class="ps-lbl">Members</div><div class="ps-val" id="ps-count">0</div></div>
+        <div class="ps-stat"><div class="ps-lbl">Total HP</div><div class="ps-val" id="ps-hp">0</div></div>
+        <div class="ps-stat"><div class="ps-lbl">Avg AC</div><div class="ps-val" id="ps-ac">0</div></div>
+        <div class="ps-stat"><div class="ps-lbl">Est DPR</div><div class="ps-val" id="ps-dpr">0</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CENTER -->
+<div class="center" id="centerArea">
+
+  <!-- BUILDER + SIM VIEW -->
+  <div id="builderView" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+
+    <!-- Encounter zone -->
+    <div class="enc-zone expanded" id="encZone">
+      <div class="enc-zone-inner">
+        <div id="encCcards"></div>
+        <div id="encCempty" style="font-family:'Crimson Pro',serif;font-size:13px;font-style:italic;color:var(--text-dim);text-align:center;padding:8px 0 4px">No monsters — add from right panel or use Generate below.</div>
+        <div class="gen-ctrl">
+          <div class="gen-row">
+            <div class="gen-grp" style="flex:1">
+              <div class="gen-lbl">Encounter Type</div>
+              <div class="chips" id="encTypeChips">
+                <span class="chip active-purple" data-etype="random" onclick="setEncType(this,'random')">&#127922; Random</span>
+                <span class="chip" data-etype="boss" onclick="setEncType(this,'boss')">&#128081; Boss</span>
+                <span class="chip" data-etype="boss_minions" onclick="setEncType(this,'boss_minions')">&#128081;+&#9876; Boss+Minions</span>
+                <span class="chip" data-etype="duo" onclick="setEncType(this,'duo')">&#9876;&#9876; Duo</span>
+                <span class="chip" data-etype="trio" onclick="setEncType(this,'trio')">&#9876;&#9876;&#9876; Trio</span>
+                <span class="chip" data-etype="horde" onclick="setEncType(this,'horde')">&#128128; Horde</span>
+              </div>
+            </div>
+          </div>
+          <div class="gen-row">
+            <div class="gen-grp">
+              <div class="gen-lbl">CR Range <span class="cr-reset" onclick="resetCRSuggested()" id="crResetLnk">&#8634; Suggested</span></div>
+              <div class="cr-wrap">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">Min</span>
+                <input type="range" class="cr-sl" id="crMinSl" min="0" max="33" value="2" oninput="onCRSlider()">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">Max</span>
+                <input type="range" class="cr-sl" id="crMaxSl" min="0" max="33" value="6" oninput="onCRSlider()">
+                <span class="cr-disp" id="crRangeDisp">CR 1/4-3</span>
+              </div>
+            </div>
+            <div class="gen-grp">
+              <div class="gen-lbl">Difficulty</div>
+              <select id="genDiffSelect" style="font-size:12px;min-width:90px">
+                <option value="low">Low</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="gen-grp" style="flex:1">
+              <div class="gen-lbl">Environment</div>
+              <select id="genEnvFilter" style="font-size:12px">
+                <option value="">Any Environment</option>
+                <option value="arctic">Arctic</option>
+                <option value="cave">Cave</option>
+                <option value="coastal">Coastal</option>
+                <option value="desert">Desert</option>
+                <option value="dungeon">Dungeon</option>
+                <option value="forest">Forest</option>
+                <option value="grassland">Grassland</option>
+                <option value="hill">Hill</option>
+                <option value="mountain">Mountain</option>
+                <option value="swamp">Swamp</option>
+                <option value="underdark">Underdark</option>
+                <option value="urban">Urban</option>
+                <option value="underwater">Underwater</option>
+              </select>
+            </div>
+          </div>
+          <div class="gen-row" style="gap:6px">
+            <button class="btn-gen" onclick="generateEncounter()">&#127922; Generate Encounter</button>
+            <button class="btn-reroll" onclick="generateEncounter()">&#8634; Re-roll</button>
+            <span id="genStatus" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);flex:1;text-align:right"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider bar -->
+    <div class="enc-divider" onclick="toggleEncZone()">
+      <span class="enc-div-label">Encounter</span>
+      <span class="enc-div-summary" id="encDivSumm">No monsters added</span>
+      <span class="enc-div-kob diff-trivial-t" id="encDivKob">--</span>
+      <span class="enc-div-arr" id="encDivArr">&#9650;</span>
+    </div>
+
+    <!-- Simulation zone -->
+    <div class="sim-zone">
+      <div class="sim-cbar">
+        <div>
+          <div class="gen-lbl">Monster Intelligence</div>
+          <div style="display:flex;align-items:center;gap:7px;margin-top:2px">
+            <input type="range" id="intelSlider" min="1" max="5" value="3" oninput="updateIntelLabel()" style="width:110px">
+            <span id="intelVal" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-gold);min-width:60px">Average</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;width:110px;margin-top:1px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim)">Mindless</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim)">Tactical</span>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+        <button class="btn-run" id="runSimBtn" onclick="runSimulation()" disabled style="max-width:160px">&#9876; Run Simulation</button>
+      </div>
+      <div class="sim-results" id="simResults">
+        <div class="sim-empty">
+          <div class="empty-glyph">&#9876;</div>
+          <div class="empty-title">Ready to Simulate</div>
+          <div class="empty-sub">Add party members and monsters, then run 1,000 combat simulations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONSTER LIBRARY VIEW -->
+  <div class="lib-view" id="libraryView">
+    <div class="lib-layout">
+      <!-- List col -->
+      <div class="lib-col lib-list-col">
+        <div class="lib-col-hdr">
+          <span style="flex:1">Monster Database</span>
+          <span id="libTotalCount" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">0</span>
+        </div>
+        <div style="padding:6px 10px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
+          <input type="text" id="libSearch" placeholder="Search..." oninput="renderLibList()" style="margin-bottom:4px">
+          <div style="display:flex;gap:3px">
+            <select id="libSrcFilter" onchange="renderLibList()" style="flex:1;font-size:11px">
+              <option value="">All Sources</option>
+              <option value="official">Official</option>
+              <option value="community">Community</option>
+              <option value="third-party">Third Party</option>
+              <option value="homebrew">Homebrew</option>
+              <option value="enriched">SRD Enriched</option>
+            </select>
+            <select id="libTypeFilter" onchange="renderLibList()" style="flex:1;font-size:11px">
+              <option value="">All Types</option>
+              <option>Beast</option><option>Undead</option><option>Humanoid</option>
+              <option>Dragon</option><option>Fiend</option><option>Construct</option>
+              <option>Elemental</option><option>Fey</option><option>Giant</option>
+              <option>Monstrosity</option><option>Ooze</option><option>Plant</option>
+            </select>
+          </div>
+        </div>
+        <div class="lib-scroll" id="libMonsterList" style="padding:0"></div>
+        <div class="lib-footer">
+          <span class="lib-cnt" id="libSelCount">0 selected</span>
+          <button class="btn teal" onclick="selectAllLib()">All</button>
+          <button class="btn" onclick="deselectAllLib()">None</button>
+          <button class="btn red" onclick="deleteSelected()">Delete</button>
+        </div>
+        <div class="db-stats-block">
+          <div class="db-srow"><span class="db-slbl">Official</span><span class="db-sval" id="stat-official">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Community</span><span class="db-sval" id="stat-community">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Third Party</span><span class="db-sval" id="stat-third">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Homebrew</span><span class="db-sval" id="stat-homebrew">0</span></div>
+          <div class="db-srow"><span class="db-slbl">SRD Enriched</span><span class="db-sval" id="stat-enriched">0</span></div>
+          <div style="margin-top:6px;display:flex;gap:4px">
+            <button class="btn gold" style="flex:1" onclick="exportFullDB()">&#11015; Export DB</button>
+          </div>
+        </div>
+      </div>
+      <!-- Editor col -->
+      <div class="lib-col lib-editor-col">
+        <div class="lib-col-hdr">
+          <span id="edTitle" style="flex:1">Monster Editor</span>
+          <button class="btn teal" onclick="newMonster()">+ New Homebrew</button>
+          <button class="btn gold" onclick="saveMonsterEdit()" style="margin-left:4px">Save</button>
+        </div>
+        <div class="lib-scroll" style="padding:0">
+          <div class="ed-form" id="editorForm">
+            <div style="font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-dim);font-style:italic;text-align:center;padding:30px">Select a monster to edit, or create a new homebrew monster.</div>
+          </div>
+        </div>
+      </div>
+      <!-- New Monster / Import col -->
+      <div class="lib-col lib-import-col">
+        <div class="lib-col-hdr">Database &amp; Homebrew</div>
+        <div class="lib-scroll">
+          <div style="padding:10px">
+            <div class="db-bar db-empty" id="dbBar">
+              <span class="db-icon">&#9888;</span>
+              <span class="db-text" id="dbText">No database loaded</span>
+              <span class="db-count" id="dbCount"></span>
+            </div>
+            <div class="flbl" style="margin-top:0">Load Monster File</div>
+            <div style="font-family:'Crimson Pro',serif;font-size:13px;color:var(--text-secondary);margin-bottom:6px">Load <strong>monsters_all_enriched.json</strong>. Full data lives in memory; slim index saved for next visit.</div>
+            <input type="file" id="dbFilePicker" accept=".json" multiple style="display:none" onchange="loadMonsterFilesWithProgress(this.files)">
+            <button class="btn gold" id="loadMonstersBtn" style="width:100%;margin-bottom:6px" onclick="document.getElementById('dbFilePicker').click()">&#128194; Load Monster File</button>
+            <div id="loadProgress" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-teal);text-align:center;padding:4px;background:rgba(58,138,122,.07);border-radius:3px;margin-bottom:8px">
+              <span id="loadProgressText">Reading file…</span>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
+            <div class="flbl" style="margin-top:0">Create Homebrew Monster</div>
+            <div style="font-family:'Crimson Pro',serif;font-size:13px;color:var(--text-secondary);margin-bottom:6px">Fill the form in the editor, or paste JSON below to pre-fill it.</div>
+            <button class="btn teal" style="width:100%;margin-bottom:8px" onclick="newMonster()">+ New Homebrew Monster</button>
+
+            <div class="flbl">Paste JSON to pre-fill editor</div>
+            <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:4px">Paste a single monster JSON object and click Fill to load its fields into the editor.</div>
+            <textarea class="import-area" id="importTA" placeholder='{"name":"My Monster","cr":"5","hp":100,"ac":15,"type":"undead",...}'></textarea>
+            <div style="display:flex;gap:4px;margin-top:5px">
+              <input type="file" id="hbFilePicker" accept=".json" style="display:none" onchange="loadHBFile(this.files[0])">
+              <button class="btn" onclick="document.getElementById('hbFilePicker').click()" style="flex:1">&#128194; From File</button>
+              <button class="btn teal" onclick="prefillFromJSON()" style="flex:1">Fill Editor</button>
+              <button class="btn gold" onclick="importHomebrew()" style="flex:1">Import All</button>
+            </div>
+            <div class="import-preview" id="importPreview">Preview will appear here.</div>
+
+            <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
+            <div class="flbl">Reset Data</div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px">
+              <button class="btn red" style="width:100%" onclick="resetLayer('kobold')">Clear Monster Database</button>
+              <button class="btn red" style="width:100%" onclick="resetLayer('homebrew')">Clear All Homebrew</button>
+            </div>
+            <div style="margin-top:8px">
+              <button class="btn gold" style="width:100%" onclick="exportFullDB()">&#11015; Export Full DB</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT — MONSTERS -->
+<div class="panel right" id="monsterPanel">
+  <div class="ptoggle" onclick="togglePanel('monster')"><span class="ptoggle-icon">&#9654;</span></div>
+  <div class="panel-inner">
+    <!-- CR Range at top -->
+    <div style="padding:6px 10px 4px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary)">CR</span>
+        <input type="range" id="rpCRMin" min="0" max="33" value="0" oninput="onRPCRSlider()" style="flex:1">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary)">to</span>
+        <input type="range" id="rpCRMax" min="0" max="33" value="33" oninput="onRPCRSlider()" style="flex:1">
+        <span class="cr-disp" id="rpCRDisp" style="min-width:70px;font-size:10px">CR 0–30</span>
+      </div>
+      <div style="display:flex;gap:3px">
+        <select id="rtypeFilter" onchange="searchMonsters()" style="flex:1;font-size:11px">
+          <option value="">All Types</option>
+          <option>Beast</option><option>Undead</option><option>Humanoid</option>
+          <option>Dragon</option><option>Fiend</option><option>Construct</option>
+          <option>Elemental</option><option>Fey</option><option>Giant</option>
+          <option>Monstrosity</option><option>Ooze</option><option>Plant</option>
+          <option>Aberration</option><option>Celestial</option>
+        </select>
+        <select id="renvFilter" onchange="searchMonsters()" style="flex:1;font-size:11px">
+          <option value="">Any Env</option>
+          <option value="arctic">Arctic</option>
+          <option value="cave">Cave</option>
+          <option value="coastal">Coastal</option>
+          <option value="desert">Desert</option>
+          <option value="dungeon">Dungeon</option>
+          <option value="forest">Forest</option>
+          <option value="grassland">Grassland</option>
+          <option value="hill">Hill</option>
+          <option value="mountain">Mountain</option>
+          <option value="swamp">Swamp</option>
+          <option value="underdark">Underdark</option>
+          <option value="urban">Urban</option>
+          <option value="underwater">Underwater</option>
+        </select>
+      </div>
+    </div>
+    <!-- Source filter chips -->
+    <div style="padding:4px 10px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
+      <div class="chips" id="srcChips">
+        <span class="chip active" data-rsrc="" onclick="setRSrc(this,'')">All</span>
+        <span class="chip" data-rsrc="official" onclick="setRSrc(this,'official')">Official</span>
+        <span class="chip" data-rsrc="community" onclick="setRSrc(this,'community')">Community</span>
+        <span class="chip" data-rsrc="third-party" onclick="setRSrc(this,'third-party')">3rd Party</span>
+        <span class="chip" data-rsrc="homebrew" onclick="setRSrc(this,'homebrew')">Homebrew</span>
+      </div>
+    </div>
+    <!-- Search -->
+    <div style="padding:5px 10px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
+      <input type="text" class="msearch" id="monsterSearch" placeholder="Search monsters..." oninput="searchMonsters()" autocomplete="off">
+    </div>
+    <!-- Monster list - always populated, scrollable -->
+    <div class="pscroll" id="monsterResults" style="flex:1;overflow-y:auto"></div>
+    <!-- Kobold baseline at bottom -->
+    <div class="kob-baseline">
+      <div class="kob-lbl">Encounter Difficulty (<span id="kob-rules">2024</span>)</div>
+      <div class="kob-diff-row">
+        <span class="kob-tag diff-trivial-t" id="kobDiffTag">--</span>
+        <div><div class="kob-xp" id="kobXP">No encounter</div><div class="kob-xp" id="kobBudget"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// CONSTANTS & DATA TABLES
+// ═══════════════════════════════════════════════════════════════
+const CR_LIST=["0","1/8","1/4","1/2","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+const CR_XP={"0":10,"1/8":25,"1/4":50,"1/2":100,"1":200,"2":450,"3":700,"4":1100,"5":1800,"6":2300,"7":2900,"8":3900,"9":5000,"10":5900,"11":7200,"12":8400,"13":10000,"14":11500,"15":13000,"16":15000,"17":18000,"18":20000,"19":22000,"20":25000,"21":33000,"22":41000,"23":50000,"24":62000,"25":75000,"26":90000,"27":105000,"28":120000,"29":135000,"30":155000};
+const CR_NUM={"0":0,"1/8":0.125,"1/4":0.25,"1/2":0.5,"1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"11":11,"12":12,"13":13,"14":14,"15":15,"16":16,"17":17,"18":18,"19":19,"20":20,"21":21,"22":22,"23":23,"24":24,"25":25,"26":26,"27":27,"28":28,"29":29,"30":30};
+const XP_2014={1:{easy:25,medium:50,hard:75,deadly:100},2:{easy:50,medium:100,hard:150,deadly:200},3:{easy:75,medium:150,hard:225,deadly:400},4:{easy:125,medium:250,hard:375,deadly:500},5:{easy:250,medium:500,hard:750,deadly:1100},6:{easy:300,medium:600,hard:900,deadly:1400},7:{easy:350,medium:750,hard:1100,deadly:1700},8:{easy:450,medium:900,hard:1400,deadly:2100},9:{easy:550,medium:1100,hard:1600,deadly:2400},10:{easy:600,medium:1200,hard:1900,deadly:2800},11:{easy:800,medium:1600,hard:2400,deadly:3600},12:{easy:1000,medium:2000,hard:3000,deadly:4500},13:{easy:1100,medium:2200,hard:3400,deadly:5100},14:{easy:1250,medium:2500,hard:3800,deadly:5700},15:{easy:1400,medium:2800,hard:4300,deadly:6400},16:{easy:1600,medium:3200,hard:4800,deadly:7200},17:{easy:2000,medium:3900,hard:5900,deadly:8800},18:{easy:2100,medium:4200,hard:6300,deadly:9500},19:{easy:2400,medium:4900,hard:7300,deadly:10900},20:{easy:2800,medium:5700,hard:8500,deadly:12700}};
+const XP_2024={1:{low:50,moderate:75,high:100,deadly:180},2:{low:100,moderate:150,high:200,deadly:360},3:{low:150,moderate:225,high:400,deadly:720},4:{low:250,moderate:375,high:500,deadly:900},5:{low:500,moderate:750,high:1100,deadly:1980},6:{low:600,moderate:1000,high:1400,deadly:2520},7:{low:750,moderate:1300,high:1700,deadly:3060},8:{low:1000,moderate:1700,high:2100,deadly:3780},9:{low:1300,moderate:2000,high:2600,deadly:4680},10:{low:1600,moderate:2300,high:3100,deadly:5580},11:{low:1900,moderate:2900,high:4100,deadly:7380},12:{low:2200,moderate:3700,high:4700,deadly:8460},13:{low:2600,moderate:4200,high:5400,deadly:9720},14:{low:2900,moderate:4900,high:6200,deadly:11160},15:{low:3300,moderate:5400,high:7800,deadly:14040},16:{low:3800,moderate:6100,high:9800,deadly:17640},17:{low:4500,moderate:7200,high:11700,deadly:21060},18:{low:5000,moderate:8700,high:14200,deadly:25560},19:{low:5500,moderate:10700,high:17200,deadly:30960},20:{low:6400,moderate:13200,high:22000,deadly:39600}};
+function xpMult2014(nm,np){const m=[0.5,1,1.5,2,2.5,3,4,5];let i=nm<=3?Math.max(1,nm):nm<7?3:nm<11?4:nm<15?5:6;if(np<3)i++;else if(np>5)i--;return m[Math.max(0,Math.min(7,i))];}
+const CD={fighter:{hd:10,init:2,acT1:16,acT2:18,dmg:"physical",xAtk:5,sneak:false,monk:false,cb:[2,2,2,2]},paladin:{hd:10,init:1,acT1:16,acT2:18,dmg:"physical",xAtk:5,sneak:false,monk:false,cb:[4,6,8,9],aura:6},ranger:{hd:10,init:3,acT1:14,acT2:16,dmg:"physical",xAtk:5,sneak:false,monk:false,cb:[4,6,8,9]},barbarian:{hd:12,init:1,acT1:14,acT2:15,dmg:"physical",xAtk:5,sneak:false,monk:false,cb:[2,2,2,2],resist:true},rogue:{hd:8,init:4,acT1:13,acT2:14,dmg:"physical",xAtk:0,sneak:true,monk:false,cb:[2,2,2,2]},monk:{hd:8,init:4,acT1:14,acT2:15,dmg:"physical",xAtk:5,sneak:false,monk:true,cb:[2,2,2,2]},wizard:{hd:6,init:2,acT1:13,acT2:13,dmg:"spell",xAtk:0,sneak:false,monk:false,cb:[2,2,2,2]},sorcerer:{hd:6,init:1,acT1:13,acT2:13,dmg:"spell",xAtk:0,sneak:false,monk:false,cb:[2,2,2,2]},warlock:{hd:8,init:2,acT1:13,acT2:13,dmg:"spell",xAtk:0,sneak:false,monk:false,cb:[2,2,2,2]},cleric:{hd:8,init:0,acT1:14,acT2:16,dmg:"hybrid",xAtk:0,sneak:false,monk:false,cb:[4,6,8,9]},druid:{hd:8,init:1,acT1:13,acT2:14,dmg:"hybrid",xAtk:0,sneak:false,monk:false,cb:[4,6,8,9]},bard:{hd:8,init:2,acT1:13,acT2:14,dmg:"hybrid",xAtk:0,sneak:false,monk:false,cb:[2,2,2,2]}};
+const ICONS={fighter:"⚔",paladin:"🛡",ranger:"🏹",barbarian:"🪓",rogue:"🗡",monk:"🥋",wizard:"📚",sorcerer:"✨",warlock:"👁",cleric:"✝",druid:"🌿",bard:"🎵"};
+function tier(l){return l<=4?1:l<=10?2:l<=16?3:4}
+function prof(l){return Math.ceil(1+l/4)}
+function avgHP(cls,l){const hd=CD[cls]?.hd||8;return hd+(l-1)*(Math.floor(hd/2)+1)+l*2}
+function avgAC(cls,t){const c=CD[cls];if(!c)return 13;return t>=2?c.acT2:c.acT1}
+function baseDPR(cls,l,sup){const c=CD[cls];if(!c)return 5;const na=c.xAtk&&l>=c.xAtk?2:1;let d=na*7.5;if(c.sneak)d=7.5+Math.ceil(l/2)*3.5;if(c.dmg==="spell")d=7+l*1.8;if(c.dmg==="hybrid")d=7.5*0.5+(7+l*1.8)*0.5;if(cls==="paladin"&&!sup)d+=4.5;if(sup)d*=0.5;return Math.round(d*10)/10}
+function estDPR(cr){const n=CR_NUM[String(cr)]||0;if(n<=0)return 2;if(n<=0.25)return 4;if(n<=0.5)return 6;if(n<=1)return 9;if(n<=2)return 14;if(n<=3)return 20;if(n<=5)return 32;if(n<=8)return 52;if(n<=10)return 65;if(n<=12)return 78;if(n<=15)return 97;if(n<=17)return 112;if(n<=20)return 140;return 150+(n-20)*10}
+function estAtk(cr){const n=CR_NUM[String(cr)]||0;if(n<=1)return 3;if(n<=3)return 4;if(n<=7)return 5;if(n<=11)return 6;if(n<=15)return 7;if(n<=20)return 9;return 11}
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+const DB_KEY="cf_db4",EXT_KEY="cf_ext4",HB_KEY="cf_hb4",PARTY_KEY="cf_parties";
+
+// Fields to persist to localStorage (slim — full rich data stays in memory only)
+const SLIM_FIELDS=new Set(['name','slug','cr','source','sourceType','_layer','hasSRD','size','type','alignment',
+  'ac','acNote','hp','hpFormula','init','legendary','unique',
+  'str','dex','con','int','wis','cha',
+  'atkBonus','numAtks','dmgPerAtk','dmgTypes','saveDC',
+  'legendaryActions','legendaryResistance','aoeType','aoeDmg','aoeTargets',
+  'saves','skills','speed','senses','passive','languages',
+  'damageImmunities','damageResistances','conditionImmunities','tags','environment',
+  'crStr','crNum','xp']);
+
+function slimM(m){const o={};SLIM_FIELDS.forEach(k=>{if(m[k]!==undefined)o[k]=m[k];});return o;}
+
+function safeSetLS(key,value){
+  try{localStorage.setItem(key,value);}
+  catch(e){
+    // QuotaExceededError — silently ignore; data lives in memory for this session
+    console.warn('localStorage quota exceeded for key:',key,'— data lives in memory only this session.');
+  }
+}
+let RULESET="2024";
+let MDB=[];       // Kobold base records
+let EXT={};       // slug -> combat enrichment
+let HB=[];        // homebrew full records
+let PCS=[],PCC=0; // party members, counter
+let ENC=[];       // [{monster,count}]
+let ATAB="builder"; // active tab
+let RSRC="";      // right panel source filter
+let EZO=true;     // enc zone open
+let ETYPE="random";
+let CRMIN=2,CRMAX=6;   // encounter generator CR range
+let RPCRMIN=0,RPCRMAX=33; // right panel CR filter
+let LIBSEL=new Set();
+let EDITSLUG=null;
+let LASTSIM=null;
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+(function init(){
+  try{MDB=JSON.parse(localStorage.getItem(DB_KEY)||"[]")}catch(e){MDB=[]}
+  try{EXT=JSON.parse(localStorage.getItem(EXT_KEY)||"{}")}catch(e){EXT={}}
+  try{HB=JSON.parse(localStorage.getItem(HB_KEY)||"[]")}catch(e){HB=[]}
+  normalizeAll();
+  loadPartyDD();
+  updateDBBar();
+  updateCRDisp();
+  updateRunBtn();
+  // Always populate the right panel monster list on load
+  searchMonsters();
+  // Init RP CR display
+  const rpDisp=document.getElementById("rpCRDisp");
+  if(rpDisp)rpDisp.textContent="CR 0–30";
+})();
+
+function normalizeAll(){
+  allM().forEach(m=>{
+    if(!m.slug)m.slug=(m.name||"unknown").toLowerCase().replace(/[^a-z0-9]+/g,"-");
+    m.crStr=String(m.cr||0);
+    m.crNum=CR_NUM[m.crStr]??(typeof m.cr==="number"?m.cr:0);
+    m.xp=CR_XP[m.crStr]??0;
+    // Normalize damage arrays to arrays
+    if(typeof m.damageImmunities==="string")m.damageImmunities=m.damageImmunities.split(",").map(s=>s.trim()).filter(Boolean);
+    if(!Array.isArray(m.damageImmunities))m.damageImmunities=[];
+    if(typeof m.damageResistances==="string")m.damageResistances=m.damageResistances.split(",").map(s=>s.trim()).filter(Boolean);
+    if(!Array.isArray(m.damageResistances))m.damageResistances=[];
+    if(typeof m.conditionImmunities==="string")m.conditionImmunities=m.conditionImmunities.split(",").map(s=>s.trim()).filter(Boolean);
+    if(!Array.isArray(m.conditionImmunities))m.conditionImmunities=[];
+    if(!Array.isArray(m.senses))m.senses=m.senses?[m.senses]:[];
+    if(!Array.isArray(m.languages))m.languages=m.languages?[m.languages]:[];
+    if(!m.saves||typeof m.saves!=="object")m.saves={};
+    if(!m.skills||typeof m.skills!=="object")m.skills={};
+    if(!m.speed||typeof m.speed!=="object")m.speed={walk:30};
+    // Ensure array-based action fields
+    if(!Array.isArray(m.traits))m.traits=[];
+    if(!Array.isArray(m.actions))m.actions=[];
+    if(!Array.isArray(m.reactions))m.reactions=[];
+    if(!Array.isArray(m.bonus_actions))m.bonus_actions=[];
+    if(!Array.isArray(m.legendary_actions))m.legendary_actions=[];
+    if(!Array.isArray(m.mythic_actions))m.mythic_actions=[];
+    if(!Array.isArray(m.spellcasting))m.spellcasting=[];
+    if(!m.lore||typeof m.lore!=="object")m.lore={paragraphs:[],images:[]};
+    if(!Array.isArray(m.lore.paragraphs))m.lore.paragraphs=[];
+  });
+}
+// Pull the "best" combat stats from monster data (direct fields take priority over EXT overrides)
+function resolveMonsterStats(m,ext){
+  ext=ext||{};
+  const hasExt=ext.atkBonus!==undefined&&ext.dmgPerAtk!==undefined;
+  // Prefer direct fields from rich schema, fallback to EXT, fallback to estimates
+  const atkBonus=hasExt?(+ext.atkBonus||0):(m.atkBonus!=null?m.atkBonus:estAtk(m.crStr));
+  const numAtks=hasExt?(+ext.numAtks||1):(m.numAtks!=null?m.numAtks:1);
+  const dprEst=estDPR(m.crStr);
+  const dmgPerAtk=hasExt?(+ext.dmgPerAtk||Math.round(dprEst/numAtks)):(m.dmgPerAtk!=null?m.dmgPerAtk:Math.round(dprEst/Math.max(1,numAtks)));
+  const saveDC=hasExt?(+ext.saveDC||0):(m.saveDC||0);
+  const legAct=hasExt?(+ext.legendaryActions||0):(m.legendaryActions!=null?m.legendaryActions:(m.legendary?3:0));
+  const legRes=hasExt?(+ext.legendaryResistance||0):(m.legendaryResistance!=null?m.legendaryResistance:0);
+  // AoE — rich schema has aoeType, aoeDmg, aoeTargets directly
+  const aoeType=ext.aoeType||(m.aoeType||"");
+  const aoeDmg=ext.aoeDmg!=null?+ext.aoeDmg:(m.aoeDmg||0);
+  const aoeTargets=ext.aoeTargets!=null?+ext.aoeTargets:(m.aoeTargets||2);
+  // Resistances & immunities — prefer direct arrays from rich schema
+  const res=(hasExt&&ext.resistances)?ext.resistances.split(",").map(s=>s.trim().toLowerCase()):(m.damageResistances||[]).map(s=>s.toLowerCase());
+  const imm=(hasExt&&ext.immunities)?ext.immunities.split(",").map(s=>s.trim().toLowerCase()):(m.damageImmunities||[]).map(s=>s.toLowerCase());
+  const condImm=(m.conditionImmunities||[]).map(s=>s.toLowerCase());
+  return{atkBonus,numAtks,dmgPerAtk,saveDC,legAct,legRes,aoeType,aoeDmg,aoeTargets,res,imm,condImm};
+}
+function allM(){return[...MDB,...HB]}
+function findM(slug){return allM().find(m=>m.slug===slug)}
+
+// ═══════════════════════════════════════════════════════════════
+// TABS & PANELS
+// ═══════════════════════════════════════════════════════════════
+function switchTab(tab){
+  ATAB=tab;
+  document.getElementById("ctab-builder").classList.toggle("active",tab==="builder");
+  document.getElementById("ctab-library").classList.toggle("active",tab==="library");
+  const bv=document.getElementById("builderView");
+  const lv=document.getElementById("libraryView");
+  const pp=document.getElementById("partyPanel");
+  const mp=document.getElementById("monsterPanel");
+  bv.style.display=tab==="builder"?"flex":"none";
+  if(tab==="library"){lv.classList.add("lib-active");pp.classList.add("hidden-lib");mp.classList.add("hidden-lib");renderLibList();updateLibStats();}
+  else{lv.classList.remove("lib-active");pp.classList.remove("hidden-lib");mp.classList.remove("hidden-lib");searchMonsters();}
+}
+function togglePanel(w){
+  const el=document.getElementById(w==="party"?"partyPanel":"monsterPanel");
+  el.classList.toggle("collapsed");
+}
+function toggleSec(id){document.getElementById(id).classList.toggle("open")}
+function setRuleset(r){
+  RULESET=r;
+  document.getElementById("rules2014").classList.toggle("active",r==="2014");
+  document.getElementById("rules2024").classList.toggle("active",r==="2024");
+  document.getElementById("kob-rules").textContent=r;
+  // Update difficulty selector options
+  const sel=document.getElementById("genDiffSelect");
+  if(sel){
+    const cur=sel.value;
+    if(r==="2014"){
+      sel.innerHTML=`<option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="deadly">Deadly</option>`;
+    }else{
+      sel.innerHTML=`<option value="low">Low</option><option value="moderate" selected>Moderate</option><option value="high">High</option><option value="deadly">Deadly</option>`;
+    }
+  }
+  updateKobold();
+}
+function updateIntelLabel(){
+  const v=parseInt(document.getElementById("intelSlider").value);
+  document.getElementById("intelVal").textContent=["Mindless","Instinctive","Average","Cunning","Tactical"][v-1];
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DB MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+function updateDBBar(){
+  const total=MDB.length+HB.length;
+  const bar=document.getElementById("dbBar");
+  const dbText=document.getElementById("dbText");
+  const dbCount=document.getElementById("dbCount");
+  if(total>0){
+    // Check if data is full (has actions) or slim (from localStorage)
+    const isSlim=MDB.length>0&&!MDB[0].actions;
+    bar.className="db-bar db-loaded";
+    dbText.textContent=`${total.toLocaleString()} monsters${isSlim?" (index)":""}`;
+    dbCount.textContent=isSlim?"Re-load file for stat blocks":`${HB.length} homebrew`;
+    if(isSlim)dbCount.style.color="var(--accent-amber)";
+    else dbCount.style.color="";
+  }else{
+    bar.className="db-bar db-empty";
+    dbText.textContent="No database loaded";
+    dbCount.textContent="";
+    dbCount.style.color="";
+  }
+}
+function updateLibStats(){
+  const getLayer=m=>m._layer||m.sourceType||"?";
+  const official=MDB.filter(m=>getLayer(m)==="official").length;
+  const community=MDB.filter(m=>getLayer(m)==="community").length;
+  const third=MDB.filter(m=>getLayer(m)==="third-party").length;
+  const enriched=Object.keys(EXT).length;
+  const homebrew=HB.length;
+  const ids=["stat-official","stat-community","stat-third","stat-homebrew","stat-enriched"];
+  const vals=[official,community,third,homebrew,enriched];
+  ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=vals[i].toLocaleString();});
+  const tc=document.getElementById("libTotalCount");
+  if(tc)tc.textContent=(MDB.length+HB.length).toLocaleString();
+}
+
+function loadMonsterFilesWithProgress(files){
+  if(!files||!files.length)return;
+  const prog=document.getElementById("loadProgress");
+  const progText=document.getElementById("loadProgressText");
+  const btn=document.getElementById("loadMonstersBtn");
+  if(prog)prog.style.display="block";
+  if(progText)progText.textContent="Reading file…";
+  if(btn){btn.disabled=true;btn.textContent="Loading…";}
+  // Give the browser a tick to render the loading state before the heavy parse
+  setTimeout(()=>{
+    loadMonsterFiles(files,()=>{
+      if(prog)prog.style.display="none";
+      if(btn){btn.disabled=false;btn.textContent="⚔ Load Monster File";}
+    });
+  },30);
+}
+
+function loadMonsterFiles(files,onDone){
+  if(!files||!files.length)return;
+  const btn=document.querySelector('#dbFilePicker+button,button[onclick*="dbFilePicker"]');
+  const statusEl=document.getElementById("dbText");
+  if(statusEl)statusEl.textContent="Loading…";
+  const readers=[];
+  for(const file of files){
+    const fname=file.name.toLowerCase();
+    let layer="official";
+    if(fname.includes("community"))layer="community";
+    else if(fname.includes("third"))layer="third-party";
+    readers.push(new Promise(res=>{
+      const r=new FileReader();
+      r.onload=e=>{
+        try{res({data:JSON.parse(e.target.result),layer})}
+        catch(err){console.error("JSON parse error:",err);res({data:[],layer});}
+      };
+      r.onerror=()=>res({data:[],layer});
+      r.readAsText(file);
+    }));
+  }
+  Promise.all(readers).then(results=>{
+    const map=new Map(MDB.map(m=>[m.slug,m]));
+    results.forEach(({data,layer})=>{
+      if(!Array.isArray(data)){console.warn("Expected array, got:",typeof data);return;}
+      data.forEach(m=>{
+        // Determine layer from sourceType if present, else from filename
+        m._layer=m.sourceType||layer;
+        m.slug=m.slug||(m.name||"?").toLowerCase().replace(/[^a-z0-9]+/g,"-");
+        m.crStr=String(m.cr||0);
+        m.crNum=CR_NUM[m.crStr]??(typeof m.cr==="number"?m.cr:0);
+        m.xp=CR_XP[m.crStr]??0;
+        map.set(m.slug,m);
+      });
+    });
+    MDB=[...map.values()];
+    const progText=document.getElementById("loadProgressText");
+    if(progText)progText.textContent="Normalizing data…";
+    normalizeAll();
+    if(progText)progText.textContent="Saving index…";
+    // Persist only slim records to avoid localStorage quota errors
+    safeSetLS(DB_KEY,JSON.stringify(MDB.map(slimM)));
+    if(progText)progText.textContent=`✓ ${MDB.length.toLocaleString()} monsters loaded`;
+    updateDBBar();
+    searchMonsters();
+    if(ATAB==="library"){renderLibList();updateLibStats();}
+    const genStatus=document.getElementById("genStatus");
+    if(genStatus)genStatus.textContent=`${MDB.length.toLocaleString()} monsters loaded`;
+    if(onDone)onDone();
+  }).catch(err=>{
+    console.error("loadMonsterFiles error:",err);
+    if(statusEl)statusEl.textContent="Error loading — check console.";
+    if(onDone)onDone();
+  });
+}
+
+function loadHBFile(file){
+  if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    document.getElementById("importTA").value=e.target.result;
+    previewImport();
+  };
+  r.readAsText(file);
+}
+
+function previewImport(){
+  const txt=(document.getElementById("importTA").value||"").trim();
+  const prev=document.getElementById("importPreview");
+  if(!txt){prev.textContent="Nothing to preview.";return;}
+  try{
+    let d=JSON.parse(txt);if(!Array.isArray(d))d=[d];
+    prev.innerHTML=`<strong style="color:var(--accent-teal)">${d.length} monster(s):</strong><br>`+d.slice(0,8).map(m=>`&bull; ${m.name||"?"} CR ${m.cr||"?"} HP ${m.hp||"?"} AC ${m.ac||"?"}`).join("<br>")+(d.length>8?`<br>+${d.length-8} more`:"");
+  }catch(e){prev.innerHTML=`<span style="color:var(--accent-red)">Invalid JSON: ${e.message}</span>`;}
+}
+
+// Pre-fill the monster editor from pasted JSON (single monster object)
+function prefillFromJSON(){
+  const txt=(document.getElementById("importTA").value||"").trim();
+  const prev=document.getElementById("importPreview");
+  if(!txt){prev.innerHTML=`<span style="color:var(--accent-red)">Nothing pasted.</span>`;return;}
+  try{
+    let d=JSON.parse(txt);
+    // Accept both single object and array of one
+    if(Array.isArray(d)){
+      if(!d.length){prev.innerHTML=`<span style="color:var(--accent-red)">Empty array.</span>`;return;}
+      d=d[0];
+    }
+    // Switch to library tab and open editor with this monster as a new homebrew
+    d._layer="homebrew";
+    d.slug=d.slug||(d.name||"hb").toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+Date.now();
+    d.crStr=String(d.cr||0);d.crNum=CR_NUM[d.crStr]??(typeof d.cr==="number"?d.cr:0);d.xp=CR_XP[d.crStr]??0;
+    switchTab("library");
+    EDITSLUG=null; // treat as new
+    renderEditorForm(d);
+    // Make all fields editable
+    document.querySelectorAll("#editorForm input[readonly],#editorForm select[disabled]").forEach(el=>{
+      el.removeAttribute("readonly");el.removeAttribute("disabled");
+    });
+    const et=document.getElementById("edTitle");
+    if(et)et.textContent=`New Homebrew: ${d.name||"Monster"}`;
+    prev.innerHTML=`<span style="color:var(--accent-teal)">&#10003; Editor filled — edit then click Save.</span>`;
+  }catch(e){prev.innerHTML=`<span style="color:var(--accent-red)">Invalid JSON: ${e.message}</span>`;}
+}
+
+function importHomebrew(){
+  const txt=(document.getElementById("importTA").value||"").trim();
+  if(!txt){alert("Nothing to import.");return;}
+  try{
+    let d=JSON.parse(txt);if(!Array.isArray(d))d=[d];
+    d.forEach(m=>{
+      m._layer="homebrew";
+      m.slug=m.slug||(m.name||"?").toLowerCase().replace(/[^a-z0-9]+/g,"-");
+      m.crStr=String(m.cr||0);m.crNum=CR_NUM[m.crStr]??(typeof m.cr==="number"?m.cr:0);m.xp=CR_XP[m.crStr]??0;
+      const idx=HB.findIndex(h=>h.slug===m.slug);
+      if(idx>=0)HB[idx]=m;else HB.push(m);
+    });
+    safeSetLS(HB_KEY,JSON.stringify(HB));
+    updateDBBar();if(ATAB==="library"){renderLibList();updateLibStats();searchMonsters();}
+    document.getElementById("importPreview").innerHTML=`<span style="color:var(--accent-teal)">&#10003; ${d.length} monster(s) imported.</span>`;
+    document.getElementById("importTA").value="";
+  }catch(e){alert("Import failed: "+e.message);}
+}
+
+function resetLayer(layer){
+  const labels={kobold:"the monster database",enriched:"SRD enrichment data",homebrew:"all homebrew monsters"};
+  if(!confirm(`Delete ${labels[layer]||layer}? Cannot be undone.`))return;
+  if(layer==="kobold"){MDB=[];localStorage.removeItem(DB_KEY);}
+  else if(layer==="enriched"){EXT={};localStorage.removeItem(EXT_KEY);}
+  else if(layer==="homebrew"){HB=[];localStorage.removeItem(HB_KEY);}
+  updateDBBar();searchMonsters();if(ATAB==="library"){renderLibList();updateLibStats();}
+}
+
+function exportFullDB(){
+  const all=allM().map(m=>({...m,...(EXT[m.slug]||{})}));
+  const b=new Blob([JSON.stringify(all,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="combat_forge_monsters.json";a.click();URL.revokeObjectURL(a.href);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════════════════════
+function setRSrc(el,src){
+  document.querySelectorAll("#srcChips .chip").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");RSRC=src;searchMonsters();
+}
+
+function matchM(m,q,type,env,src){
+  if(q&&!m.name.toLowerCase().includes(q))return false;
+  if(type&&!(m.type||"").toLowerCase().includes(type.toLowerCase()))return false;
+  if(env){
+    const menv=m.environment;
+    if(!menv)return false;
+    if(Array.isArray(menv)){
+      if(!menv.some(e=>e.toLowerCase().includes(env)))return false;
+    } else {
+      if(!String(menv).toLowerCase().includes(env))return false;
+    }
+  }
+  if(src){
+    const l=(m._layer||m.sourceType||"").toLowerCase();
+    if(src==="homebrew"&&l!=="homebrew")return false;
+    if(src==="official"&&l!=="official")return false;
+    if(src==="community"&&l!=="community")return false;
+    if(src==="third-party"&&l!=="third-party")return false;
+    if(src==="enriched"&&!EXT[m.slug])return false;
+  }
+  return true;
+}
+
+// Right panel CR slider
+function onRPCRSlider(){
+  RPCRMIN=parseInt(document.getElementById("rpCRMin").value);
+  RPCRMAX=parseInt(document.getElementById("rpCRMax").value);
+  if(RPCRMIN>RPCRMAX){RPCRMAX=RPCRMIN;document.getElementById("rpCRMax").value=RPCRMAX;}
+  document.getElementById("rpCRDisp").textContent=`CR ${CR_LIST[RPCRMIN]||"0"}–${CR_LIST[RPCRMAX]||"30"}`;
+  searchMonsters();
+}
+
+function searchMonsters(){
+  const q=(document.getElementById("monsterSearch").value||"").trim().toLowerCase();
+  const type=document.getElementById("rtypeFilter").value;
+  const env=document.getElementById("renvFilter").value;
+  const el=document.getElementById("monsterResults");
+  if(!MDB.length&&!HB.length){
+    el.innerHTML='<div style="padding:12px 10px;font-family:\'JetBrains Mono\',monospace;font-size:10px;color:var(--text-secondary);text-align:center">Load monster database in Monster Library tab.</div>';
+    return;
+  }
+  const crMinNum=CR_NUM[CR_LIST[RPCRMIN]]??0;
+  const crMaxNum=CR_NUM[CR_LIST[RPCRMAX]]??30;
+  let filtered=allM().filter(m=>{
+    if(!matchM(m,q,type,env,RSRC))return false;
+    // CR range filter
+    const cn=m.crNum??CR_NUM[String(m.cr)]??0;
+    if(cn<crMinNum||cn>crMaxNum)return false;
+    return true;
+  });
+  if(q)filtered.sort((a,b)=>a.name.toLowerCase().indexOf(q)-b.name.toLowerCase().indexOf(q));
+  else filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  filtered=filtered.slice(0,80);
+  if(!filtered.length){
+    el.innerHTML='<div style="padding:12px 10px;font-family:\'Crimson Pro\',serif;font-size:13px;font-style:italic;color:var(--text-secondary);text-align:center">No monsters match these filters.</div>';
+    return;
+  }
+  el.innerHTML=filtered.map(m=>{
+    const hasFull=EXT[m.slug]?.atkBonus!==undefined||m.atkBonus!=null||m._layer==="homebrew";
+    const sid=`sb-${m.slug.replace(/[^a-z0-9]/g,"-")}`;
+    return `<div class="mresult-row" id="mr-${sid}">
+      <div class="mr-main-row">
+        <span class="mr-toggle-btn" id="tgl-${sid}" onclick="toggleStatBlock('${m.slug}','${sid}')">▸</span>
+        <span class="mr-name" onclick="toggleStatBlock('${m.slug}','${sid}')" title="${m.name}">${m.name}</span>
+        <span class="mr-type">${(m.type||"").toLowerCase().slice(0,8)}</span>
+        <span class="mr-cr">CR ${m.cr}</span>
+        ${m.legendary?'<span class="mr-leg">&#9733;</span>':""}
+        ${hasFull?'<span style="color:var(--accent-green);font-size:8px">&#9679;</span>':""}
+        <button class="mr-add-btn" onclick="addToEnc('${m.slug}')" title="Add to encounter">+</button>
+      </div>
+      <div class="mr-expand" id="${sid}"></div>
+    </div>`;
+  }).join("");
+}
+let OPEN_SB=null;
+function toggleStatBlock(slug,sid){
+  const panel=document.getElementById(sid);
+  const btn=document.getElementById("tgl-"+sid);
+  if(!panel)return;
+  // Close previously open one
+  if(OPEN_SB&&OPEN_SB!==sid){
+    const prev=document.getElementById(OPEN_SB);
+    const prevBtn=document.getElementById("tgl-"+OPEN_SB);
+    if(prev){prev.classList.remove("open");prev.innerHTML="";}
+    if(prevBtn){prevBtn.textContent="▸";prevBtn.classList.remove("open");}
+  }
+  if(panel.classList.contains("open")){
+    panel.classList.remove("open");panel.innerHTML="";
+    if(btn){btn.textContent="▸";btn.classList.remove("open");}
+    OPEN_SB=null;
+  } else {
+    const m=findM(slug);if(!m)return;
+    panel.innerHTML=renderStatBlock(m);
+    panel.classList.add("open");
+    if(btn){btn.textContent="▾";btn.classList.add("open");}
+    OPEN_SB=sid;
+    // Activate first tab
+    sbSwitchTab(sid,0);
+  }
+}
+
+function sbSwitchTab(sid,idx){
+  const panel=document.getElementById(sid);if(!panel)return;
+  panel.querySelectorAll(".mr-tab").forEach((t,i)=>t.classList.toggle("active",i===idx));
+  panel.querySelectorAll(".mr-tab-panel").forEach((p,i)=>p.classList.toggle("active",i===idx));
+}
+
+function mod(score){const m=Math.floor((score-10)/2);return(m>=0?"+":"")+m;}
+
+function renderStatBlock(m){
+  // ── TAB 1: Stats & Abilities ──
+  const speedParts=Object.entries(m.speed||{walk:30}).map(([k,v])=>k==="walk"?`${v} ft.`:`${k} ${v} ft.`).join(", ");
+  const statsHtml=`
+    <div class="sb-name">${m.name}</div>
+    <div class="sb-meta">${m.size||""} ${m.type||""}${m.alignment?", "+m.alignment:""}</div>
+    <hr class="sb-divider">
+    <div class="sb-prop-row"><b>Armor Class</b> ${m.ac}${m.acNote?" ("+m.acNote+")":""}</div>
+    <div class="sb-prop-row"><b>Hit Points</b> ${m.hp}${m.hpFormula?" ("+m.hpFormula+")":""}</div>
+    <div class="sb-prop-row"><b>Speed</b> ${speedParts||"30 ft."}</div>
+    <div class="sb-prop-row"><b>Initiative</b> ${m.init>=0?"+"+m.init:m.init||"+0"}</div>
+    <hr class="sb-divider">
+    <div class="sb-stats-row">
+      ${["str","dex","con","int","wis","cha"].map(s=>`<div class="sb-stat">
+        <div class="sb-stat-lbl">${s.toUpperCase()}</div>
+        <div class="sb-stat-val">${m[s]||10}</div>
+        <div class="sb-stat-mod">${mod(m[s]||10)}</div>
+      </div>`).join("")}
+    </div>
+    <hr class="sb-divider">
+    ${Object.keys(m.saves||{}).length?`<div class="sb-prop-row"><b>Saving Throws</b> ${Object.entries(m.saves).map(([k,v])=>`${k.charAt(0).toUpperCase()+k.slice(1)} ${v>=0?"+"+v:v}`).join(", ")}</div>`:""}
+    ${Object.keys(m.skills||{}).length?`<div class="sb-prop-row"><b>Skills</b> ${Object.entries(m.skills).map(([k,v])=>`${k.charAt(0).toUpperCase()+k.slice(1)} ${v>=0?"+"+v:v}`).join(", ")}</div>`:""}
+    ${m.damageImmunities?.length?`<div class="sb-prop-row"><b>Damage Immunities</b> ${m.damageImmunities.join(", ")}</div>`:""}
+    ${m.damageResistances?.length?`<div class="sb-prop-row"><b>Damage Resistances</b> ${m.damageResistances.join(", ")}</div>`:""}
+    ${m.conditionImmunities?.length?`<div class="sb-prop-row"><b>Condition Immunities</b> ${m.conditionImmunities.join(", ")}</div>`:""}
+    ${m.senses?.length?`<div class="sb-prop-row"><b>Senses</b> ${m.senses.join(", ")}${m.passive?", passive Perception "+m.passive:""}</div>`:""}
+    ${m.languages?.length?`<div class="sb-prop-row"><b>Languages</b> ${m.languages.join(", ")}</div>`:""}
+    <div class="sb-prop-row"><b>Challenge</b> ${m.cr} (${(CR_XP[String(m.cr)]||0).toLocaleString()} XP)</div>
+    ${m.legendaryResistance?`<div class="sb-prop-row"><b>Legendary Resistance</b> ${m.legendaryResistance}/Day</div>`:""}
+    ${m.traits?.length?`<div class="sb-section-lbl">Traits</div>${m.traits.map(t=>`<div class="sb-action"><span class="sb-action-name">${t.name}. </span><span class="sb-action-text">${t.text}</span></div>`).join("")}`:""}
+    ${m.actions?.length?`<div class="sb-section-lbl">Actions</div>${m.actions.map(a=>`<div class="sb-action"><span class="sb-action-name">${a.name}. </span><span class="sb-action-text">${a.text}</span></div>`).join("")}`:""}
+    ${m.bonus_actions?.length?`<div class="sb-section-lbl">Bonus Actions</div>${m.bonus_actions.map(a=>`<div class="sb-action"><span class="sb-action-name">${a.name}. </span><span class="sb-action-text">${a.text}</span></div>`).join("")}`:""}
+    ${m.reactions?.length?`<div class="sb-section-lbl">Reactions</div>${m.reactions.map(a=>`<div class="sb-action"><span class="sb-action-name">${a.name}. </span><span class="sb-action-text">${a.text}</span></div>`).join("")}`:""}
+    ${m.legendary_actions?.length?`<div class="sb-section-lbl">Legendary Actions (${m.legendaryActions||3}/round)</div>${m.legendary_actions.map(a=>`<div class="sb-action"><span class="sb-action-name">${a.name}. </span><span class="sb-action-text">${a.text}</span></div>`).join("")}`:""}
+    ${m.mythic_actions?.length?`<div class="sb-section-lbl">Mythic Actions</div>${m.mythic_actions.map(a=>`<div class="sb-action"><span class="sb-action-name">${a.name}. </span><span class="sb-action-text">${a.text}</span></div>`).join("")}`:""}
+    ${m.spellcasting?.length?`<div class="sb-section-lbl">Spellcasting</div>${m.spellcasting.map(sc=>{
+      const spellLines=[];
+      if(sc.spells){
+        if(sc.spells.at_will?.length)spellLines.push(`At will: ${sc.spells.at_will.join(", ")}`);
+        if(sc.spells["3_per_day"]?.length)spellLines.push(`3/day each: ${sc.spells["3_per_day"].join(", ")}`);
+        if(sc.spells["2_per_day"]?.length)spellLines.push(`2/day each: ${sc.spells["2_per_day"].join(", ")}`);
+        if(sc.spells["1e_per_day"]?.length||sc.spells["1_per_day"]?.length)spellLines.push(`1/day each: ${(sc.spells["1e_per_day"]||sc.spells["1_per_day"]||[]).join(", ")}`);
+      }
+      return`<div class="sb-action"><span class="sb-action-name">${sc.name}. </span><span class="sb-action-text">${sc.header||""} ${spellLines.join(" ")}</span></div>`;
+    }).join("")}`:""}
+  `;
+
+  // ── TAB 2: Lore ──
+  const lore=m.lore||{};
+  const paras=lore.paragraphs||[];
+  const loreHtml=paras.length?paras.map(p=>{
+    // Render **bold** markdown
+    const html=p.replace(/\*\*([^*]+)\*\*/g,'<span class="sb-lore-bold">$1</span>');
+    return`<div class="sb-lore-para">${html}</div>`;
+  }).join("")
+  :`<div class="sb-no-lore">No lore available for this creature.</div>`;
+
+  return `<div class="mr-tabs">
+    <div class="mr-tab active" onclick="sbSwitchTab('sb-${m.slug.replace(/[^a-z0-9]/g,"-")}',0)">Stats &amp; Abilities</div>
+    <div class="mr-tab" onclick="sbSwitchTab('sb-${m.slug.replace(/[^a-z0-9]/g,"-")}',1)">Lore</div>
+  </div>
+  <div class="mr-tab-panel active">${statsHtml}</div>
+  <div class="mr-tab-panel">${loreHtml}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENCOUNTER
+// ═══════════════════════════════════════════════════════════════
+function addToEnc(slug){
+  const m=findM(slug);if(!m)return;
+  const ex=ENC.find(e=>e.monster.slug===slug);
+  if(ex){ex.count++;renderEnc();updateKobold();updateEncDiv();updateRunBtn();return;}
+  ENC.push({monster:m,count:1});
+  renderEnc();updateKobold();updateEncDiv();updateRunBtn();
+}
+function removeFromEnc(slug){ENC=ENC.filter(e=>e.monster.slug!==slug);renderEnc();updateKobold();updateEncDiv();updateRunBtn();}
+function chgCnt(slug,d){const e=ENC.find(x=>x.monster.slug===slug);if(!e)return;e.count=Math.max(1,e.count+d);renderEnc();updateKobold();updateEncDiv();}
+
+function renderEnc(){
+  const cards=document.getElementById("encCcards");
+  const empty=document.getElementById("encCempty");
+  if(!ENC.length){
+    cards.innerHTML="";
+    empty.style.display="";
+    return;
+  }
+  empty.style.display="none";
+  cards.innerHTML=ENC.map(e=>{
+    const m=e.monster;
+    const ext=EXT[m.slug]||{};
+    const full=(ext.atkBonus!==undefined&&ext.dmgPerAtk!==undefined)||(m._layer==="homebrew"&&m.atkBonus!==undefined)||(m.atkBonus!=null&&m.dmgPerAtk!=null);
+    return `<div class="enc-ccard">
+      <div class="enc-ccard-hdr">
+        <span class="enc-ccard-name" title="${m.name}">${m.name}</span>
+        <span class="enc-ccard-cr">CR ${m.cr}</span>
+        <span class="enc-ccard-badge ${full?'badge-full':'badge-cr'}">${full?'Full':'Est.'}</span>
+        <div class="cntrow">
+          <button class="cb" onclick="chgCnt('${m.slug}',-1)">&#8722;</button>
+          <span class="cv">${e.count}</span>
+          <button class="cb" onclick="chgCnt('${m.slug}',1)">&#43;</button>
+          <button class="cb" style="color:var(--accent-red);margin-left:2px" onclick="removeFromEnc('${m.slug}')">&#10005;</button>
+        </div>
+      </div>
+      <div class="enc-ccard-expand" onclick="togCcard('${m.slug}')">&#9881; HP ${m.hp} &middot; AC ${m.ac}${m.legendary?" &middot; Legendary":""} &#9660;</div>
+      <div class="enc-ccard-body" id="ccb-${m.slug}">
+        ${extForm(m,ext)}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function togCcard(slug){const b=document.getElementById("ccb-"+slug);if(b)b.classList.toggle("open");}
+
+function extForm(m,ext){
+  const e=ext||{};const s=m.slug;
+  return `<div class="ext-grid">
+    <div><label class="flbl" style="margin-top:0">Atk Bonus</label><input type="number" value="${e.atkBonus??""}" placeholder="auto" onchange="saveExt('${s}','atkBonus',this.value)" style="font-size:11px"></div>
+    <div><label class="flbl" style="margin-top:0">Num Attacks</label><input type="number" value="${e.numAtks??1}" min="1" onchange="saveExt('${s}','numAtks',this.value)" style="font-size:11px"></div>
+    <div><label class="flbl">Avg Dmg/Atk</label><input type="number" value="${e.dmgPerAtk??""}" placeholder="auto" onchange="saveExt('${s}','dmgPerAtk',this.value)" style="font-size:11px"></div>
+    <div><label class="flbl">Save DC</label><input type="number" value="${e.saveDC??""}" placeholder="none" onchange="saveExt('${s}','saveDC',this.value)" style="font-size:11px"></div>
+  </div>
+  <label class="flbl">Damage Types</label><input type="text" value="${e.dmgTypes??""}" placeholder="slashing, fire..." onchange="saveExt('${s}','dmgTypes',this.value)" style="font-size:11px">
+  <label class="flbl">Resistances</label><input type="text" value="${e.resistances??""}" placeholder="cold, nonmagical..." onchange="saveExt('${s}','resistances',this.value)" style="font-size:11px">
+  <label class="flbl">Immunities</label><input type="text" value="${e.immunities??""}" placeholder="poison..." onchange="saveExt('${s}','immunities',this.value)" style="font-size:11px">
+  <div class="ext-grid" style="margin-top:4px">
+    <div><label class="flbl" style="margin-top:0">Leg. Actions</label><input type="number" value="${e.legendaryActions??0}" min="0" onchange="saveExt('${s}','legendaryActions',this.value)" style="font-size:11px"></div>
+    <div><label class="flbl" style="margin-top:0">Leg. Resist</label><input type="number" value="${e.legendaryResistance??0}" min="0" onchange="saveExt('${s}','legendaryResistance',this.value)" style="font-size:11px"></div>
+  </div>
+  <label class="flbl">AoE Type</label>
+  <select onchange="saveExt('${s}','aoeType',this.value)" style="font-size:11px">
+    <option value="${e.aoeType?"":"selected"}" value="">None</option>
+    <option value="recharge"${e.aoeType==="recharge"?" selected":""}>Recharge (~1/3 rounds)</option>
+    <option value="sustained"${e.aoeType==="sustained"?" selected":""}>Sustained</option>
+    <option value="cone"${e.aoeType==="cone"?" selected":""}>Cone/Line</option>
+  </select>
+  ${e.aoeType?`<div class="ext-grid" style="margin-top:3px"><div><label class="flbl" style="margin-top:0">AoE Dmg</label><input type="number" value="${e.aoeDmg??""}" onchange="saveExt('${s}','aoeDmg',this.value)" style="font-size:11px"></div><div><label class="flbl" style="margin-top:0">Targets</label><input type="number" value="${e.aoeTargets??2}" min="1" onchange="saveExt('${s}','aoeTargets',this.value)" style="font-size:11px"></div></div>`:""}
+  <label class="flbl">Save-or-Suck DC</label><input type="number" value="${e.sosDC??""}" placeholder="blank=none" onchange="saveExt('${s}','sosDC',this.value)" style="font-size:11px">`;
+}
+
+function saveExt(slug,key,val){
+  if(!EXT[slug])EXT[slug]={};
+  const n=parseFloat(val);EXT[slug][key]=isNaN(n)?val:n;
+  safeSetLS(EXT_KEY,JSON.stringify(EXT));
+  renderEnc();updateLibStats();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENC ZONE COLLAPSE
+// ═══════════════════════════════════════════════════════════════
+function toggleEncZone(){
+  EZO=!EZO;
+  const z=document.getElementById("encZone");
+  const arr=document.getElementById("encDivArr");
+  z.classList.toggle("expanded",EZO);
+  z.classList.toggle("zone-collapsed",!EZO);
+  arr.textContent=EZO?"▲":"▼";
+}
+
+function updateEncDiv(){
+  const summ=document.getElementById("encDivSumm");
+  const kob=document.getElementById("encDivKob");
+  if(!ENC.length){
+    summ.textContent="No monsters — use Generate or search right panel";
+    kob.textContent="--";kob.className="enc-div-kob diff-trivial-t";
+    return;
+  }
+  const total=ENC.reduce((s,e)=>s+e.count,0);
+  summ.textContent=`${total} monster${total!==1?"s":""}: `+ENC.map(e=>`${e.count>1?e.count+"x ":""}${e.monster.name}`).join(", ");
+  const tag=document.getElementById("kobDiffTag");
+  kob.textContent=tag.textContent;
+  kob.className="enc-div-kob "+tag.className.replace("kob-tag","").trim();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GENERATOR — XP Budget based (Kobold+ approach)
+// ═══════════════════════════════════════════════════════════════
+
+// Encounter templates: ratio = fraction of XP budget, count = number of monsters
+// boss:true = use HIGH CR pool (legendary preferred, no horde)
+// horde:true = use LOW CR pool (no legendary)
+// Counts with "P" are relative to party size, resolved at runtime
+const TMPLS={
+  random:[
+    {groups:[{count:1,ratio:1.0}]},
+    {groups:[{count:1,ratio:0.5},{count:1,ratio:0.5}]},
+    {groups:[{count:1,ratio:0.33},{count:2,ratio:0.67}]},
+    {groups:[{count:1,ratio:0.17},{count:5,ratio:0.83}]},
+    {groups:[{count:1,ratio:0.33},{count:1,ratio:0.33},{count:1,ratio:0.34}]},
+    {groups:[{count:1,ratio:0.25},{count:1,ratio:0.25},{count:2,ratio:0.5}]},
+    {groups:[{count:2,ratio:0.5},{count:2,ratio:0.5}]},
+    {groups:[{count:8,ratio:1.0,horde:true}]},
+  ],
+  boss:[
+    {groups:[{count:1,ratio:1.0,boss:true}]}
+  ],
+  boss_minions:[
+    {groups:[{count:1,ratio:0.55,boss:true},{count:"P",ratio:0.45,horde:true}]},
+    {groups:[{count:1,ratio:0.55,boss:true},{count:2,ratio:0.2},{count:"P",ratio:0.25,horde:true}]},
+  ],
+  duo:[
+    {groups:[{count:1,ratio:0.5},{count:1,ratio:0.5}]},
+    {groups:[{count:1,ratio:0.6},{count:1,ratio:0.4}]},
+  ],
+  trio:[
+    {groups:[{count:1,ratio:0.33},{count:1,ratio:0.33},{count:1,ratio:0.34}]},
+    {groups:[{count:1,ratio:0.5},{count:1,ratio:0.3},{count:1,ratio:0.2}]},
+  ],
+  horde:[
+    {groups:[{count:"P3",ratio:1.0,horde:true}]},
+    {groups:[{count:"P4",ratio:1.0,horde:true}]},
+    {groups:[{count:2,ratio:0.3,horde:true},{count:"P2",ratio:0.7,horde:true}]},
+  ],
+};
+
+// 2014 XP multiplier (for encounter budget calcs)
+function xpMult(n,p){const m=[0.5,1,1.5,2,2.5,3,4,5];let i=n<=3?Math.max(1,n):n<7?3:n<11?4:n<15?5:6;if(p<3)i++;else if(p>5)i--;return m[Math.max(0,Math.min(7,i))];}
+
+// Find CR index whose XP is closest to target
+function crIdxForXP(targetXP){
+  let best=0,bestDist=Infinity;
+  for(let i=0;i<CR_LIST.length;i++){
+    const d=Math.abs(CR_XP[CR_LIST[i]]-targetXP);
+    if(d<bestDist){bestDist=d;best=i;}
+  }
+  return best;
+}
+
+// Get party XP budget for a given difficulty key
+function partyBudget(diff){
+  // diff: "low","moderate","high" (2024) or "easy","medium","hard","deadly" (2014)
+  return PCS.reduce((s,p)=>{
+    const t=RULESET==="2014"?XP_2014[Math.min(20,Math.max(1,p.level))]:XP_2024[Math.min(20,Math.max(1,p.level))];
+    return s+(t[diff]||0);
+  },0);
+}
+
+function setEncType(el,type){
+  document.querySelectorAll("#encTypeChips .chip").forEach(c=>c.classList.remove("active","active-purple"));
+  el.classList.add("active","active-purple");ETYPE=type;
+}
+
+// ── CR Suggestion using XP budget ──
+function getSuggested(){
+  if(!PCS.length)return{min:2,max:6};
+  const lowBudget=partyBudget(RULESET==="2014"?"easy":"low");
+  const deadlyBudget=partyBudget(RULESET==="2014"?"deadly":"deadly");
+  const avgLvl=Math.round(PCS.reduce((s,p)=>s+p.level,0)/PCS.length);
+  // Min: XP per monster in a group of 5 at low difficulty, floor = avgLevel-4
+  const minXP=lowBudget/5;
+  const floorCR=Math.max(0,avgLvl-4);
+  const floorIdx=CR_LIST.findIndex(cr=>CR_NUM[cr]>=floorCR);
+  // Max: solo boss at deadly budget, cap = avgLevel+8
+  const maxXP=deadlyBudget;
+  const capCR=avgLvl+8;
+  const capIdx=CR_LIST.findIndex(cr=>CR_NUM[cr]>=capCR);
+  const rawMaxIdx=crIdxForXP(maxXP);
+  const maxIdx=capIdx>0?Math.min(rawMaxIdx,capIdx):rawMaxIdx;
+  const rawMinIdx=crIdxForXP(minXP);
+  const minIdx=Math.max(floorIdx>0?floorIdx:0,Math.min(rawMinIdx,maxIdx-1));
+  return{min:Math.max(0,minIdx),max:Math.min(33,maxIdx)};
+}
+
+function resetCRSuggested(){
+  const s=getSuggested();CRMIN=s.min;CRMAX=s.max;
+  document.getElementById("crMinSl").value=CRMIN;
+  document.getElementById("crMaxSl").value=CRMAX;
+  updateCRDisp();
+}
+
+function onCRSlider(){
+  CRMIN=parseInt(document.getElementById("crMinSl").value);
+  CRMAX=parseInt(document.getElementById("crMaxSl").value);
+  if(CRMIN>CRMAX){CRMAX=CRMIN;document.getElementById("crMaxSl").value=CRMAX;}
+  updateCRDisp();
+}
+
+function updateCRDisp(){
+  document.getElementById("crRangeDisp").textContent=`CR ${CR_LIST[CRMIN]||"0"}–${CR_LIST[CRMAX]||"0"}`;
+}
+
+// ── Main encounter generator ──
+function generateEncounter(){
+  const env=document.getElementById("genEnvFilter").value;
+  const diffSel=document.getElementById("genDiffSelect")?.value||"moderate";
+  const np=Math.max(1,PCS.length||4);
+
+  // Resolve XP budget for chosen difficulty
+  const totalXP=partyBudget(diffSel);
+  if(!totalXP){document.getElementById("genStatus").textContent="Add party members first.";return;}
+
+  // Pick a random template for this encounter type
+  const tmplArr=TMPLS[ETYPE]||TMPLS.random;
+  const tmpl=JSON.parse(JSON.stringify(tmplArr[Math.floor(Math.random()*tmplArr.length)]));
+
+  // Resolve dynamic counts
+  tmpl.groups.forEach(g=>{
+    if(typeof g.count==="string"){
+      if(g.count==="P")g.count=np;
+      else if(g.count==="P2")g.count=np*2;
+      else if(g.count==="P3")g.count=Math.max(3,np*3);
+      else if(g.count==="P4")g.count=Math.max(4,np*4);
+    }
+  });
+
+  // For 2014 rules: back-calculate un-multiplied budget
+  // For 2024: no multiplier (= 1.0)
+  const totalMonsters=tmpl.groups.reduce((s,g)=>s+g.count,0);
+  const effectiveBudget=RULESET==="2014"?totalXP/xpMult(totalMonsters,np):totalXP;
+
+  // Build pools
+  const allMonsters=allM();
+  const crMinNum=CR_NUM[CR_LIST[CRMIN]]||0;
+  const crMaxNum=CR_NUM[CR_LIST[CRMAX]]||99;
+
+  function buildPool(isHorde,isBoss){
+    return allMonsters.filter(m=>{
+      if(env){
+        const menv=m.environment;
+        if(!menv)return false;
+        const envMatch=Array.isArray(menv)?menv.some(e=>e.includes(env)):String(menv).includes(env);
+        if(!envMatch)return false;
+      }
+      // Boss: prefer legendary, use upper 50% of CR range
+      if(isBoss){
+        const bossMinCR=crMinNum+(crMaxNum-crMinNum)*0.5;
+        return m.crNum>=bossMinCR&&m.crNum<=crMaxNum;
+      }
+      // Horde: lower 40% of CR range, exclude legendary creatures
+      if(isHorde){
+        const hordeMaxCR=crMinNum+(crMaxNum-crMinNum)*0.4;
+        return m.crNum>=crMinNum&&m.crNum<=hordeMaxCR&&!m.legendary;
+      }
+      // Normal: full range
+      return m.crNum>=crMinNum&&m.crNum<=crMaxNum;
+    });
+  }
+
+  function pickClosest(pool,targetXP,used){
+    const elig=pool.filter(m=>!used.has(m.slug));
+    if(!elig.length)return null;
+    const sorted=elig.sort((a,b)=>Math.abs(a.xp-targetXP)-Math.abs(b.xp-targetXP));
+    const cands=sorted.slice(0,Math.min(5,sorted.length));
+    return cands[Math.floor(Math.random()*cands.length)];
+  }
+
+  const newEnc=[];const used=new Set();
+  for(const grp of tmpl.groups){
+    const targetXPPerMonster=(effectiveBudget*grp.ratio)/grp.count;
+    const pool=buildPool(!!grp.horde,!!grp.boss);
+    if(!pool.length){
+      // Fallback: use full range if pool is empty
+      const fallback=allMonsters.filter(m=>m.crNum>=crMinNum&&m.crNum<=crMaxNum&&!used.has(m.slug));
+      if(!fallback.length)continue;
+      const sorted=fallback.sort((a,b)=>Math.abs(a.xp-targetXPPerMonster)-Math.abs(b.xp-targetXPPerMonster));
+      const picked=sorted[0];
+      used.add(picked.slug);
+      newEnc.push({monster:picked,count:grp.count});
+      continue;
+    }
+    const picked=pickClosest(pool,targetXPPerMonster,used);
+    if(!picked)continue;
+    used.add(picked.slug);
+    newEnc.push({monster:picked,count:Math.max(1,grp.count)});
+  }
+
+  if(!newEnc.length){document.getElementById("genStatus").textContent="Could not fill encounter — try widening the CR range or changing environment.";return;}
+  ENC=newEnc;
+  renderEnc();updateKobold();updateEncDiv();updateRunBtn();
+  const totalM=newEnc.reduce((s,e)=>s+e.count,0);
+  document.getElementById("genStatus").textContent=`${totalM} monsters: `+newEnc.map(e=>`${e.count>1?e.count+"× ":""}${e.monster.name} (CR ${e.monster.cr})`).join(", ");
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PARTY
+// ═══════════════════════════════════════════════════════════════
+function addPC(data){
+  PCC++;const id="pc-"+PCC;
+  const pc=data||{id,name:"",cls:"fighter",level:5,gearMagical:false,isSupport:false,initOverride:"",collapsed:false};
+  pc.id=id;
+  if(pc.collapsed===undefined)pc.collapsed=false;
+  PCS.push(pc);
+  // Only re-render the pcList, preserving existing cards' collapsed state
+  renderPCList();updatePS();updateRunBtn();resetCRSuggested();
+}
+function removePC(id){PCS=PCS.filter(p=>p.id!==id);renderPCList();updatePS();updateRunBtn();resetCRSuggested();}
+function clearParty(){if(!PCS.length)return;if(!confirm("Clear all party members?"))return;PCS=[];renderPCList();updatePS();updateRunBtn();resetCRSuggested();}
+function collapseAllPCs(){
+  // Toggle: if any are expanded, collapse all; if all collapsed, expand all
+  const anyExpanded=PCS.some(p=>!p.collapsed);
+  PCS.forEach(p=>p.collapsed=anyExpanded);
+  renderPCList();
+}
+function updPC(id,key,val){
+  const pc=PCS.find(p=>p.id===id);if(!pc)return;
+  if(key==="level")val=Math.max(1,Math.min(20,parseInt(val)||1));
+  else if(key==="gearMagical"||key==="isSupport")val=!!val;
+  pc[key]=val;
+  if(key==="level"||key==="cls")resetCRSuggested();
+  updatePS();updateRunBtn();
+}
+
+function togglePC(id){
+  const pc=PCS.find(p=>p.id===id);
+  if(pc){pc.collapsed=!pc.collapsed;}
+  const card=document.querySelector(`.pc-card[data-id="${id}"]`);
+  if(card)card.classList.toggle("pc-collapsed",pc?pc.collapsed:false);
+}
+
+function renderPCList(){
+  document.getElementById("pcList").innerHTML=PCS.map(pc=>`
+  <div class="pc-card${pc.collapsed?" pc-collapsed":""}" data-id="${pc.id}">
+    <div class="pc-hdr" onclick="togglePC('${pc.id}')">
+      <span class="pc-avatar">${ICONS[pc.cls]||"&#129497;"}</span>
+      <input class="pc-name-in" type="text" value="${pc.name}" placeholder="Name..." onchange="updPC('${pc.id}','name',this.value)" onclick="event.stopPropagation()">
+      <span class="pc-summary-line">${pc.cls.slice(0,3).toUpperCase()} ${pc.level}</span>
+      <span class="pc-collapse-icon">&#9660;</span>
+      <button class="ibtn red" onclick="event.stopPropagation();removePC('${pc.id}')" style="margin-left:2px">&#10005;</button>
+    </div>
+    <div class="pc-body">
+      <div style="display:flex;gap:3px;align-items:flex-end;margin-bottom:3px">
+        <div style="flex:1.5;min-width:0">
+          <label class="flbl" style="margin-top:0">Class</label>
+          <select onchange="updPC('${pc.id}','cls',this.value);renderPCList()" style="font-size:12px">
+            ${Object.keys(CD).map(c=>`<option value="${c}"${pc.cls===c?" selected":""}>${c.charAt(0).toUpperCase()+c.slice(1)}</option>`).join("")}
+          </select>
+        </div>
+        <div style="flex:.8;min-width:0">
+          <label class="flbl" style="margin-top:0">Lvl</label>
+          <input type="number" value="${pc.level}" min="1" max="20" onchange="updPC('${pc.id}','level',this.value)" style="font-size:12px">
+        </div>
+      </div>
+      <div style="display:flex;gap:3px;align-items:center;margin-top:3px">
+        <div style="flex:1;min-width:0">
+          <label class="flbl" style="margin-top:0">Gear</label>
+          <div class="chips" style="gap:2px">
+            <span class="chip${!pc.gearMagical?" active":""}" onclick="updPC('${pc.id}','gearMagical',false);renderPCList()" style="font-size:9px">Mundane</span>
+            <span class="chip${pc.gearMagical?" active":""}" onclick="updPC('${pc.id}','gearMagical',true);renderPCList()" style="font-size:9px">${["wizard","sorcerer","warlock"].includes(pc.cls)?"+1 Focus":"Magical"}</span>
+          </div>
+        </div>
+        <label class="chk-row" style="flex-shrink:0;margin-top:14px">
+          <input type="checkbox" class="chk"${pc.isSupport?" checked":""} onchange="updPC('${pc.id}','isSupport',this.checked);renderPCList()">
+          <span class="chk-lbl">Support</span>
+        </label>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;margin-top:4px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary)">Init:</span>
+        <input type="number" value="${pc.initOverride??""}" placeholder="auto" min="-5" max="30" onchange="updPC('${pc.id}','initOverride',this.value===''?'':parseInt(this.value)||0)" style="font-size:12px;width:52px;flex-shrink:0">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary)">base +${CD[pc.cls]?.init??0}</span>
+      </div>
+    </div>
+  </div>`).join("");
+}
+
+function updatePS(){
+  const el=document.getElementById("partySummary");
+  if(!PCS.length){el.style.display="none";return;}
+  el.style.display="";
+  document.getElementById("ps-count").textContent=PCS.length;
+  document.getElementById("ps-hp").textContent=PCS.reduce((s,p)=>s+avgHP(p.cls,p.level),0);
+  document.getElementById("ps-ac").textContent=Math.round(PCS.reduce((s,p)=>s+avgAC(p.cls,tier(p.level)),0)/PCS.length);
+  document.getElementById("ps-dpr").textContent=Math.round(PCS.reduce((s,p)=>s+baseDPR(p.cls,p.level,p.isSupport),0));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SAVED PARTIES
+// ═══════════════════════════════════════════════════════════════
+function getSP(){try{return JSON.parse(localStorage.getItem(PARTY_KEY)||"{}")}catch{return{}}}
+function loadPartyDD(){const s=document.getElementById("partySavedSelect");const p=getSP();s.innerHTML='<option value="">-- Saved parties --</option>'+Object.keys(p).map(n=>`<option value="${n}">${n}</option>`).join("");}
+function saveParty(){const name=(document.getElementById("partyNameInput").value||"").trim();if(!name){alert("Enter a party name.");return;}const p=getSP();p[name]=PCS.map(pc=>({...pc}));localStorage.setItem(PARTY_KEY,JSON.stringify(p));loadPartyDD();document.getElementById("partySavedSelect").value=name;}
+function loadParty(){const name=document.getElementById("partySavedSelect").value;if(!name)return;const saved=getSP()[name];if(!saved)return;PCS=[];saved.forEach(pc=>{PCC++;PCS.push({...pc,id:"pc-"+PCC})});renderPCList();updatePS();updateRunBtn();resetCRSuggested();document.getElementById("partyNameInput").value=name;}
+function deleteParty(){const name=document.getElementById("partySavedSelect").value;if(!name)return;if(!confirm(`Delete "${name}"?`))return;const p=getSP();delete p[name];localStorage.setItem(PARTY_KEY,JSON.stringify(p));loadPartyDD();}
+
+// ═══════════════════════════════════════════════════════════════
+// KOBOLD BASELINE
+// ═══════════════════════════════════════════════════════════════
+function updateKobold(){
+  const tag=document.getElementById("kobDiffTag");
+  const xpEl=document.getElementById("kobXP");
+  const budEl=document.getElementById("kobBudget");
+  if(!ENC.length||!PCS.length){tag.className="kob-tag diff-trivial-t";tag.textContent="--";xpEl.textContent="No encounter";budEl.textContent="";updateEncDiv();return;}
+  const totalXP=ENC.reduce((s,e)=>s+e.monster.xp*e.count,0);
+  const nm=ENC.reduce((s,e)=>s+e.count,0);const np=PCS.length;
+  let diff,cls;
+  if(RULESET==="2014"){
+    const mult=xpMult2014(nm,np);const adj=Math.floor(totalXP*mult);
+    const b=PCS.reduce((acc,p)=>{const t=XP_2014[Math.min(20,Math.max(1,p.level))];acc.easy+=t.easy;acc.medium+=t.medium;acc.hard+=t.hard;acc.deadly+=t.deadly;return acc},{easy:0,medium:0,hard:0,deadly:0});
+    if(adj<b.easy){diff="Trivial";cls="trivial";}else if(adj<b.medium){diff="Easy";cls="low";}else if(adj<b.hard){diff="Medium";cls="moderate";}else if(adj<b.deadly){diff="Hard";cls="high";}else{diff="Deadly";cls="deadly";}
+    xpEl.textContent=`${totalXP.toLocaleString()} XP x${mult} = ${adj.toLocaleString()}`;
+    budEl.textContent=`E ${b.easy.toLocaleString()} M ${b.medium.toLocaleString()} D ${b.deadly.toLocaleString()}`;
+  }else{
+    const b=PCS.reduce((acc,p)=>{const t=XP_2024[Math.min(20,Math.max(1,p.level))];acc.low+=t.low;acc.moderate+=t.moderate;acc.high+=t.high;acc.deadly+=t.deadly;return acc},{low:0,moderate:0,high:0,deadly:0});
+    if(totalXP<b.low){diff="Trivial";cls="trivial";}else if(totalXP<b.moderate){diff="Low";cls="low";}else if(totalXP<b.high){diff="Moderate";cls="moderate";}else if(totalXP<b.deadly){diff="High";cls="high";}else{diff="Deadly";cls="deadly";}
+    xpEl.textContent=`${totalXP.toLocaleString()} XP`;
+    budEl.textContent=`L ${b.low.toLocaleString()} M ${b.moderate.toLocaleString()} H ${b.high.toLocaleString()} D ${b.deadly.toLocaleString()}`;
+  }
+  tag.className=`kob-tag diff-${cls}-t`;tag.textContent=diff;
+  document.getElementById("kob-rules").textContent=RULESET;
+  updateEncDiv();
+}
+function updateRunBtn(){document.getElementById("runSimBtn").disabled=!(PCS.length>0&&ENC.length>0);}
+
+// ═══════════════════════════════════════════════════════════════
+// MONSTER LIBRARY
+// ═══════════════════════════════════════════════════════════════
+function renderLibList(){
+  const q=(document.getElementById("libSearch")?.value||"").trim().toLowerCase();
+  const src=document.getElementById("libSrcFilter")?.value||"";
+  const type=document.getElementById("libTypeFilter")?.value||"";
+  const filtered=allM().filter(m=>matchM(m,q,type,"",src)).slice(0,300);
+  const el=document.getElementById("libMonsterList");
+  if(!el)return;
+  if(!filtered.length){
+    el.innerHTML='<div style="padding:10px;font-family:\'Crimson Pro\',serif;font-size:13px;color:var(--text-dim);font-style:italic;text-align:center">No monsters found.</div>';
+    return;
+  }
+  el.innerHTML=filtered.map(m=>{
+    const hasFull=EXT[m.slug]?.atkBonus!==undefined;const isHB=m._layer==="homebrew";
+    return `<div class="lib-mrow${LIBSEL.has(m.slug)?" lib-sel":""}" onclick="selLibM('${m.slug}',event)">
+      <input type="checkbox" class="chk" style="flex-shrink:0"${LIBSEL.has(m.slug)?" checked":""} onclick="event.stopPropagation();togLibSel('${m.slug}')">
+      <span class="lib-mname" title="${m.name}">${m.name}</span>
+      <span class="lib-mcr">CR ${m.cr}</span>
+      <span class="lib-msrc">${(m._layer||"?").slice(0,6)}</span>
+      ${hasFull?'<span class="lib-mbadge badge-full">&#9679;</span>':""}
+      ${isHB?'<span class="lib-mbadge" style="background:rgba(112,96,160,.1);color:var(--accent-purple);border:1px solid rgba(112,96,160,.25)">HB</span>':""}
+    </div>`;
+  }).join("");
+  const sc=document.getElementById("libSelCount");if(sc)sc.textContent=`${LIBSEL.size} selected`;
+}
+
+function selLibM(slug,ev){if(ev?.target?.type==="checkbox")return;EDITSLUG=slug;const m=findM(slug);if(m)renderEditorForm(m);}
+function togLibSel(slug){if(LIBSEL.has(slug))LIBSEL.delete(slug);else LIBSEL.add(slug);renderLibList();}
+function selectAllLib(){allM().filter(m=>{const q=(document.getElementById("libSearch")?.value||"").trim().toLowerCase();const src=document.getElementById("libSrcFilter")?.value||"";const type=document.getElementById("libTypeFilter")?.value||"";return matchM(m,q,type,"",src)}).forEach(m=>LIBSEL.add(m.slug));renderLibList();}
+function deselectAllLib(){LIBSEL.clear();renderLibList();}
+function deleteSelected(){
+  if(!LIBSEL.size)return;
+  if(!confirm(`Delete ${LIBSEL.size} monster(s)?`))return;
+  MDB=MDB.filter(m=>!LIBSEL.has(m.slug));HB=HB.filter(m=>!LIBSEL.has(m.slug));
+  LIBSEL.forEach(s=>delete EXT[s]);LIBSEL.clear();
+  localStorage.setItem(DB_KEY,JSON.stringify(MDB.map(slimM)));safeSetLS(HB_KEY,JSON.stringify(HB));safeSetLS(EXT_KEY,JSON.stringify(EXT));
+  updateDBBar();renderLibList();updateLibStats();
+}
+
+function renderEditorForm(m){
+  const ext=EXT[m.slug]||{};const isHB=m._layer==="homebrew";
+  const roAttr=isHB?"":" readonly";const disAttr=isHB?"":" disabled";
+  const edTitle=document.getElementById("edTitle");if(edTitle)edTitle.textContent=`Editing: ${m.name}`;
+  const ef=document.getElementById("editorForm");if(!ef)return;
+  const roNote=isHB?"":'<span style="font-family:\'JetBrains Mono\',monospace;font-size:8px;font-weight:normal;color:var(--text-secondary)">(read-only for official)</span>';
+  // Pre-populate combat stats: EXT overrides take priority, then direct monster fields
+  const cv=k=>ext[k]!=null?ext[k]:(m[k]!=null?m[k]:"");
+  const cvNum=k=>ext[k]!=null?ext[k]:(m[k]!=null?m[k]:0);
+  const cvStr=k=>ext[k]!=null?ext[k]:(Array.isArray(m[k])?m[k].join(", "):(m[k]||""));
+  ef.innerHTML=`<div class="ed-form">
+  <div class="ed-sec">
+    <div class="ed-sec-title">Identity ${roNote}</div>
+    <div class="ed-grid">
+      <div><label class="flbl" style="margin-top:0">Name</label><input type="text" id="ed-name" value="${m.name||""}"${roAttr}></div>
+      <div><label class="flbl" style="margin-top:0">CR</label><select id="ed-cr"${disAttr}>${CR_LIST.map(c=>`<option value="${c}"${String(m.cr)===c?" selected":""}>${c}</option>`).join("")}</select></div>
+      <div><label class="flbl">Type</label><input type="text" id="ed-type" value="${m.type||""}"${roAttr}></div>
+      <div><label class="flbl">Size</label><input type="text" id="ed-size" value="${m.size||""}"${roAttr}></div>
+      <div><label class="flbl">HP</label><input type="number" id="ed-hp" value="${m.hp||0}"${roAttr}></div>
+      <div><label class="flbl">AC</label><input type="number" id="ed-ac" value="${m.ac||10}"${roAttr}></div>
+    </div>
+    <div><label class="flbl">Environment</label><input type="text" id="ed-env" value="${Array.isArray(m.environment)?m.environment.join(", "):(m.environment||"")}"></div>
+    <div style="display:flex;gap:8px;margin-top:5px">
+      <label class="chk-row"><input type="checkbox" class="chk" id="ed-legendary"${m.legendary?" checked":""}${disAttr}><span class="chk-lbl">Legendary</span></label>
+      <label class="chk-row"><input type="checkbox" class="chk" id="ed-unique"${m.unique?" checked":""}${disAttr}><span class="chk-lbl">Unique</span></label>
+    </div>
+  </div>
+  <div class="ed-sec">
+    <div class="ed-sec-title">Combat Stats <span style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:normal;color:var(--text-secondary)">(editable for all monsters — pre-filled from data)</span></div>
+    <div class="ed-grid">
+      <div><label class="flbl" style="margin-top:0">Atk Bonus</label><input type="number" id="ed-atkBonus" value="${cv('atkBonus')}"></div>
+      <div><label class="flbl" style="margin-top:0">Num Attacks</label><input type="number" id="ed-numAtks" value="${cv('numAtks')||1}" min="1"></div>
+      <div><label class="flbl">Avg Dmg/Atk</label><input type="number" id="ed-dmgPerAtk" value="${cv('dmgPerAtk')}"></div>
+      <div><label class="flbl">Save DC</label><input type="number" id="ed-saveDC" value="${cv('saveDC')}"></div>
+      <div><label class="flbl">Leg. Actions</label><input type="number" id="ed-legAct" value="${cvNum('legendaryActions')}" min="0"></div>
+      <div><label class="flbl">Leg. Resist</label><input type="number" id="ed-legRes" value="${cvNum('legendaryResistance')}" min="0"></div>
+    </div>
+    <div><label class="flbl">Damage Types</label><input type="text" id="ed-dmgTypes" value="${cvStr('dmgTypes')}"></div>
+    <div><label class="flbl">Damage Resistances</label><input type="text" id="ed-resist" value="${cvStr('damageResistances')}"></div>
+    <div><label class="flbl">Damage Immunities</label><input type="text" id="ed-immune" value="${cvStr('damageImmunities')}"></div>
+    <div><label class="flbl">Condition Immunities</label><input type="text" id="ed-condimm" value="${cvStr('conditionImmunities')}"></div>
+    <div class="ed-grid" style="margin-top:5px">
+      <div><label class="flbl" style="margin-top:0">AoE Type</label><select id="ed-aoeType">
+        <option value=""${!cv('aoeType')?" selected":""}>None</option>
+        <option value="recharge"${cv('aoeType')==="recharge"?" selected":""}>Recharge</option>
+        <option value="sustained"${cv('aoeType')==="sustained"?" selected":""}>Sustained</option>
+        <option value="cone"${cv('aoeType')==="cone"?" selected":""}>Cone/Line</option>
+      </select></div>
+      <div><label class="flbl" style="margin-top:0">AoE Dmg</label><input type="number" id="ed-aoeDmg" value="${cv('aoeDmg')}"></div>
+      <div><label class="flbl">AoE Targets</label><input type="number" id="ed-aoeTargets" value="${cv('aoeTargets')||2}" min="1"></div>
+      <div><label class="flbl">SoS DC</label><input type="number" id="ed-sosDC" value="${cv('sosDC')}"></div>
+    </div>
+  </div>
+  </div>`;
+}
+
+function newMonster(){
+  EDITSLUG=null;
+  const et=document.getElementById("edTitle");if(et)et.textContent="New Homebrew Monster";
+  renderEditorForm({name:"",cr:"1",type:"Humanoid",size:"Medium",hp:20,ac:13,_layer:"homebrew"});
+  document.querySelectorAll("#editorForm input[readonly],#editorForm select[disabled]").forEach(el=>{el.removeAttribute("readonly");el.removeAttribute("disabled");if(el.style)el.style.opacity="";});
+}
+
+function saveMonsterEdit(){
+  const isNew=!EDITSLUG;
+  const existing=EDITSLUG?findM(EDITSLUG):null;
+  const isHB=isNew||(existing?._layer==="homebrew");
+  const slug=EDITSLUG||("hb-"+(document.getElementById("ed-name")?.value||"monster").toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+Date.now());
+  const ext={};
+  const flds={atkBonus:"ed-atkBonus",numAtks:"ed-numAtks",dmgPerAtk:"ed-dmgPerAtk",saveDC:"ed-saveDC",legendaryActions:"ed-legAct",legendaryResistance:"ed-legRes",dmgTypes:"ed-dmgTypes",resistances:"ed-resist",immunities:"ed-immune",aoeType:"ed-aoeType",aoeDmg:"ed-aoeDmg",aoeTargets:"ed-aoeTargets",sosDC:"ed-sosDC"};
+  for(const[key,id]of Object.entries(flds)){const el=document.getElementById(id);if(!el)continue;const v=el.value.trim();if(!v)continue;const n=parseFloat(v);ext[key]=isNaN(n)?v:n;}
+  EXT[slug]=ext;safeSetLS(EXT_KEY,JSON.stringify(EXT));
+  if(isHB){
+    const name=document.getElementById("ed-name")?.value||"Unnamed";
+    const cr=document.getElementById("ed-cr")?.value||"1";
+    const hp=parseInt(document.getElementById("ed-hp")?.value||20);
+    const ac=parseInt(document.getElementById("ed-ac")?.value||13);
+    const type=document.getElementById("ed-type")?.value||"";
+    const size=document.getElementById("ed-size")?.value||"Medium";
+    const env=document.getElementById("ed-env")?.value||"";
+    const legendary=document.getElementById("ed-legendary")?.checked?"legendary":"";
+    const unique=document.getElementById("ed-unique")?.checked?"unique":"";
+    const hbM={name,cr,hp,ac,type,size,environment:env,legendary,unique,_layer:"homebrew",slug,crStr:String(cr),crNum:CR_NUM[String(cr)]??(parseFloat(cr)||0),xp:CR_XP[String(cr)]||0};
+    const idx=HB.findIndex(h=>h.slug===slug);
+    if(idx>=0)HB[idx]=hbM;else HB.push(hbM);
+    safeSetLS(HB_KEY,JSON.stringify(HB));
+    EDITSLUG=slug;
+  }
+  updateDBBar();renderLibList();updateLibStats();
+  const et=document.getElementById("edTitle");if(et){et.textContent="Saved ✓";setTimeout(()=>{if(et)et.textContent=`Editing: ${document.getElementById("ed-name")?.value||"Monster"}`;},1500);}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SIMULATION ENGINE
+// ═══════════════════════════════════════════════════════════════
+const NUM_SIMS=1000;
+function d20(){return Math.floor(Math.random()*20)+1;}
+function runSimulation(){
+  const btn=document.getElementById("runSimBtn");
+  btn.disabled=true;btn.textContent="Simulating...";
+  document.getElementById("simResults").innerHTML='<div class="spin-wrap"><div class="spin"></div><div class="spin-txt">Running 1,000 simulations...</div></div>';
+  setTimeout(()=>{
+    try{const r=runMC();LASTSIM=r;renderSim(r);}
+    catch(e){document.getElementById("simResults").innerHTML=`<div style="padding:20px;font-family:'Crimson Pro',serif;color:var(--accent-red)">Error: ${e.message}</div>`;console.error(e);}
+    btn.disabled=false;btn.textContent="⚔ Run Simulation";
+  },50);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COMPLETE CLASS DATA TABLES
+// Based on 2024 SRD + PHB. All values derived from spell/ability math.
+// Fields: atkBonus, numAtks, dmgPerAtk, bonusAtks, bonusAtkDmg,
+//   sneakDice, smitePerRound, actionSurgeBonus,
+//   aoeTargets, aoeDmgPerTarget, sustainedAoeDmg, sustainedAoeTargets,
+//   spellDmg (casters - primary action), cantripDmg,
+//   controlStrength (0-1), controlTargets, controlDur,
+//   healPerRound, partyAuraBonus, bardicInspo,
+//   physResist, reckless, stunningStrike, spiritWeaponDmg
+// ═══════════════════════════════════════════════════════════════
+const CLD={
+  fighter:{
+    t1:{ab:6,na:1,dpAtk:9.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.12,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:8,na:2,dpAtk:10.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.25,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.15,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:9,na:3,dpAtk:10.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.30,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.15,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:10,na:3,dpAtk:11.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.35,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.20,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:4,dpAtk:11.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.45,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.20,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  paladin:{
+    t1:{ab:5,na:1,dpAtk:8.5,bAtks:0,bAtkDmg:0,sk:0,sm:4.5,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:7,na:2,dpAtk:9.5,bAtks:0,bAtkDmg:0,sk:0,sm:8.0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.20,ct:1,cd:2,heal:0,aura:4,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:8,na:2,dpAtk:9.5,bAtks:0,bAtkDmg:4.5,sk:0,sm:11.0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.25,ct:1,cd:2,heal:0,aura:5,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:2,dpAtk:10.5,bAtks:0,bAtkDmg:4.5,sk:0,sm:15.0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.30,ct:1,cd:2,heal:0,aura:5,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:2,dpAtk:10.5,bAtks:0,bAtkDmg:4.5,sk:0,sm:18.0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.30,ct:1,cd:2,heal:0,aura:5,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  ranger:{
+    t1:{ab:5,na:1,dpAtk:8.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:0,can:0,cs:0.05,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:7,na:2,dpAtk:9.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:0,can:0,cs:0.10,ct:1,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:8,na:2,dpAtk:9.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:0,can:0,cs:0.15,ct:1,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:2,dpAtk:10.5,bAtks:2,bAtkDmg:9.0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:14.0,sAoe:3.5,sAoeT:1,spDmg:0,can:0,cs:0.20,ct:2,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:2,dpAtk:10.5,bAtks:2,bAtkDmg:9.5,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:14.0,sAoe:3.5,sAoeT:1,spDmg:0,can:0,cs:0.20,ct:2,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  barbarian:{
+    t1:{ab:5,na:1,dpAtk:12.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.05,ct:1,cd:1,heal:0,aura:0,bi:0,pr:true,rk:true,ss:false,sw:0},
+    t2:{ab:7,na:2,dpAtk:13.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:true,rk:true,ss:false,sw:0},
+    t3:{ab:8,na:2,dpAtk:14.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:true,rk:true,ss:false,sw:0},
+    t4:{ab:9,na:2,dpAtk:15.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:true,rk:true,ss:false,sw:0},
+    t5:{ab:11,na:2,dpAtk:17.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:true,rk:true,ss:false,sw:0},
+  },
+  rogue:{
+    t1:{ab:5,na:1,dpAtk:7.0,bAtks:0,bAtkDmg:0,sk:2,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.0,ct:0,cd:0,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0,ud:false,ev:false},
+    t2:{ab:7,na:1,dpAtk:8.0,bAtks:0,bAtkDmg:0,sk:4,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.0,ct:0,cd:0,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0,ud:true,ev:true},
+    t3:{ab:8,na:1,dpAtk:8.5,bAtks:0,bAtkDmg:0,sk:6,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.0,ct:0,cd:0,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0,ud:true,ev:true},
+    t4:{ab:9,na:1,dpAtk:9.5,bAtks:0,bAtkDmg:0,sk:8,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.0,ct:0,cd:0,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0,ud:true,ev:true},
+    t5:{ab:11,na:1,dpAtk:9.5,bAtks:0,bAtkDmg:0,sk:10,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.0,ct:0,cd:0,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0,ud:true,ev:true},
+  },
+  monk:{
+    t1:{ab:5,na:1,dpAtk:5.5,bAtks:1,bAtkDmg:5.5,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.10,ct:1,cd:1,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:7,na:2,dpAtk:7.5,bAtks:2,bAtkDmg:7.5,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.45,ct:1,cd:1.5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:true,sw:0},
+    t3:{ab:8,na:2,dpAtk:8.5,bAtks:2,bAtkDmg:8.5,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.50,ct:1,cd:1.5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:true,sw:0},
+    t4:{ab:9,na:2,dpAtk:9.5,bAtks:2,bAtkDmg:9.5,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.55,ct:1,cd:1.5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:true,sw:0},
+    t5:{ab:11,na:2,dpAtk:10.5,bAtks:2,bAtkDmg:10.5,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:0,sAoeT:0,spDmg:0,can:0,cs:0.60,ct:1,cd:1.5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:true,sw:0},
+  },
+  wizard:{
+    t1:{ab:5,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:8.0,sAoe:0,sAoeT:0,spDmg:10.5,can:4.5,cs:0.30,ct:3,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:6,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:18.0,sAoe:0,sAoeT:0,spDmg:20.0,can:9.0,cs:0.55,ct:4,cd:3,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:7,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:22.0,sAoe:15.0,sAoeT:1,spDmg:35.0,can:13.5,cs:0.65,ct:3,cd:4,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:5,aoeDpt:30.0,sAoe:20.0,sAoeT:2,spDmg:55.0,can:16.5,cs:0.70,ct:2,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:6,aoeDpt:35.0,sAoe:25.0,sAoeT:3,spDmg:85.0,can:22.0,cs:0.75,ct:3,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  sorcerer:{
+    t1:{ab:5,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.15,aoeT:3,aoeDpt:9.0,sAoe:0,sAoeT:0,spDmg:10.5,can:4.5,cs:0.30,ct:3,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:6,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.20,aoeT:4,aoeDpt:20.0,sAoe:0,sAoeT:0,spDmg:22.0,can:9.0,cs:0.60,ct:4,cd:3,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:7,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.25,aoeT:4,aoeDpt:24.0,sAoe:0,sAoeT:0,spDmg:42.0,can:13.5,cs:0.70,ct:3,cd:4,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.30,aoeT:5,aoeDpt:32.0,sAoe:0,sAoeT:0,spDmg:65.0,can:16.5,cs:0.75,ct:3,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.35,aoeT:6,aoeDpt:38.0,sAoe:0,sAoeT:0,spDmg:90.0,can:22.0,cs:0.80,ct:4,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  warlock:{
+    t1:{ab:5,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:9.0,can:8.5,cs:0.25,ct:3,cd:2,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:6,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:19.0,can:19.0,cs:0.40,ct:3,cd:3,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:7,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:28.5,can:28.5,cs:0.50,ct:2,cd:4,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:40.0,can:28.5,cs:0.60,ct:2,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:0,aoeDpt:0,sAoe:3.5,sAoeT:1,spDmg:42.0,can:38.0,cs:0.65,ct:3,cd:5,heal:0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  cleric:{
+    t1:{ab:4,na:1,dpAtk:6.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:5.5,sAoe:5.5,sAoeT:1,spDmg:9.0,can:4.5,cs:0.20,ct:1,cd:2,heal:4.5,aura:0,bi:0,pr:false,rk:false,ss:false,sw:5.5},
+    t2:{ab:6,na:1,dpAtk:7.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:9.0,sAoe:9.0,sAoeT:3,spDmg:14.0,can:6.5,cs:0.35,ct:2,cd:3,heal:12.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:8.5},
+    t3:{ab:7,na:1,dpAtk:8.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:11.0,sAoe:15.0,sAoeT:3,spDmg:22.0,can:9.0,cs:0.45,ct:2,cd:3,heal:20.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:11.5},
+    t4:{ab:9,na:1,dpAtk:9.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:25.0,sAoe:22.0,sAoeT:3,spDmg:35.0,can:10.5,cs:0.45,ct:2,cd:3,heal:26.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:13.5},
+    t5:{ab:11,na:1,dpAtk:10.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:5,aoeDpt:32.0,sAoe:28.0,sAoeT:4,spDmg:50.0,can:13.5,cs:0.50,ct:3,cd:3,heal:50.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:15.5},
+  },
+  druid:{
+    t1:{ab:4,na:1,dpAtk:5.5,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:5.5,sAoe:0,sAoeT:0,spDmg:8.0,can:5.0,cs:0.35,ct:4,cd:3,heal:5.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:6,na:1,dpAtk:7.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:12.0,sAoe:11.0,sAoeT:1,spDmg:14.0,can:7.5,cs:0.45,ct:3,cd:3,heal:10.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:7,na:1,dpAtk:8.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:18.0,sAoe:18.0,sAoeT:1,spDmg:25.0,can:9.0,cs:0.55,ct:3,cd:4,heal:15.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:1,dpAtk:9.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:5,aoeDpt:25.0,sAoe:22.0,sAoeT:2,spDmg:35.0,can:10.5,cs:0.60,ct:4,cd:4,heal:22.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:1,dpAtk:10.0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:6,aoeDpt:32.0,sAoe:28.0,sAoeT:3,spDmg:45.0,can:13.5,cs:0.65,ct:5,cd:5,heal:35.0,aura:0,bi:0,pr:false,rk:false,ss:false,sw:0},
+  },
+  bard:{
+    t1:{ab:4,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:3,aoeDpt:5.0,sAoe:0,sAoeT:0,spDmg:7.0,can:4.0,cs:0.30,ct:1,cd:2,heal:4.5,aura:0,bi:3.5,pr:false,rk:false,ss:false,sw:0},
+    t2:{ab:6,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:8.0,sAoe:0,sAoeT:0,spDmg:12.0,can:5.5,cs:0.55,ct:4,cd:3,heal:9.0,aura:0,bi:4.5,pr:false,rk:false,ss:false,sw:0},
+    t3:{ab:7,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:18.0,sAoe:0,sAoeT:0,spDmg:22.0,can:7.0,cs:0.60,ct:4,cd:4,heal:14.0,aura:0,bi:5.5,pr:false,rk:false,ss:false,sw:0},
+    t4:{ab:9,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:4,aoeDpt:25.0,sAoe:15.0,sAoeT:3,spDmg:40.0,can:8.0,cs:0.65,ct:4,cd:4,heal:22.0,aura:0,bi:6.5,pr:false,rk:false,ss:false,sw:0},
+    t5:{ab:11,na:0,dpAtk:0,bAtks:0,bAtkDmg:0,sk:0,sm:0,as:1.0,aoeT:5,aoeDpt:35.0,sAoe:22.0,sAoeT:3,spDmg:55.0,can:9.5,cs:0.70,ct:5,cd:5,heal:35.0,aura:0,bi:6.5,pr:false,rk:false,ss:false,sw:0},
+  },
+};
+
+function getCLD(cls,level){
+  const t=tier(level);
+  const key=["t1","t2","t3","t4","t5"][t-1]||"t1";
+  return(CLD[cls]||CLD.fighter)[key];
+}
+
+// ──────────────────────────────────────────────────────────────
+// BUILD COMBAT — uses CLD for all party stats
+// ──────────────────────────────────────────────────────────────
+function buildCombat(){
+  // Paladin aura: +ChaModifier (approx +4-5) to all ally saves
+  const pallyAuraBonus=PCS.reduce((best,p)=>{
+    if(p.cls==="paladin"&&p.level>=6){const t=tier(p.level);return Math.max(best,t<=2?4:5);}
+    return best;
+  },0);
+
+  const party=PCS.map(p=>{
+    const t=tier(p.level);const pf=prof(p.level);
+    const c=CD[p.cls]||CD.fighter;
+    const d=getCLD(p.cls,p.level);
+    const mhp=avgHP(p.cls,p.level);
+    const ib=p.initOverride!==""&&p.initOverride!==undefined?parseInt(p.initOverride):(c.init||0);
+    const bypassNM=p.gearMagical||c.dmg==="spell"||(c.monk&&p.level>=5);
+    const isCaster=d.na===0; // pure caster acts via spells not weapon attacks
+    const isHybrid=d.na>0&&d.spDmg>0; // has weapon attacks AND spells (cleric/druid)
+
+    return{
+      id:p.id,
+      name:p.name||p.cls.charAt(0).toUpperCase()+p.cls.slice(1),
+      cls:p.cls,level:p.level,tier:t,
+      maxHP:mhp,hp:mhp,
+      ac:avgAC(p.cls,t),
+      // Attack stats
+      atkBonus:d.ab,
+      numAtks:d.na,
+      dmgPerAtk:d.dpAtk,
+      bonusAtks:d.bAtks,          // monk flurry, ranger swift quiver
+      bonusAtkDmg:d.bAtkDmg,
+      sneakDice:d.sk,              // rogue sneak attack dice count
+      smitePerRound:d.sm,          // paladin: avg smite dmg per round
+      actionSurgeBonus:d.as,       // multiplier on melee DPR for surge
+      // Spell stats
+      isCaster,isHybrid,
+      spellDmg:d.spDmg,            // primary action spell damage
+      cantripDmg:d.can,            // backup cantrip damage
+      aoeTargets:d.aoeT,           // expected AoE targets
+      aoeDmgPerTarget:d.aoeDpt,    // AoE damage per target
+      sustainedAoeDmg:d.sAoe,      // persistent AoE (Spirit Guardians, Call Lightning)
+      sustainedAoeTargets:d.sAoeT,
+      spiritWeaponDmg:d.sw,        // bonus action spirit weapon (clerics)
+      // Control
+      controlStrength:d.cs,        // probability control spell lands per round
+      controlTargets:d.ct,
+      controlDur:d.cd,
+      // Healing
+      healPerRound:d.heal,         // avg HP healed per round when acting as healer
+      // Party buffs
+      partyAuraBonus:d.aura||pallyAuraBonus, // bonus to all ally saves
+      bardicInspo:d.bi,            // avg DPR bonus added to one ally
+      // Defensive
+      physResist:d.pr||false,      // barbarian: half phys damage while raging
+      reckless:d.rk||false,        // barbarian: +10% hit rate but enemies have advantage
+      stunningStrike:d.ss||false,  // monk: can stun on hit
+      uncannyDodge:d.ud||false,    // rogue: halve one attack per round
+      bypassNM,
+      hasPalAura:p.cls==="paladin"&&p.level>=6,
+      // State
+      isSupport:p.isSupport,isPC:true,
+      initBonus:ib,
+      concBonus:c.cb[t-1]||2,
+      concentrating:false,isDown:false,isDead:false,
+      deathSuccesses:0,deathFailures:0,
+      // Sustained AoE tracking
+      sustainedActive:false,
+      controlledEnemies:0,
+    };
+  });
+
+  const monsters=[];
+  ENC.forEach(e=>{
+    for(let i=0;i<e.count;i++){
+      const m=e.monster;const ext=EXT[m.slug]||{};
+      const rs=resolveMonsterStats(m,ext);
+      // Stun immunity from condition immunities
+      const stunImm=rs.condImm.includes("stunned")||rs.condImm.includes("charmed");
+      // Concentration save bonus: use CON save if available, else CON mod
+      const conSaveBonus=m.saves?.con!=null?m.saves.con:Math.floor(((m.con||10)-10)/2);
+      monsters.push({
+        id:`${m.slug}-${i}`,name:e.count>1?`${m.name} ${i+1}`:m.name,
+        slug:m.slug,cr:m.cr,crNum:m.crNum,maxHP:m.hp,hp:m.hp,ac:m.ac,
+        atkBonus:rs.atkBonus,numAtks:rs.numAtks,dmgPerAtk:rs.dmgPerAtk,
+        saveDC:rs.saveDC,
+        legendaryActions:rs.legAct,legendaryActionsLeft:rs.legAct,
+        legendaryResistance:rs.legRes,legendaryResistanceLeft:rs.legRes,
+        resistances:rs.res,immunities:rs.imm,conditionImmunities:rs.condImm,
+        stunImmune:stunImm,
+        aoeType:rs.aoeType,aoeDmg:rs.aoeDmg,aoeTargets:rs.aoeTargets,
+        sosDC:+ext.sosDC||rs.saveDC,
+        isPC:false,isDown:false,isDead:false,
+        initBonus:m.init||0,
+        stunned:false,stunnedRounds:0,
+        conSaveBonus,
+      });
+    }
+  });
+  return{party,monsters,pallyAuraBonus};
+}
+
+function runMC(){
+  const intel=parseInt(document.getElementById("intelSlider").value);
+  const sims=[];for(let i=0;i<NUM_SIMS;i++)sims.push(runOne(intel));
+  const wins=sims.filter(r=>r.out==="win").length;
+  const tpks=sims.filter(r=>r.out==="tpk").length;
+  const flawless=sims.filter(r=>r.out==="win"&&r.downs===0).length;
+  const minor=sims.filter(r=>r.out==="win"&&r.pct<0.5&&r.downs===0).length;
+  const someDown=sims.filter(r=>r.downs>=1).length;
+  const multiDown=sims.filter(r=>r.downs>=2).length;
+  const rounds=sims.map(r=>r.rounds).sort((a,b)=>a-b);
+  const medR=rounds[Math.floor(NUM_SIMS/2)];
+  const avgDown=sims.reduce((s,r)=>s+r.downs,0)/NUM_SIMS;
+  const avgPct=sims.reduce((s,r)=>s+r.pct,0)/NUM_SIMS;
+  const surv=wins/NUM_SIMS;const tpkR=tpks/NUM_SIMS;const downR=someDown/NUM_SIMS;
+  let diff,dc;
+  if(tpkR>=0.3){diff="Deadly";dc="deadly";}
+  else if(tpkR>=0.1||downR>=0.7){diff="Severe";dc="severe";}
+  else if(downR>=0.4||avgPct>=0.7){diff="High";dc="high";}
+  else if(downR>=0.15||avgPct>=0.5){diff="Moderate";dc="moderate";}
+  else if(avgPct>=0.25){diff="Low";dc="low";}
+  else{diff="Trivial";dc="trivial";}
+  const rep=sims.filter(r=>r.out==="win").sort((a,b)=>Math.abs(a.rounds-medR)-Math.abs(b.rounds-medR))[0]||sims[Math.floor(NUM_SIMS/2)];
+  return{n:NUM_SIMS,wins,tpks,flawless,minor,someDown,multiDown,medR,minR:rounds[0],maxR:rounds[NUM_SIMS-1],avgDown,avgPct,surv,tpkR,downR,diff,dc,rep};
+}
+
+function runOne(intel){
+  const{party,monsters,pallyAuraBonus}=buildCombat();
+  const log=[];let round=0;const MAX=30;
+  const order=[];
+  party.forEach(p=>order.push({...p,initiative:d20()+p.initBonus}));
+  monsters.forEach(m=>order.push({...m,initiative:d20()+m.initBonus}));
+  order.sort((a,b)=>b.initiative-a.initiative||(b.isPC?1:-1));
+
+  // Concentration / buff tracking
+  let bless=false,blessHolder=null;
+  // Support caster casts concentration buff on round 1
+  const sc=party.find(p=>p.isSupport&&["cleric","bard","druid","wizard","sorcerer","warlock"].includes(p.cls));
+  if(sc){bless=true;blessHolder=sc;sc.concentrating=true;sc.sustainedActive=true;}
+  // Bardic inspiration: support bard gives +bi to party attacks (modeled as bonus flat dmg)
+  const bardInspoBonus=party.filter(p=>p.cls==="bard"&&p.isSupport).reduce((s,p)=>s+p.bardicInspo,0);
+  // Party-wide save bonus (paladin aura + any other sources)
+  const saveBonus=pallyAuraBonus;
+
+  while(round<MAX){
+    round++;
+    const rd={round,actions:[],iOrd:order.map(t=>({name:t.name.split(" ")[0],isPC:t.isPC}))};
+    // Reset legendary actions, tick stun
+    monsters.forEach(m=>{
+      if(!m.isDead){
+        m.legendaryActionsLeft=m.legendaryActions;
+        if(m.stunnedRounds>0)m.stunnedRounds--;
+        if(m.stunnedRounds<=0)m.stunned=false;
+      }
+    });
+
+    for(let ti=0;ti<order.length;ti++){
+      const a=order[ti];
+      if(a.isDead)continue;
+
+      // ── Death saves for downed PCs ──
+      if(a.isDown&&a.isPC){
+        const ds=d20();
+        if(ds===20){a.isDown=false;a.hp=1;a.deathSuccesses=0;a.deathFailures=0;rd.actions.push({t:"heal",s:`${a.name} rolls 20 — stabilizes at 1 HP!`});}
+        else if(ds>=10){a.deathSuccesses++;if(a.deathSuccesses>=3){a.isDown=false;a.hp=1;rd.actions.push({t:"heal",s:`${a.name} stabilizes.`});}else rd.actions.push({t:"death-save",s:`${a.name} death save: ${ds} — success (${a.deathSuccesses}/3)`});}
+        else{a.deathFailures++;if(a.deathFailures>=3){a.isDead=true;a.isDown=false;rd.actions.push({t:"down",s:`${a.name} has died.`});}else rd.actions.push({t:"death-save",s:`${a.name} death save: ${ds} — failure (${a.deathFailures}/3)`});}
+        continue;
+      }
+      if(a.isDown)continue;
+
+      if(a.isPC){
+        const alivePCs=party.filter(p=>!p.isDown&&!p.isDead);
+        const wounded=alivePCs.filter(p=>p.hp<p.maxHP*0.5).sort((x,y)=>x.hp-y.hp);
+        const aliveM=monsters.filter(m=>!m.isDead);
+
+        // ── HEALING ACTION (support with wounded allies) ──
+        if(a.isSupport&&a.healPerRound>0&&wounded[0]){
+          const tg=wounded[0];
+          const healAmt=Math.round(a.healPerRound*(0.8+Math.random()*0.4)); // ±20% variance
+          tg.hp=Math.min(tg.maxHP,tg.hp+healAmt);
+          rd.actions.push({t:"heal",s:`${a.name} heals ${tg.name} for ${healAmt} HP. (${tg.hp}/${tg.maxHP})`});
+          // Bonus action spirit weapon (cleric) still deals damage after healing action
+          if(a.spiritWeaponDmg>0&&aliveM.length){
+            const swTgt=aliveM.sort((x,y)=>x.hp-y.hp)[0];
+            const swDmg=Math.round(a.spiritWeaponDmg*(0.7+Math.random()*0.6));
+            swTgt.hp-=swDmg;
+            if(swTgt.hp<=0){swTgt.hp=0;swTgt.isDead=true;rd.actions.push({t:"kill",s:`${a.name} Spirit Weapon → ${swTgt.name}: ${swDmg}dmg — defeated! ☠`});}
+            else rd.actions.push({t:"hit",s:`${a.name} Spirit Weapon → ${swTgt.name}: ${swDmg}dmg. (${swTgt.hp}/${swTgt.maxHP})`});
+          }
+          continue;
+        }
+
+        // ── RECAST CONCENTRATION if dropped ──
+        if(a.isSupport&&!bless&&blessHolder&&a.id===blessHolder.id){
+          bless=true;blessHolder=a;a.concentrating=true;a.sustainedActive=true;
+          rd.actions.push({t:"conc",s:`${a.name} recasts concentration buff.`});
+          continue;
+        }
+
+        if(!aliveM.length)break;
+
+        // ── SUSTAINED AoE (Spirit Guardians, Call Lightning style) ──
+        // Applied at start of monster's turn in monster loop below, tracked here as setup
+        // Also: AoE burst spells on action (fireball, Conjure Celestial etc)
+        const usedAoE=a.isCaster&&a.aoeTargets>0&&Math.random()<0.5&&!a.isSupport;
+        // Control spells: casters attempt control when not healing, ~40% of turns
+        const useControl=a.isCaster&&a.controlStrength>0&&Math.random()<a.controlStrength&&aliveM.length>=2;
+
+        if(useControl&&!usedAoE){
+          // Control spell: incapacitate some monsters for controlDur rounds
+          // Only target monsters that can be stunned/charmed/incapacitated
+          const controllable=aliveM.filter(m=>!m.stunImmune);
+          const numControlled=Math.min(Math.round(a.controlTargets),controllable.length||aliveM.length);
+          const affected=(controllable.length?controllable:aliveM).slice(0,numControlled);
+          let actuallyControlled=0;
+          affected.forEach(m=>{
+            // Monster may use legendary resistance
+            if(m.legendaryResistanceLeft>0&&Math.random()<0.7){
+              m.legendaryResistanceLeft--;
+              rd.actions.push({t:"conc",s:`${a.name} control → ${m.name}: Legendary Resistance! (${m.legendaryResistanceLeft} left)`});
+            } else if(!m.stunImmune){
+              m.stunned=true;m.stunnedRounds=Math.ceil(a.controlDur);
+              actuallyControlled++;
+            }
+          });
+          if(actuallyControlled>0)rd.actions.push({t:"conc",s:`${a.name} control spell — ${actuallyControlled} monster${actuallyControlled>1?"s":""} incapacitated for ~${a.controlDur.toFixed(0)} rounds.`});
+          else rd.actions.push({t:"miss",s:`${a.name} control spell — all targets resisted.`});
+        } else if(usedAoE&&a.aoeTargets>0){
+          // AoE damage spell
+          const numTgts=Math.min(a.aoeTargets,aliveM.length);
+          const tgts=aliveM.sort(()=>Math.random()-0.5).slice(0,numTgts);
+          tgts.forEach(m=>{
+            const dmg=Math.round(a.aoeDmgPerTarget*(0.7+Math.random()*0.6));
+            m.hp-=dmg;
+            if(m.hp<=0){m.hp=0;m.isDead=true;rd.actions.push({t:"kill",s:`${a.name} AoE → ${m.name}: ${dmg}dmg — defeated! ☠`});}
+            else rd.actions.push({t:"hit",s:`${a.name} AoE → ${m.name}: ${dmg}dmg. (${m.hp}/${m.maxHP})`});
+          });
+        } else if(a.isCaster&&!a.isHybrid){
+          // Pure caster: spell attack / spell action (single target or cantrip fallback)
+          const tgt=aliveM.sort((x,y)=>x.hp-y.hp)[0];
+          const useBigSpell=Math.random()<0.6; // 60% chance to use a spell slot vs cantrip
+          const dmg=Math.round((useBigSpell?a.spellDmg:a.cantripDmg)*(0.7+Math.random()*0.6));
+          tgt.hp-=dmg;
+          if(tgt.hp<=0){tgt.hp=0;tgt.isDead=true;rd.actions.push({t:"kill",s:`${a.name} → ${tgt.name}: ${dmg}dmg (${useBigSpell?"spell":"cantrip"}) — defeated! ☠`});}
+          else rd.actions.push({t:"hit",s:`${a.name} → ${tgt.name}: ${dmg}dmg. (${tgt.hp}/${tgt.maxHP})`});
+          // Sustained AoE bonus (Hex on warlock, cantrip continuation etc)
+          if(a.sustainedAoeDmg>0&&a.sustainedAoeTargets>0){
+            const sTgts=aliveM.filter(m=>!m.isDead).slice(0,a.sustainedAoeTargets);
+            sTgts.forEach(m=>{const sd=Math.round(a.sustainedAoeDmg*(0.7+Math.random()*0.6));m.hp-=sd;if(m.hp<=0){m.hp=0;m.isDead=true;}});
+          }
+        } else {
+          // Martial / hybrid: weapon attacks
+          let tgt=Math.random()<0.8?aliveM.sort((x,y)=>x.hp-y.hp)[0]:aliveM[Math.floor(Math.random()*aliveM.length)];
+          const hitProb=Math.max(0.05,Math.min(0.95,(21-(tgt.ac-a.atkBonus)+(a.reckless?2:0)))/20);
+          const blessBonus=bless?2:0;
+
+          for(let atk=0;atk<a.numAtks;atk++){
+            if(tgt.isDead){const nx=monsters.filter(m=>!m.isDead);if(!nx.length)break;tgt=nx.sort((x,y)=>x.hp-y.hp)[0];}
+            const roll=d20();const hit=roll===20||(roll+a.atkBonus+blessBonus)>=tgt.ac;const crit=roll===20;
+            if(hit){
+              let dmg=Math.round(a.dmgPerAtk*(crit?1.5:1));
+              // Sneak attack (rogue)
+              if(a.sneakDice>0)dmg+=Math.round(a.sneakDice*3.5*(crit?1.5:1));
+              // Paladin Improved Divine Smite (+1d8 every melee hit)
+              if(a.smitePerRound>0&&atk===0)dmg+=Math.round(a.smitePerRound);
+              // Bypass nonmagical resistance
+              const res=!a.bypassNM&&tgt.resistances.some(r=>r.includes("nonmagical"));
+              // Check damage immunity
+              const immCheck=tgt.immunities&&tgt.immunities.length>0&&!a.bypassNM&&tgt.immunities.some(i=>i.includes("bludgeoning")||i.includes("slashing")||i.includes("piercing"));
+              const fd=immCheck?0:res?Math.floor(dmg/2):dmg;
+              if(fd===0){
+                rd.actions.push({t:"miss",s:`${a.name} → ${tgt.name}: ${dmg}dmg IMMUNE. (${tgt.hp}/${tgt.maxHP})`});
+              } else {
+                tgt.hp-=fd;
+                if(tgt.hp<=0){tgt.hp=0;tgt.isDead=true;rd.actions.push({t:"kill",s:`${a.name} → ${tgt.name}: ${fd}dmg${crit?" CRIT":""}${res?" (res)":""} — defeated! ☠`});}
+                else{
+                  rd.actions.push({t:"hit",s:`${a.name} → ${tgt.name}: ${fd}dmg${crit?" CRIT":""}${res?" (res)":""}. (${tgt.hp}/${tgt.maxHP})`});
+                  // Stunning Strike (monk) — attempt on every hit; checks stun immunity & legendary resistance
+                  if(a.stunningStrike&&!tgt.stunned&&!tgt.stunImmune&&Math.random()<0.4){
+                    let stunLanded=Math.random()<0.55;
+                    if(stunLanded&&tgt.legendaryResistanceLeft>0){
+                      tgt.legendaryResistanceLeft--;
+                      stunLanded=false;
+                      rd.actions.push({t:"conc",s:`${a.name} Stunning Strike → ${tgt.name}: used Legendary Resistance! (${tgt.legendaryResistanceLeft} left)`});
+                    }
+                    if(stunLanded){tgt.stunned=true;tgt.stunnedRounds=1;rd.actions.push({t:"conc",s:`${a.name} Stunning Strike → ${tgt.name}: STUNNED until end of next turn!`});}
+                  }
+                }
+              }
+              // Concentration check if bless-holder was hit
+              if(bless&&blessHolder&&blessHolder.id===a.id){/* bless holder hit their target, concentration fine */}
+            } else{
+              rd.actions.push({t:"miss",s:`${a.name} → ${tgt.name}: miss (${roll}+${a.atkBonus} vs AC ${tgt.ac}).`});
+            }
+          }
+          // Bonus attacks (monk flurry, ranger swift quiver)
+          if(a.bonusAtks>0){
+            for(let ba=0;ba<a.bonusAtks;ba++){
+              if(!monsters.filter(m=>!m.isDead).length)break;
+              if(tgt.isDead){const nx=monsters.filter(m=>!m.isDead);if(!nx.length)break;tgt=nx[0];}
+              const roll=d20();const hit=roll===20||(roll+a.atkBonus)>=tgt.ac;
+              if(hit){const dmg=Math.round(a.bonusAtkDmg*(roll===20?1.5:1));tgt.hp-=dmg;if(tgt.hp<=0){tgt.hp=0;tgt.isDead=true;rd.actions.push({t:"kill",s:`${a.name} bonus attack → ${tgt.name}: ${dmg}dmg — defeated! ☠`});}else rd.actions.push({t:"hit",s:`${a.name} bonus attack → ${tgt.name}: ${dmg}dmg. (${tgt.hp}/${tgt.maxHP})`});}
+            }
+          }
+          // Spirit Weapon bonus action (cleric/druid hybrid)
+          if(a.spiritWeaponDmg>0){
+            const swTgt=monsters.filter(m=>!m.isDead).sort((x,y)=>x.hp-y.hp)[0];
+            if(swTgt){const sd=Math.round(a.spiritWeaponDmg*(0.7+Math.random()*0.6));swTgt.hp-=sd;if(swTgt.hp<=0){swTgt.hp=0;swTgt.isDead=true;}rd.actions.push({t:"hit",s:`${a.name} Spirit Weapon → ${swTgt.name}: ${sd}dmg. (${Math.max(0,swTgt.hp)}/${swTgt.maxHP})`});}
+          }
+          // Action surge: multiply DPR for one full action
+          if(a.actionSurgeBonus>1.0&&Math.random()<(a.actionSurgeBonus-1.0)*0.5){
+            const surgeTgt=monsters.filter(m=>!m.isDead).sort((x,y)=>x.hp-y.hp)[0];
+            if(surgeTgt){
+              const surgeDmg=Math.round(a.dmgPerAtk*a.numAtks*0.8);
+              surgeTgt.hp-=surgeDmg;
+              if(surgeTgt.hp<=0){surgeTgt.hp=0;surgeTgt.isDead=true;rd.actions.push({t:"kill",s:`${a.name} Action Surge → ${surgeTgt.name}: ${surgeDmg}dmg — defeated! ☠`});}
+              else rd.actions.push({t:"hit",s:`${a.name} Action Surge → ${surgeTgt.name}: ${surgeDmg}dmg extra. (${surgeTgt.hp}/${surgeTgt.maxHP})`});
+            }
+          }
+        }
+      } else {
+        // ── MONSTER TURN ──
+        const alivePCs=party.filter(p=>!p.isDown&&!p.isDead);if(!alivePCs.length)break;
+
+        // Sustained AoE damage (Spirit Guardians, Call Lightning etc.) hits monsters at start of their turn
+        party.filter(p=>p.sustainedActive&&p.sustainedAoeDmg>0&&!p.isDown&&!p.isDead).forEach(caster=>{
+          if(!a.isDead){
+            const sd=Math.round(caster.sustainedAoeDmg*(0.7+Math.random()*0.6));
+            a.hp-=sd;
+            if(a.hp<=0){a.hp=0;a.isDead=true;rd.actions.push({t:"kill",s:`${caster.name} sustained AoE → ${a.name}: ${sd}dmg — defeated! ☠`});}
+            else rd.actions.push({t:"hit",s:`${caster.name} aura → ${a.name}: ${sd}dmg. (${a.hp}/${a.maxHP})`});
+          }
+        });
+        if(a.isDead)continue;
+
+        // Stunned monsters skip their turn
+        if(a.stunned){
+          rd.actions.push({t:"miss",s:`${a.name} is stunned — loses their action.`});
+          // While stunned: all attacks against it have advantage = +25% hit rate, handled on PC side passively
+        } else {
+          // Target selection by intelligence
+          let tgt;
+          if(intel<=1)tgt=alivePCs[Math.floor(Math.random()*alivePCs.length)];
+          else if(intel<=2)tgt=alivePCs.sort((x,y)=>x.hp-y.hp)[0];
+          else if(intel<=3)tgt=Math.random()<0.5?alivePCs.sort((x,y)=>x.hp-y.hp)[0]:alivePCs[Math.floor(Math.random()*alivePCs.length)];
+          else if(intel<=4)tgt=alivePCs.sort((x,y)=>x.ac-y.ac)[0];
+          else{const dp=party.find(p=>p.isDown&&!p.isDead);tgt=dp||alivePCs.sort((x,y)=>x.hp-y.hp)[0];}
+
+          // Use monster's actual save DC if available, else default 14
+          const mDC=a.saveDC||14;
+
+          // Monster AoE ability
+          if(a.aoeType&&a.aoeDmg>0){
+            const fire=a.aoeType==="recharge"?Math.random()<0.33:a.aoeType==="sustained"||Math.random()<0.6;
+            if(fire){
+              const tgts=alivePCs.sort(()=>Math.random()-0.5).slice(0,Math.min(a.aoeTargets,alivePCs.length));
+              tgts.forEach(p=>{
+                const sv=d20()+saveBonus>=mDC;const dmg=sv?Math.floor(a.aoeDmg/2):a.aoeDmg;
+                applyDmg(p,dmg,party,rd);
+                rd.actions.push({t:"hit",s:`${a.name} AoE → ${p.name}: ${sv?"saved":"failed"} ${dmg}dmg (DC ${mDC}). (${Math.max(0,p.hp)}/${p.maxHP})`});
+              });
+              if(bless&&blessHolder&&!blessHolder.isDown){checkConc(blessHolder,a.aoeDmg,saveBonus,rd);if(!blessHolder.concentrating){bless=false;blessHolder.sustainedActive=false;}}
+              continue;
+            }
+          }
+
+          // Regular attacks
+          for(let atk=0;atk<a.numAtks;atk++){
+            const roll=d20();
+            const hit=roll===20||(roll+a.atkBonus)>=tgt.ac;const crit=roll===20;
+            if(hit){
+              let dmg=Math.round(a.dmgPerAtk*(crit?1.5:1));
+              // Barbarian physical resistance
+              if(tgt.physResist)dmg=Math.floor(dmg/2);
+              // Rogue Uncanny Dodge: halve damage from one attack per round
+              if(tgt.uncannyDodge&&atk===0)dmg=Math.floor(dmg/2);
+              applyDmg(tgt,dmg,party,rd);
+              rd.actions.push({t:"hit",s:`${a.name} → ${tgt.name}: ${dmg}dmg${crit?" CRIT":""}. (${Math.max(0,tgt.hp)}/${tgt.maxHP}${tgt.isDown?" 💀":""})`});
+              // Concentration check if bless holder was hit
+              if(bless&&blessHolder&&blessHolder.id===tgt.id&&!blessHolder.isDown){checkConc(blessHolder,dmg,saveBonus,rd);if(!blessHolder.concentrating){bless=false;blessHolder.sustainedActive=false;}}
+            } else{
+              rd.actions.push({t:"miss",s:`${a.name} → ${tgt.name}: miss (${roll}+${a.atkBonus} vs AC ${tgt.ac}).`});
+            }
+          }
+        }
+      }
+
+      // ── LEGENDARY ACTIONS after each PC turn ──
+      if(a.isPC){
+        monsters.forEach(m=>{
+          if(!m.isDead&&m.legendaryActionsLeft>0&&!m.stunned){
+            m.legendaryActionsLeft--;
+            const apc=party.filter(p=>!p.isDown&&!p.isDead);if(!apc.length)return;
+            const lt=apc[Math.floor(Math.random()*apc.length)];
+            const roll=d20();
+            if(roll+m.atkBonus>=lt.ac||roll===20){
+              const dmg=Math.round(m.dmgPerAtk*0.7);
+              const fd=lt.physResist?Math.floor(dmg/2):dmg;
+              applyDmg(lt,fd,party,rd);
+              rd.actions.push({t:"legendary",s:`★ ${m.name} legendary → ${lt.name}: ${fd}dmg. (${Math.max(0,lt.hp)}/${lt.maxHP})`});
+            } else{
+              rd.actions.push({t:"legendary",s:`★ ${m.name} legendary → ${lt.name}: miss.`});
+            }
+          }
+        });
+      }
+
+      if(monsters.every(m=>m.isDead))break;
+      if(party.every(p=>p.isDown||p.isDead))break;
+    }
+
+    rd.ps=party.map(p=>({name:p.name,hp:Math.max(0,p.hp),maxHP:p.maxHP,isDown:p.isDown,isDead:p.isDead,ds:p.deathSuccesses,df:p.deathFailures}));
+    rd.ms=monsters.map(m=>({name:m.name,hp:Math.max(0,m.hp),maxHP:m.maxHP,isDead:m.isDead,stunned:m.stunned}));
+    log.push(rd);
+    if(monsters.every(m=>m.isDead))break;
+    if(party.every(p=>p.isDown||p.isDead))break;
+  }
+
+  const out=monsters.every(m=>m.isDead)?"win":"tpk";
+  const downs=party.filter(p=>p.isDown||p.isDead).length;
+  const totHP=party.reduce((s,p)=>s+p.maxHP,0);
+  const remHP=party.reduce((s,p)=>s+Math.max(0,p.hp),0);
+  return{out,rounds:round,log,downs,pct:1-(remHP/totHP)};
+}
+
+function checkConc(holder,dmgTaken,saveBonus,rd){
+  const roll=d20()+holder.concBonus+saveBonus;
+  if(roll<10){holder.concentrating=false;rd.actions.push({t:"conc",s:`${holder.name} concentration check: ${roll} vs DC 10 — BROKEN!`});}
+  else rd.actions.push({t:"conc",s:`${holder.name} concentration check: ${roll} vs DC 10 — maintained.`});
+}
+
+function applyDmg(pc,dmg,party,rd){
+  if(pc.isDown||pc.isDead)return;
+  pc.hp-=dmg;
+  if(pc.hp<=0){pc.hp=0;pc.isDown=true;pc.deathSuccesses=0;pc.deathFailures=0;rd.actions.push({t:"down",s:`${pc.name} falls unconscious! 💀`});}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER SIM RESULTS
+// ═══════════════════════════════════════════════════════════════
+const DC={trivial:"var(--diff-trivial)",low:"var(--diff-low)",moderate:"var(--diff-moderate)",high:"var(--diff-high)",severe:"var(--diff-severe)",deadly:"var(--diff-deadly)"};
+
+function renderSim(r){
+  const el=document.getElementById("simResults");
+  const c=DC[r.dc]||"var(--diff-moderate)";
+  const kobTag=document.getElementById("kobDiffTag").textContent;
+  const kobXP=document.getElementById("kobXP").textContent;
+  el.innerHTML=`
+  <div style="margin-bottom:12px">
+    <div class="dash-top">
+      <div class="dash-diff" style="color:${c};border:2px solid ${c};background:${c}15">${r.diff}</div>
+      <div class="dash-stats">
+        <div class="dash-stat"><div class="dash-lbl">Median Rounds</div><div class="dash-val">${r.medR}</div><div class="dash-sub">range ${r.minR}–${r.maxR}</div></div>
+        <div class="dash-stat"><div class="dash-lbl">Party Survival</div><div class="dash-val">${Math.round(r.surv*100)}%</div><div class="dash-sub">of ${r.n.toLocaleString()} runs</div></div>
+        <div class="dash-stat"><div class="dash-lbl">Avg PC Downs</div><div class="dash-val">${r.avgDown.toFixed(1)}</div><div class="dash-sub">per encounter</div></div>
+        <div class="dash-stat"><div class="dash-lbl">HP Consumed</div><div class="dash-val">${Math.round(r.avgPct*100)}%</div><div class="dash-sub">party avg</div></div>
+      </div>
+    </div>
+    <div class="prob-section">
+      <div class="prob-title">Outcome Probability — ${r.n.toLocaleString()} simulations</div>
+      ${prow("Flawless (no downs)",r.flawless/r.n,"var(--accent-teal)")}
+      ${prow("Minor injuries only",r.minor/r.n,"var(--accent-green)")}
+      ${prow("Someone goes unconscious",r.someDown/r.n,"var(--accent-amber)")}
+      ${prow("Multiple party members down",r.multiDown/r.n,"var(--diff-high)")}
+      ${prow("Total Party Kill",r.tpkR,"var(--accent-red)")}
+    </div>
+    <div class="compare-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.ca').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
+      <span>Compare vs Kobold Baseline</span><span class="ca" style="margin-left:auto">▼</span>
+    </div>
+    <div class="compare-panel">
+      <div class="compare-grid">
+        <div>
+          <div class="compare-col-title">Kobold Baseline</div>
+          <div style="font-family:'Cinzel',serif;font-size:16px;color:var(--accent-gold);margin-bottom:3px">${kobTag}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">${kobXP}</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-top:4px;font-style:italic">Pure XP threshold — no class, resistance, or action economy modeling.</div>
+        </div>
+        <div>
+          <div class="compare-col-title">Combat Forge</div>
+          <div style="font-family:'Cinzel',serif;font-size:16px;color:${c};margin-bottom:3px">${r.diff}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">${Math.round(r.surv*100)}% survival · ${r.medR} rounds</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-top:4px;font-style:italic">Full class/resistance/action economy simulation across 1,000 runs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="log-header">
+    <span class="log-title">Representative Combat Log</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)" id="logMeta">${r.rep.out==="win"?"✓ Victory":"✗ TPK"} · ${r.rep.rounds} rounds</span>
+    <button class="btn" onclick="rerun()" style="margin-left:8px">↺ Different Run</button>
+  </div>
+  ${renderLog(r.rep)}`;
+}
+
+function prow(lbl,pct,col){const w=Math.round(pct*100);return`<div class="prob-row"><span class="prob-lbl">${lbl}</span><div class="prob-bar-wrap"><div class="prob-bar" style="width:${w}%;background:${col}"></div></div><span class="prob-pct">${w}%</span></div>`;}
+
+function renderLog(run){
+  if(!run||!run.log)return"";
+  return run.log.map((rd,i)=>{
+    const allM=rd.ms.every(m=>m.isDead);const allP=rd.ps.every(p=>p.isDown||p.isDead);
+    const summ=allM?"⚔ All monsters defeated!":allP?"💀 Party wiped!":rd.ms.filter(m=>!m.isDead).length+" monsters remaining";
+    return `<div class="round-block${i===0?" open":""}">
+      <div class="round-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <span class="round-num">Round ${rd.round}</span>
+        <span class="round-summ">${summ}</span>
+        <div class="round-hprow">${rd.ps.map(hpbadge).join("")}</div>
+        <span class="round-arr">▶</span>
+      </div>
+      <div class="round-body">
+        <div class="init-track">${rd.iOrd.map(t=>`<span class="init-chip ${t.isPC?"init-pc":"init-monster"}">${t.name}</span>`).join("")}</div>
+        ${rd.actions.map(a=>`<div class="log-line ${a.t}">${a.s}</div>`).join("")}
+        <div class="hpbar-sec">
+          <div class="hpbar-sec-lbl">Party</div>${rd.ps.map(hpbar).join("")}
+          <div class="hpbar-sec-lbl" style="margin-top:4px">Monsters</div>${rd.ms.map(hpbar).join("")}
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function hpbadge(p){const pct=p.maxHP>0?p.hp/p.maxHP:0;const c=p.isDead?"#666":p.isDown?"var(--accent-red)":pct>0.5?"var(--hp-full)":pct>0.25?"var(--hp-mid)":"var(--hp-low)";return`<span style="font-family:'JetBrains Mono',monospace;font-size:7px;padding:1px 3px;border-radius:2px;background:${c}22;color:${c};border:1px solid ${c}44;white-space:nowrap">${p.name.split(" ")[0]} ${p.isDead?"✝":p.isDown?"↓":p.hp}</span>`;}
+
+function hpbar(e){const pct=e.maxHP>0?Math.max(0,e.hp/e.maxHP):0;const c=e.isDead?"#555":pct>0.6?"var(--hp-full)":pct>0.3?"var(--hp-mid)":"var(--hp-low)";const lbl=e.isDown?"(down)":e.isDead?"(dead)":`${e.hp}/${e.maxHP}`;return`<div class="hpbar-wrap"><span class="hpbar-name" title="${e.name}">${e.name.length>10?e.name.slice(0,9)+"…":e.name}</span><div class="hpbar-track"><div class="hpbar-fill" style="width:${Math.round(pct*100)}%;background:${c}"></div></div><span class="hpbar-val">${lbl}</span></div>`;}
+
+function rerun(){
+  if(!LASTSIM)return;
+  const intel=parseInt(document.getElementById("intelSlider").value);
+  const run=runOne(intel);
+  const el=document.getElementById("simResults");
+  const lh=el.querySelector(".log-header");if(!lh)return;
+  const meta=document.getElementById("logMeta");if(meta)meta.textContent=`${run.out==="win"?"✓ Victory":"✗ TPK"} · ${run.rounds} rounds`;
+  let next=lh.nextElementSibling;while(next){const n=next.nextElementSibling;next.remove();next=n;}
+  lh.insertAdjacentHTML("afterend",renderLog(run));
+}
+</script>
+</body>
+</html>
