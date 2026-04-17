@@ -1,0 +1,29 @@
+# ── Build outputs (regenerable from source + bake script) ──
+combat_forge_baked.html
+combat_forge_v12_baked.html
+
+# ── Archived old versions (large, local-only) ──
+Old/
+
+# ── 5etools source data (large, not ours) ──
+5etools-src-main/
+
+# ── 3rd party PDFs ──
+*.pdf
+
+# ── Intermediate pipeline files (regenerable) ──
+monsters_final.pre-*.json
+data/monsters_all_enriched.json
+data/monsters_all_enriched_v2.json
+
+# ── Python cache ──
+__pycache__/
+*.pyc
+
+# ── Claude Code internal ──
+.claude/
+
+# ── OS files ──
+.DS_Store
+Thumbs.db
+desktop.ini

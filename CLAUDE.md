@@ -3,7 +3,13 @@
 ## What This Is
 A single-file D&D 5e encounter simulator and combat calculator for Dungeon Masters.
 Built as a self-contained HTML app that can be shared and run locally in a browser.
-Current version: **Combat Forge v12** (`combat_forge_v12.html`)
+Current version: **Combat Forge v15.1** (displayed in the app's top bar; filename is unversioned).
+
+Versioning follows semver-ish:
+- Major bump (v13 → v14): full UI restructures, big feature additions
+- Minor bump (v14 → v14.1): smaller features, visible changes, batched bug fixes
+- Patch bump (v14.1 → v14.1.1): silent bug fixes, no behavior change
+Update both `<title>` and `.tb-sub` text in `combat_forge.html` when bumping.
 
 ## Repository
 https://github.com/tophercarstensen-hub/dnd-combat-forge
@@ -11,24 +17,38 @@ https://github.com/tophercarstensen-hub/dnd-combat-forge
 ## File Structure
 ```
 Combat Calc/
-├── combat_forge_v12.html        # Main app — currently has monsters BAKED IN (17MB)
-├── monsters_final.json          # Clean monster database (7,304 monsters, 12.6MB)
-├── monsters_all_enriched_v2.json # 5etools-only build (4,439 monsters)
-├── monsters_all_enriched.json   # Old enriched file (6,847 monsters, used as merge source)
-├── build_monsters_enriched.py   # Rebuilds monster JSON from 5etools source files
-├── merge_monsters.py            # Merges 5etools monsters + Kobold third-party monsters
-├── enrich_environments_local.py # AI-assisted environment tag enrichment (uses Claude API)
-└── CLAUDE.md                    # This file
+├── combat_forge.html                   # Stripped source (~213KB) — EDIT THIS
+├── combat_forge_baked.html             # Bake output (~17MB) — TEST THIS
+├── monsters_final.json                 # Production monster DB (7,304 monsters)
+├── bake_monsters.py                    # Bakes monsters_final.json into combat_forge.html
+├── CLAUDE.md                           # This file
+├── scripts/
+│   ├── build_monsters_enriched.py      # Rebuilds data/monsters_all_enriched_v2.json from 5etools
+│   └── merge_monsters.py               # Merges v2 + 3rd-party → monsters_final.json
+├── data/
+│   ├── monsters_all_enriched.json      # Old enriched file (6,847 monsters, merge source)
+│   ├── monsters_all_enriched_v2.json   # 5etools-only build (4,439 monsters)
+│   └── kobold-plus-fight-club-master/  # Vendored KFC data
+└── Old/
+    ├── combat_forge_v12.html           # Previous baked version (stale, archived)
+    ├── dnd_combat_calc_v11.html        # Older app versions
+    └── dnd_combat_calc_v2..v9.html
 ```
 
 ## Architecture — IMPORTANT
-The app currently bakes `monsters_final.json` directly into the HTML as a JS const,
-making it 17MB. The goal is to:
-1. Strip monsters out → `combat_forge.html` (~200KB, easy to work with)
-2. Write `bake_monsters.py` — injects monsters_final.json into the HTML
-3. Workflow: edit unbaked HTML → run bake script → test baked version locally
+The app ships with monsters baked directly into the HTML as a JS const
+(`const MONSTER_DATA=JSON.parse(atob('...'));`). For easier editing/QA the
+source HTML is kept stripped (`combat_forge.html`, ~213KB) and a Python
+script bakes monsters back in on demand.
 
-**bake_monsters.py has NOT been written yet** — this is the next task.
+**Workflow:**
+1. Edit `combat_forge.html`
+2. Run `python bake_monsters.py` (defaults: reads `combat_forge.html` + `monsters_final.json`, writes `combat_forge_baked.html`)
+3. Open `combat_forge_baked.html` in browser to test
+4. Bump the version label in `combat_forge.html` (`<title>` and `.tb-sub`) when shipping meaningful changes — filename stays unversioned.
+
+Bake-script flags: `--in`, `--monsters`, `--out`. Re-baking an already-baked
+HTML works (regex matches both stripped and baked forms).
 
 ## Monster Data Pipeline
 Source: `C:\Users\tophe\Downloads\5etools-src-main\5etools-src-main\data\bestiary\`
@@ -90,7 +110,7 @@ Pipeline:
 }
 ```
 
-## App Features (Combat Forge v12)
+## App Features
 - Left panel: Monster browser with search, CR sliders, type/env/source filters, sort chips
 - Center: Encounter builder + Monte Carlo sim (1,000 runs)
 - Right panel: Party builder (class, level, gear, support toggle)
@@ -118,13 +138,12 @@ When DM clicks Generate Encounter with a chosen difficulty:
 - Generator difficulty chips: Low / Moderate / High / Dangerous / Deadly (no Severe/Death)
 
 ## Known Issues / Next Tasks (priority order)
-1. **Write bake_monsters.py** — strip monsters from HTML, create inject script
-2. **Monster list pagination** — currently caps display at 500 (A-D range), need pages of 75 + letter chips
-3. **CR slider sub-1 fix** — getSuggested() floors at CR 1, needs to allow 0/1/8/1/4/1/2
-4. **Horde/swarm generation** — swarm = very low CR many monsters; horde = sim-driven count scaling
-5. **Text size** — A+/A- buttons in topbar exist but only scale some elements (need root font-size fix)
+1. **Monster list pagination** — currently caps display at 500 (A-D range), need pages of 75 + letter chips
+2. **CR slider sub-1 fix** — getSuggested() floors at CR 1, needs to allow 0/1/8/1/4/1/2
+3. **Horde/swarm generation** — swarm = very low CR many monsters; horde = sim-driven count scaling
+4. **Text size** — A+/A- buttons in topbar exist but only scale some elements (need root font-size fix)
 
-## Key JS Variables & Functions (combat_forge_v12.html)
+## Key JS Variables & Functions (combat_forge.html)
 - `MDB` — monster database array (loaded from baked const or file)
 - `ENC` — current encounter array `[{monster, count}]`
 - `PCS` — party members array
