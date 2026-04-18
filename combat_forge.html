@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Combat Forge v15.1</title>
+<title>Combat Forge v16.9</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -36,6 +36,32 @@ body{background:var(--bg-void);color:var(--text-primary);font-family:'Crimson Pr
 .ruleset-tog{display:flex;gap:2px}
 .ruleset-btn{padding:3px 9px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:all var(--ease)}
 .ruleset-btn.active{border-color:var(--accent-gold-dim);color:var(--accent-gold);background:rgba(201,168,76,.08)}
+.tb-ibtn{padding:3px 9px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:3px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;transition:all var(--ease);min-width:26px}
+.tb-ibtn:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim)}
+.btn-books{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:3px 9px;background:var(--bg-card);border:1px solid var(--accent-gold-dim);border-radius:2px;color:var(--accent-gold);cursor:pointer;white-space:nowrap;letter-spacing:.04em;transition:all var(--ease)}
+.btn-books:hover{background:rgba(201,168,76,.08);border-color:var(--accent-gold)}
+.btn-books.filtered{background:rgba(201,168,76,.15);border-color:var(--accent-gold);color:var(--accent-gold)}
+.settings-tab{padding:8px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-dim);font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all var(--ease)}
+.settings-tab:hover{color:var(--text-secondary)}
+.settings-tab.active{color:var(--accent-gold);border-bottom-color:var(--accent-gold)}
+.lib-layout3{display:flex;flex:1;overflow:hidden}
+.lib-filter-panel{width:300px;min-width:300px;background:var(--bg-panel);border-right:1px solid var(--border-dim);padding:10px 12px;overflow-y:auto;flex-shrink:0}
+.lib-filter-panel::-webkit-scrollbar{width:4px}
+.lib-filter-panel::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:2px}
+/* Library's filter panel is narrower than Spell Library — use 3 cols for chips */
+.lib-filter-panel .sp-chip-grid{grid-template-columns:repeat(3,1fr)}
+.lib-filter-panel .sp-chip{padding:4px 5px;font-size:11px}
+.lib-chip-section{margin-bottom:12px}
+.lib-chip-label{display:block;font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--accent-gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.lib-chip-grid{display:flex;flex-wrap:wrap;gap:3px}
+.lib-chip{padding:3px 8px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:2px;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:9px;cursor:pointer;transition:all var(--ease);text-transform:capitalize;user-select:none}
+.lib-chip:hover{color:var(--accent-gold);border-color:var(--accent-gold-dim)}
+.lib-chip.active{background:rgba(201,168,76,.12);border-color:var(--accent-gold);color:var(--accent-gold)}
+.lib-chip.empty{opacity:.3;cursor:default;pointer-events:none}
+.lib-chip em{font-style:normal;color:var(--text-dim);margin-left:3px}
+.lib-chip.active em{color:var(--accent-gold)}
+.lib-list-col2{flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border-dim)}
+.lib-detail-col{flex:1.2;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:var(--bg-panel)}
 .layout{display:flex;flex:1;overflow:hidden}
 .panel{width:var(--panel-w);min-width:var(--panel-w);background:var(--bg-panel);display:flex;flex-direction:column;overflow:hidden;transition:width var(--ease),min-width var(--ease),opacity var(--ease);position:relative;flex-shrink:0}
 .panel.left{border-right:1px solid var(--border-dim)}
@@ -502,7 +528,7 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
    ENC STAT PANEL
 ═══════════════════════════════════════════════════════════════ */
 .enc-zone-inner{display:flex;gap:0;align-items:stretch;padding:0!important;overflow:visible!important;max-height:none!important}
-.enc-list-col{flex:1;min-width:0;padding:10px 14px 4px;overflow-y:auto;max-height:540px;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent;transition:flex .3s ease}
+.enc-list-col{flex:1;min-width:0;padding:10px 14px 4px;overflow-y:auto;max-height:calc(100vh - 260px);min-height:400px;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent;transition:flex .3s ease}
 .enc-list-col::-webkit-scrollbar{width:4px}
 .enc-list-col::-webkit-scrollbar-thumb{background:var(--border-mid)}
 .enc-sb-panel{width:0;overflow:hidden;transition:width .3s ease;flex-shrink:0;border-left:0px solid var(--border-dim);display:flex;flex-direction:column}
@@ -513,6 +539,7 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
 .enc-sb-pane:last-child{border-right:none}
 .enc-sb-pane-hdr{display:flex;align-items:center;gap:4px;padding:5px 8px;border-bottom:1px solid var(--border-dim);flex-shrink:0;background:var(--bg-card);min-height:28px}
 .enc-sb-pane-name{font-family:'Cinzel',serif;font-size:9px;font-weight:600;color:var(--text-primary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.enc-sb-pane-src{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);padding:1px 4px;border:1px solid var(--border-dim);border-radius:2px;background:var(--bg-input);flex-shrink:0;letter-spacing:.04em}
 .enc-sb-pin{font-size:10px;background:none;border:1px solid var(--border-dim);border-radius:2px;color:var(--text-dim);cursor:pointer;padding:1px 4px;line-height:1;transition:all .15s}
 .enc-sb-pin:hover{border-color:var(--accent-gold);color:var(--accent-gold)}
 .enc-sb-pin.pinned{border-color:var(--accent-gold);color:var(--accent-gold);background:rgba(212,175,55,.12)}
@@ -556,16 +583,17 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
   <span class="tb-orn">&#9876;</span>
   <span class="tb-title">Combat Forge</span>
   <span class="tb-orn">&#10022;</span>
-  <span class="tb-sub">D&amp;D 5e Simulator v15.1</span>
+  <span class="tb-sub">D&amp;D 5e Simulator v16.9</span>
   <div class="center-tabs">
     <button class="ctab active" id="ctab-builder" onclick="switchTab('builder')">&#9876; Builder + Sim</button>
     <button class="ctab" id="ctab-library" onclick="switchTab('library')">&#128218; Monster Library</button>
     <button class="ctab" id="ctab-spells" onclick="switchTab('spells')" title="Search and browse all spells by name, level, school, or class">&#128156; Spell Library</button>
   </div>
   <span class="tb-spacer"></span>
-  <div style="display:none">
-    <button onclick="adjTextSize(-1)">A−</button>
-    <button onclick="adjTextSize(1)">A+</button>
+  <div class="tb-ibtns" style="display:flex;gap:4px;align-items:center;margin-right:8px">
+    <button class="tb-ibtn" onclick="adjTextSize(-1)" title="Decrease text size">A−</button>
+    <button class="tb-ibtn" onclick="adjTextSize(1)" title="Increase text size">A+</button>
+    <button class="tb-ibtn" onclick="openSettings()" title="Settings — database, homebrew, export">&#9881;</button>
   </div>
   <div class="ruleset-tog">
     <button class="ruleset-btn" id="rules2014" onclick="setRuleset('2014')">2014</button>
@@ -587,13 +615,19 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
       </div>
     </div>
     <div style="padding:5px 10px 4px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
-      <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px" title="Challenge Rating range — filters monster list and constrains the generator's picks">
+      <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px" title="Challenge Rating range — filters monster list and constrains the generator's picks">
         <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);flex-shrink:0">CR</span>
         <input type="range" id="rpCRMin" min="0" max="33" value="0" oninput="onRPCRSlider()" style="flex:1" title="Minimum CR">
         <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);flex-shrink:0">–</span>
         <input type="range" id="rpCRMax" min="0" max="33" value="33" oninput="onRPCRSlider()" style="flex:1" title="Maximum CR">
         <span class="cr-disp" id="rpCRDisp" style="min-width:60px;font-size:10px;flex-shrink:0">All CR</span>
         <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-gold);cursor:pointer;flex-shrink:0" onclick="resetCRSuggested()" title="Auto-suggest CR range based on party level + chosen difficulty">↺</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px" title="Pick an exact CR for either bound — set both to the same value to show only that CR">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);flex-shrink:0;letter-spacing:.08em">MIN</span>
+        <select id="rpCRMinSel" onchange="onRPCRDropdown()" style="flex:1;font-size:10px" title="Minimum CR (syncs with slider)"><option value="0">0</option><option value="1">1/8</option><option value="2">1/4</option><option value="3">1/2</option><option value="4">1</option><option value="5">2</option><option value="6">3</option><option value="7">4</option><option value="8">5</option><option value="9">6</option><option value="10">7</option><option value="11">8</option><option value="12">9</option><option value="13">10</option><option value="14">11</option><option value="15">12</option><option value="16">13</option><option value="17">14</option><option value="18">15</option><option value="19">16</option><option value="20">17</option><option value="21">18</option><option value="22">19</option><option value="23">20</option><option value="24">21</option><option value="25">22</option><option value="26">23</option><option value="27">24</option><option value="28">25</option><option value="29">26</option><option value="30">27</option><option value="31">28</option><option value="32">29</option><option value="33">30</option></select>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);flex-shrink:0;letter-spacing:.08em">MAX</span>
+        <select id="rpCRMaxSel" onchange="onRPCRDropdown()" style="flex:1;font-size:10px" title="Maximum CR (syncs with slider)"><option value="0">0</option><option value="1">1/8</option><option value="2">1/4</option><option value="3">1/2</option><option value="4">1</option><option value="5">2</option><option value="6">3</option><option value="7">4</option><option value="8">5</option><option value="9">6</option><option value="10">7</option><option value="11">8</option><option value="12">9</option><option value="13">10</option><option value="14">11</option><option value="15">12</option><option value="16">13</option><option value="17">14</option><option value="18">15</option><option value="19">16</option><option value="20">17</option><option value="21">18</option><option value="22">19</option><option value="23">20</option><option value="24">21</option><option value="25">22</option><option value="26">23</option><option value="27">24</option><option value="28">25</option><option value="29">26</option><option value="30">27</option><option value="31">28</option><option value="32">29</option><option value="33" selected>30</option></select>
       </div>
       <div style="display:flex;gap:3px;margin-bottom:4px">
         <select id="rtypeFilter" onchange="searchMonsters()" style="flex:1;font-size:11px" title="Filter by monster type (beast, undead, humanoid, etc.)">
@@ -623,7 +657,7 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
           <span class="chip" data-rsrc="third-party" onclick="setRSrc(this,'third-party')" title="Monsters from 3rd-party publishers (Kobold Press, etc.)">3rd Party</span>
           <span class="chip" data-rsrc="homebrew" onclick="setRSrc(this,'homebrew')" title="Monsters you've created locally (stored in browser)">Homebrew</span>
         </div>
-        <button onclick="openSourceModal()" style="flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 7px;background:var(--bg-input);border:1px solid var(--border-mid);border-radius:2px;color:var(--text-secondary);cursor:pointer;white-space:nowrap" title="Filter by individual sourcebooks">Books ▾</button>
+        <button class="btn-books" onclick="openSourceModal()" title="Filter by individual sourcebooks">Books ▾</button>
       </div>
       <div style="display:flex;gap:3px;align-items:center">
         <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);flex-shrink:0" title="Sort order for the monster list">Sort</span>
@@ -791,108 +825,75 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
     </div>
   </div>
 
-  <!-- MONSTER LIBRARY VIEW -->
+  <!-- MONSTER LIBRARY VIEW — 3-column: filters | list | stat block + editor -->
   <div class="lib-view" id="libraryView">
-    <div class="lib-layout">
-      <div class="lib-col lib-list-col">
+    <div class="lib-layout3">
+      <!-- Left: filter chips panel (spell-library style) -->
+      <div class="lib-filter-panel">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--accent-gold);letter-spacing:.1em">FILTERS</span>
+          <div style="flex:1"></div>
+          <button onclick="clearLibFilters()" class="sp-clear-btn" title="Reset all filters">⟲ Clear All</button>
+        </div>
+        <!-- CR Range (only non-chip section — uses slider + dropdown duo) -->
+        <div class="sp-chip-section">
+          <span class="sp-chip-label">CR Range</span>
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">
+            <input type="range" id="libCRMin" min="0" max="33" value="0" oninput="onLibCRSlider()" style="flex:1">
+            <input type="range" id="libCRMax" min="0" max="33" value="33" oninput="onLibCRSlider()" style="flex:1">
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">
+            <select id="libCRMinSel" onchange="onLibCRDropdown()" style="flex:1;font-size:10px" title="Minimum CR"><option value="0">0</option><option value="1">1/8</option><option value="2">1/4</option><option value="3">1/2</option><option value="4">1</option><option value="5">2</option><option value="6">3</option><option value="7">4</option><option value="8">5</option><option value="9">6</option><option value="10">7</option><option value="11">8</option><option value="12">9</option><option value="13">10</option><option value="14">11</option><option value="15">12</option><option value="16">13</option><option value="17">14</option><option value="18">15</option><option value="19">16</option><option value="20">17</option><option value="21">18</option><option value="22">19</option><option value="23">20</option><option value="24">21</option><option value="25">22</option><option value="26">23</option><option value="27">24</option><option value="28">25</option><option value="29">26</option><option value="30">27</option><option value="31">28</option><option value="32">29</option><option value="33">30</option></select>
+            <span style="font-size:9px;color:var(--text-dim)">–</span>
+            <select id="libCRMaxSel" onchange="onLibCRDropdown()" style="flex:1;font-size:10px" title="Maximum CR"><option value="0">0</option><option value="1">1/8</option><option value="2">1/4</option><option value="3">1/2</option><option value="4">1</option><option value="5">2</option><option value="6">3</option><option value="7">4</option><option value="8">5</option><option value="9">6</option><option value="10">7</option><option value="11">8</option><option value="12">9</option><option value="13">10</option><option value="14">11</option><option value="15">12</option><option value="16">13</option><option value="17">14</option><option value="18">15</option><option value="19">16</option><option value="20">17</option><option value="21">18</option><option value="22">19</option><option value="23">20</option><option value="24">21</option><option value="25">22</option><option value="26">23</option><option value="27">24</option><option value="28">25</option><option value="29">26</option><option value="30">27</option><option value="31">28</option><option value="32">29</option><option value="33" selected>30</option></select>
+          </div>
+          <div id="libCRDisp" style="text-align:center;font-size:10px;color:var(--accent-gold);font-family:'JetBrains Mono',monospace">All CR</div>
+        </div>
+        <!-- Chip sections (populated by renderLibChips) -->
+        <div class="sp-chip-section"><span class="sp-chip-label">Type</span><div class="sp-chip-grid" id="libChipTypes"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label">Size</span><div class="sp-chip-grid" id="libChipSizes"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label">Abilities</span><div class="sp-chip-grid" id="libChipAbilities"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label">Combat</span><div class="sp-chip-grid" id="libChipCombat"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label">Mobility</span><div class="sp-chip-grid" id="libChipMobility"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label" title="Active chips HIDE matching monsters from the list">Hide</span><div class="sp-chip-grid" id="libChipExclude"></div></div>
+        <div class="sp-chip-section"><span class="sp-chip-label">Environment</span><div class="sp-chip-grid" id="libChipEnvs"></div></div>
+        <div class="sp-chip-section">
+          <span class="sp-chip-label">Source</span>
+          <div class="sp-chip-grid" id="libChipSrcs"></div>
+          <button onclick="openSourceModal()" class="sp-sort-btn" style="width:100%;margin-top:5px;font-size:9px" title="Filter by individual sourcebooks">+ Individual Books</button>
+        </div>
+      </div>
+
+      <!-- Middle: search + monster list -->
+      <div class="lib-list-col2">
         <div class="lib-col-hdr">
-          <span style="flex:1">Monster Database</span>
-          <span id="libTotalCount" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">0</span>
+          <span style="flex:1">MONSTER DATABASE</span>
+          <span id="libTotalCount" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">0 shown</span>
         </div>
         <div style="padding:6px 10px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
-          <input type="text" id="libSearch" placeholder="Search..." oninput="renderLibList()" style="margin-bottom:4px">
-          <div style="display:flex;gap:3px">
-            <select id="libSrcFilter" onchange="renderLibList()" style="flex:1;font-size:11px">
-              <option value="">All Sources</option>
-              <option value="official">Official</option>
-              <option value="community">Community</option>
-              <option value="third-party">Third Party</option>
-              <option value="homebrew">Homebrew</option>
-            </select>
-            <select id="libTypeFilter" onchange="renderLibList()" style="flex:1;font-size:11px">
-              <option value="">All Types</option>
-              <option>Beast</option><option>Undead</option><option>Humanoid</option>
-              <option>Dragon</option><option>Fiend</option><option>Construct</option>
-              <option>Elemental</option><option>Fey</option><option>Giant</option>
-              <option>Monstrosity</option><option>Ooze</option><option>Plant</option>
-            </select>
-          </div>
+          <input type="text" id="libSearch" placeholder="Search monsters..." oninput="renderLibraryView()" style="width:100%">
         </div>
-        <div class="lib-scroll" id="libMonsterList" style="padding:0"></div>
+        <div class="alpha-chips" id="libAlphaChips" title="Jump to the first monster starting with a letter. Dim letters have no matches under current filters."></div>
+        <div class="pscroll" id="libMonsterList" style="flex:1"></div>
+        <div id="libPager" class="pager" style="padding:6px 10px;border-top:1px solid var(--border-dim);flex-shrink:0;display:flex;gap:4px;align-items:center;flex-wrap:wrap"></div>
         <div class="lib-footer">
           <span class="lib-cnt" id="libSelCount">0 selected</span>
           <button class="btn teal" onclick="selectAllLib()">All</button>
           <button class="btn" onclick="deselectAllLib()">None</button>
           <button class="btn red" onclick="deleteSelected()">Delete</button>
         </div>
-        <div class="db-stats-block">
-          <div class="db-srow"><span class="db-slbl">Official</span><span class="db-sval" id="stat-official">0</span></div>
-          <div class="db-srow"><span class="db-slbl">Community</span><span class="db-sval" id="stat-community">0</span></div>
-          <div class="db-srow"><span class="db-slbl">Third Party</span><span class="db-sval" id="stat-third">0</span></div>
-          <div class="db-srow"><span class="db-slbl">Homebrew</span><span class="db-sval" id="stat-homebrew">0</span></div>
-        </div>
       </div>
-      <div class="lib-col lib-editor-col">
+
+      <!-- Right: stat block + editor -->
+      <div class="lib-detail-col">
         <div class="lib-col-hdr">
           <span id="edTitle" style="flex:1">Monster Editor</span>
-          <button class="btn teal" onclick="newMonster()">+ New Homebrew</button>
+          <button class="btn teal" onclick="newMonster()">+ New</button>
           <button class="btn gold" onclick="saveMonsterEdit()" style="margin-left:4px">Save</button>
         </div>
-        <div class="lib-scroll" style="padding:0">
+        <div class="pscroll" style="flex:1">
           <div class="ed-form" id="editorForm">
-            <div style="font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-dim);font-style:italic;text-align:center;padding:30px">Select a monster to edit, or create a new homebrew monster.</div>
-          </div>
-        </div>
-      </div>
-      <div class="lib-col lib-import-col">
-        <div class="lib-col-hdr">Database &amp; Homebrew</div>
-        <div class="lib-scroll">
-          <div style="padding:10px">
-            <div class="flbl" style="margin-top:0">Monster Database</div>
-            <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:6px" id="dbEmbedStatus">&#9989; Monsters baked in — no loading required.</div>
-
-            <div class="flbl">Import &amp; Merge</div>
-            <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:5px">Import a JSON to merge or overwrite monsters in memory this session. Use Download Updated App to make permanent.</div>
-            <input type="file" id="dbFilePicker" accept=".json" multiple style="display:none" onchange="loadMonsterFilesWithProgress(this.files)">
-            <button class="btn teal" style="width:100%;margin-bottom:4px" onclick="document.getElementById('dbFilePicker').click()">&#128194; Import Monster JSON</button>
-            <div id="loadProgress" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-teal);text-align:center;padding:4px;background:rgba(58,138,122,.07);border-radius:3px;margin-bottom:6px"><span id="loadProgressText">Reading file&#8230;</span></div>
-
-            <button class="btn gold" style="width:100%;margin-bottom:4px" onclick="exportFullDB()">&#11015; Export Monster JSON</button>
-
-            <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
-
-            <!-- DOWNLOAD UPDATED APP -->
-            <div class="flbl">Download Updated App</div>
-            <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:8px">Creates a new self-contained HTML with selected data baked in permanently.</div>
-            <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px" id="downloadChecks">
-              <label class="chk-row"><input type="checkbox" class="chk" id="dl-monsters" checked><span class="chk-lbl">Monster Database (with EXT merged in)</span></label>
-              <label class="chk-row"><input type="checkbox" class="chk" id="dl-homebrew" checked><span class="chk-lbl">Homebrew Monsters</span></label>
-              <label class="chk-row"><input type="checkbox" class="chk" id="dl-parties" checked><span class="chk-lbl">Saved Parties</span></label>
-              <label class="chk-row"><input type="checkbox" class="chk" id="dl-encounters" checked><span class="chk-lbl">Saved Encounters</span></label>
-              <label class="chk-row"><input type="checkbox" class="chk" id="dl-srcprefs" checked><span class="chk-lbl">Source Filter Preferences</span></label>
-            </div>
-            <button class="btn-run" style="width:100%;margin-bottom:4px" onclick="downloadUpdatedApp()">&#11123; Download Updated App</button>
-            <div id="dlStatus" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);text-align:center;min-height:12px"></div>
-
-            <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
-
-            <div class="flbl" style="margin-top:0">Homebrew</div>
-            <button class="btn teal" style="width:100%;margin-bottom:6px" onclick="newMonster()">+ New Homebrew Monster</button>
-            <div class="flbl">Paste JSON to pre-fill editor</div>
-            <textarea class="import-area" id="importTA" placeholder='{"name":"My Monster","cr":"5","hp":100,"ac":15}'></textarea>
-            <input type="file" id="hbFilePicker" accept=".json" style="display:none" onchange="loadHBFile(this.files[0])">
-            <div style="display:flex;gap:4px;margin-top:5px">
-              <button class="btn" onclick="document.getElementById('hbFilePicker').click()" style="flex:1">&#128194; File</button>
-              <button class="btn teal" onclick="prefillFromJSON()" style="flex:1">Fill</button>
-              <button class="btn gold" onclick="importHomebrew()" style="flex:1">Import</button>
-            </div>
-            <div class="import-preview" id="importPreview">Preview will appear here.</div>
-            <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
-            <div class="flbl">Reset</div>
-            <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px">
-              <button class="btn red" style="width:100%" onclick="resetLayer('kobold')">Reset to Baked-In Monsters</button>
-              <button class="btn red" style="width:100%" onclick="resetLayer('homebrew')">Clear All Homebrew</button>
-            </div>
+            <div style="font-family:'Crimson Pro',serif;font-size:14px;color:var(--text-dim);font-style:italic;text-align:center;padding:30px">Select a monster from the list to view its stat block, or create a new homebrew monster.</div>
           </div>
         </div>
       </div>
@@ -1125,9 +1126,16 @@ let MFILTERED=[];             // cached filtered/sorted monster list for paginat
 let MPAGE=0;                  // current page index in the monster list
 const MPER_PAGE=75;           // monsters per page
 let MACTIVE_LETTER=null;      // letter user explicitly jumped to (overrides chip-active calc)
+let MLIST_OFFSET=null;        // letter-jump override: slice MFILTERED starting at this index so the chosen letter sits at row 0 (avoids scroll-clamp near page end)
 let GEN_COLLAPSED=false;      // generate section collapse state
 let MON_COLLAPSED=false;      // monsters section collapse state
 let ENC_PINNED=true;          // default true: encounter stays open on Simulate. Click lock to opt into auto-collapse.
+const RECENT_PICKS=[];        // rolling log of recently-generated monster slugs (last ~30) — picker avoids these for cross-Generate variety
+const RECENT_MAX=30;
+// Debug toggle for the encounter generator. Flip via browser console:
+//   DEBUG_GEN = true   (logs pool sizes + picks for every Generate)
+//   DEBUG_GEN = false  (default — silent)
+window.DEBUG_GEN=false;
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
@@ -1152,7 +1160,14 @@ let ENC_PINNED=true;          // default true: encounter stays open on Simulate.
   updateDBBar();
   updateRunBtn();
   renderSavedEncList();
-  document.getElementById("rpCRDisp").textContent="All CR";
+  // New UI init wrapped defensively — if any of these throw, don't block the
+  // monster list from loading on the encounter builder.
+  try{initCRDropdowns();}catch(e){console.error("initCRDropdowns failed:",e);}
+  try{syncCRUI();}catch(e){console.error("syncCRUI failed:",e);}
+  // Defer library UI init to the next tick — LIB_F and its const siblings
+  // are declared later in the source, and this IIFE runs before the whole
+  // script finishes parsing. setTimeout(0) pushes initLibUI past that TDZ.
+  setTimeout(()=>{try{initLibUI();}catch(e){console.error("initLibUI failed:",e);}},0);
   searchMonsters();
 })();
 
@@ -1258,10 +1273,17 @@ function normalizeAll(){
     // legendaryActions a numeric value. Without this, sim sees Tiamat's
     // legendaryActionsLeft as an array, never decrements, never fires.
     if(Array.isArray(m.legendaryActions)){
-      if(!Array.isArray(m.legendary_actions)||!m.legendary_actions.length){
-        m.legendary_actions=m.legendaryActions;
+      // Empty array = no legendary actions. The old code blindly set =3 for
+      // any array including [], which mislabeled every CR-0 commoner as a
+      // 3-legendary-action monster.
+      if(m.legendaryActions.length===0){
+        m.legendaryActions=0;
+      } else {
+        if(!Array.isArray(m.legendary_actions)||!m.legendary_actions.length){
+          m.legendary_actions=m.legendaryActions;
+        }
+        m.legendaryActions=3;
       }
-      m.legendaryActions=3;
     } else if(typeof m.legendaryActions!=="number"){
       m.legendaryActions=m.legendary?3:0;
     }
@@ -1609,6 +1631,44 @@ function resolveMonsterStats(m,ext){
   return{atkBonus,numAtks,dmgPerAtk,bestAttackDmg,saveDC,legAct,legRes,aoeType,aoeDmg,aoeTargets,aoeFreq,res,imm,condImm};
 }
 function allM(){return[...MDB,...HB]}
+
+// Named-NPC detection. Only trusts explicit flags — the earlier heuristic
+// that used lore-length was flagging generic monsters with missing lore data
+// rather than actual named characters. Accurate now at the cost of coverage
+// (Arabelle, Thavius Kreeg etc. won't trip until we enrich the DB).
+// TODO: once parseable 5e book data is imported, flag creatures that appear
+// in adventure-module NPC indices (e.g., BGDIA appendix named characters).
+function isLikelyNamedNPC(m){
+  if(!m)return false;
+  return m.unique===true||m.isNpc===true||m.isNamedCreature===true;
+}
+
+// STOPGAP: stricter-than-isLikelyNamedNPC filter applied ONLY to the grunt
+// pool + mutation pool in the encounter generator. Catches named WotC NPCs
+// that lack the `unique` flag (Thavius Kreeg, Volo, Donavich, Arabelle, etc.)
+// by combining two signals:
+//   1. Type is a specific humanoid race — "humanoid (human)", NOT "humanoid
+//      (any race)". Generic adventurers use "any race"; named characters pick
+//      a specific race.
+//   2. Name lacks any common role/title word. "Bandit Captain" has Captain,
+//      "Lizardfolk Commoner" has Commoner — those are generic. "Thavius
+//      Kreeg" has no role word → flagged.
+//   3. Name doesn't contain " of " — "Fist of Bane", "Necromite of Myrkul"
+//      are faction roles, not named individuals.
+// Intended for the grunt/mutation pools only — we can afford some false
+// positives there (pool is still 1000+ monsters). NOT applied to the Library
+// filter, which demands accuracy.
+const _GRUNT_ROLE_WORDS=/\b(commoner|guard|bandit|thug|priest|acolyte|noble|knight|soldier|veteran|spy|assassin|mage|archmage|druid|scout|captain|marauder|cultist|berserker|gladiator|warlock|sorcerer|wizard|paladin|ranger|cleric|fighter|monk|rogue|barbarian|bard|warrior|apprentice|adept|initiate|aspirant|recruit|sergeant|lieutenant|henchman|lackey|minion|grunt|brute|ruffian|agent|medic|healer|cook|porter|servant|blademaster|deputy|tracker|hunter|archer|crossbowman|slinger|spearman|pikeman|pirate|sailor|merchant|trader|scholar|sage|courtier|diplomat|emissary|herald|messenger|explorer|adventurer|pilgrim|ascetic|poisoner|envoy|ambassador|shepherd|farmer|fisherman|blacksmith|smith|carpenter|baker|butcher|gravedigger|alchemist|apothecary|herbalist|miner|woodcutter|beggar|orphan|patrol|patroller|warden|ward|keeper|reaver|raider|defender|striker|brawler|pugilist|wrestler|corsair|buccaneer|swashbuckler|duelist|mercenary|deserter|conscript|recruit|prisoner|slave|slaver|trader|vagabond|wanderer|mystic|oracle|seer|astrologer|astronomer|witch|hag|crone|sage|savant|lord|lady|baron|baroness|duke|duchess|count|countess|king|queen|prince|princess|tyrant|despot|dictator|general|commander|admiral|marshal|major|colonel|corporal|trooper|rider|cavalier|champion|chosen|elect|anointed|blessed|cursed|fallen|unsworn|oathbound|bound)\b/i;
+function isGrunTierNPC(m){
+  if(!m)return false;
+  const type=(m.type||"").toLowerCase();
+  const name=m.name||"";
+  if(!/humanoid\s*\([^)]+\)/.test(type))return false;
+  if(/any race|any alignment/.test(type))return false;
+  if(/\bof\b/i.test(name))return false;
+  if(_GRUNT_ROLE_WORDS.test(name))return false;
+  return true;
+}
 function findM(slug){return allM().find(m=>m.slug===slug)}
 
 // ═══════════════════════════════════════════════════════════════
@@ -1631,7 +1691,7 @@ function switchTab(tab){
     mp.classList.remove("hidden-lib");pp.classList.remove("hidden-lib");searchMonsters();
   } else {
     mp.classList.add("hidden-lib");pp.classList.add("hidden-lib");
-    if(tab==="library"){renderLibList();updateLibStats();}
+    if(tab==="library"){renderLibraryView();updateLibStats();}
     if(tab==="spells")renderSpellList();
   }
 }
@@ -1688,7 +1748,10 @@ function clearFilters(keepCR){
 let UI_FONT_SIZE=100;
 function adjTextSize(delta){
   UI_FONT_SIZE=Math.max(70,Math.min(140,UI_FONT_SIZE+(delta*10)));
-  document.documentElement.style.fontSize=UI_FONT_SIZE+'%';
+  // Use zoom instead of root font-size: most of this file's CSS uses literal
+  // px font sizes, so a root-font-size change leaves 90% of the UI unchanged.
+  // Zoom scales everything proportionally (text + layout).
+  document.body.style.zoom=UI_FONT_SIZE+'%';
   showToast(`Text size: ${UI_FONT_SIZE}%`);
 }
 
@@ -1827,8 +1890,7 @@ function updateLibStats(){
   const ids=["stat-official","stat-community","stat-third","stat-homebrew","stat-enriched"];
   const vals=[official,community,third,homebrew,enriched];
   ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=vals[i].toLocaleString();});
-  const tc=document.getElementById("libTotalCount");
-  if(tc)tc.textContent=(MDB.length+HB.length).toLocaleString();
+  // libTotalCount is owned by renderLibraryView (shows filtered count) — don't overwrite here.
 }
 
 function loadMonsterFilesWithProgress(files){
@@ -1890,7 +1952,7 @@ function loadMonsterFiles(files,onDone){
     updateDBBar();
     loadSavedSourcePrefs(); // restore source filter prefs after load
     searchMonsters();
-    if(ATAB==="library"){renderLibList();updateLibStats();}
+    if(ATAB==="library"){renderLibraryView();updateLibStats();}
     const genStatus=document.getElementById("genStatus");
     if(genStatus)genStatus.textContent=`${MDB.length.toLocaleString()} monsters loaded`;
     if(onDone)onDone();
@@ -1995,11 +2057,21 @@ function buildSourceModal(){
   const assigned=new Set();
   let html="";
 
-  SOURCE_GROUPS.forEach(grp=>{
+  // Per-section select-all/clear buttons: keyed by section id so the handler
+  // can flip only checkboxes inside that group without touching others.
+  const sectionHdr=(label,sectionId,gold)=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border-dim)">
+      <span style="font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--${gold?"accent-gold":"text-secondary"});letter-spacing:.1em;text-transform:uppercase;flex:1">${label}</span>
+      <button onclick="selectSection('${sectionId}',true)" style="font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:2px;color:var(--text-secondary);cursor:pointer">All</button>
+      <button onclick="selectSection('${sectionId}',false)" style="font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;background:var(--bg-input);border:1px solid var(--border-dim);border-radius:2px;color:var(--text-secondary);cursor:pointer">None</button>
+    </div>`;
+
+  SOURCE_GROUPS.forEach((grp,gi)=>{
     const grpKeys=grp.keys.filter(k=>counts[k]);
     if(!grpKeys.length)return;
-    html+=`<div style="margin-bottom:14px">
-      <div style="font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--accent-gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border-dim)">${grp.label}</div>
+    const sid=`src-sec-${gi}`;
+    html+=`<div class="src-section" data-sid="${sid}" style="margin-bottom:14px">
+      ${sectionHdr(grp.label,sid,true)}
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:3px">`;
     grpKeys.forEach(k=>{
       assigned.add(k);
@@ -2017,8 +2089,9 @@ function buildSourceModal(){
   // Ungrouped / overflow
   const ungrouped=allKeys.filter(k=>!assigned.has(k)).sort((a,b)=>counts[b]-counts[a]);
   if(ungrouped.length){
-    html+=`<div style="margin-bottom:14px">
-      <div style="font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--text-secondary);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border-dim)">Other / Misc</div>
+    const sid="src-sec-misc";
+    html+=`<div class="src-section" data-sid="${sid}" style="margin-bottom:14px">
+      ${sectionHdr("Other / Misc",sid,false)}
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:3px">`;
     ungrouped.forEach(k=>{
       const checked=SELECTED_SOURCES===null||SELECTED_SOURCES.has(k);
@@ -2031,6 +2104,14 @@ function buildSourceModal(){
     html+="</div></div>";
   }
   body.innerHTML=html;
+  updateSourceSelCount();
+}
+
+// Flip all checkboxes inside one source-modal section to checked/unchecked.
+function selectSection(sid,val){
+  const sec=document.querySelector(`.src-section[data-sid="${sid}"]`);
+  if(!sec)return;
+  sec.querySelectorAll("input[type=checkbox]").forEach(cb=>{cb.checked=val;});
   updateSourceSelCount();
 }
 
@@ -2141,7 +2222,7 @@ function importHomebrew(){
       if(idx>=0)HB[idx]=m;else HB.push(m);
     });
     safeSetLS(HB_KEY,JSON.stringify(HB));
-    updateDBBar();if(ATAB==="library"){renderLibList();updateLibStats();searchMonsters();}
+    updateDBBar();if(ATAB==="library"){renderLibraryView();updateLibStats();searchMonsters();}
     document.getElementById("importPreview").innerHTML=`<span style="color:var(--accent-teal)">&#10003; ${d.length} monster(s) imported.</span>`;
     document.getElementById("importTA").value="";
   }catch(e){alert("Import failed: "+e.message);}
@@ -2156,7 +2237,7 @@ function resetLayer(layer){
     } else {MDB=[];}
   }
   else if(layer==="homebrew"){HB=[];localStorage.removeItem(HB_KEY);}
-  updateDBBar();searchMonsters();if(ATAB==="library"){renderLibList();updateLibStats();}
+  updateDBBar();searchMonsters();if(ATAB==="library"){renderLibraryView();updateLibStats();}
 }
 
 function exportFullDB(){
@@ -2255,6 +2336,14 @@ function setRSrc(el,src){
 
 function normaliseSource(s){
   if(!s)return"";
+  // URL-style sources ("Monster-A-Day: https://reddit.com/..." with a unique
+  // URL per monster) were creating one modal entry per URL — hundreds of
+  // dupes. Collapse anything containing http:// or https:// down to the
+  // label before the colon.
+  if(/https?:\/\//.test(s)){
+    const cut=s.indexOf(":");
+    return cut>0?s.slice(0,cut).trim():s.trim();
+  }
   // Strip page number suffix: "Tome of Beasts 2: 188" -> "Tome of Beasts 2"
   return s.replace(/:\s*\d+.*$/,"").replace(/,.*$/,"").trim();
 }
@@ -2293,12 +2382,46 @@ function matchM(m,q,type,env,src){
   return true;
 }
 
+// Populate the CR dropdowns once at init — options mirror CR_LIST (value = index).
+function initCRDropdowns(){
+  const opts=CR_LIST.map((c,i)=>`<option value="${i}">${c}</option>`).join("");
+  const mn=document.getElementById("rpCRMinSel");
+  const mx=document.getElementById("rpCRMaxSel");
+  if(mn){mn.innerHTML=opts;mn.value=RPCRMIN;}
+  if(mx){mx.innerHTML=opts;mx.value=RPCRMAX;}
+}
+
+// Reflect RPCRMIN/RPCRMAX to all four CR inputs (two sliders + two dropdowns)
+// and the "CR 2–5" display label. Used after any handler that updates state.
+function syncCRUI(){
+  const mnSl=document.getElementById("rpCRMin"),mxSl=document.getElementById("rpCRMax");
+  const mnSel=document.getElementById("rpCRMinSel"),mxSel=document.getElementById("rpCRMaxSel");
+  if(mnSl)mnSl.value=RPCRMIN;
+  if(mxSl)mxSl.value=RPCRMAX;
+  if(mnSel)mnSel.value=RPCRMIN;
+  if(mxSel)mxSel.value=RPCRMAX;
+  const disp=document.getElementById("rpCRDisp");
+  if(disp)disp.textContent=RPCRMIN===0&&RPCRMAX===CR_LIST.length-1?"All CR":(RPCRMIN===RPCRMAX?`CR ${CR_LIST[RPCRMIN]}`:`CR ${CR_LIST[RPCRMIN]}–${CR_LIST[RPCRMAX]}`);
+}
+
 // Right panel CR slider
 function onRPCRSlider(){
   RPCRMIN=parseInt(document.getElementById("rpCRMin").value);
   RPCRMAX=parseInt(document.getElementById("rpCRMax").value);
-  if(RPCRMIN>RPCRMAX){RPCRMAX=RPCRMIN;document.getElementById("rpCRMax").value=RPCRMAX;}
-  document.getElementById("rpCRDisp").textContent=`CR ${CR_LIST[RPCRMIN]||"0"}–${CR_LIST[RPCRMAX]||"30"}`;
+  if(RPCRMIN>RPCRMAX)RPCRMAX=RPCRMIN;
+  syncCRUI();
+  searchMonsters();
+}
+
+// Dropdown-side handler — same semantics, different inputs. Fall back to
+// current state if the dropdown somehow has no value (prevents NaN state).
+function onRPCRDropdown(){
+  const mn=parseInt(document.getElementById("rpCRMinSel")?.value);
+  const mx=parseInt(document.getElementById("rpCRMaxSel")?.value);
+  if(Number.isFinite(mn))RPCRMIN=mn;
+  if(Number.isFinite(mx))RPCRMAX=mx;
+  if(RPCRMIN>RPCRMAX)RPCRMAX=RPCRMIN;
+  syncCRUI();
   searchMonsters();
 }
 
@@ -2326,21 +2449,22 @@ function searchMonsters(){
   else if(SORT_MODE==='alpha-rev')filtered.sort((a,b)=>b.name.localeCompare(a.name));
   else if(q)filtered.sort((a,b)=>a.name.toLowerCase().indexOf(q)-b.name.toLowerCase().indexOf(q));
   else filtered.sort((a,b)=>a.name.localeCompare(b.name));
-  const booksBtn=document.querySelector('button[onclick="openSourceModal()"]');
-  if(booksBtn){
+  // Update every Books button (builder sidebar + library filter panel).
+  // Active-filter state goes on the .filtered class, never inline styles —
+  // the base .btn-books styling needs to stay gold-readable at all times.
+  document.querySelectorAll('button.btn-books, button[onclick="openSourceModal()"]').forEach(btn=>{
     if(SELECTED_SOURCES!==null){
-      booksBtn.style.color="var(--accent-gold)";
-      booksBtn.style.borderColor="var(--accent-gold-dim)";
-      booksBtn.textContent=`Books (${SELECTED_SOURCES.size}) ▾`;
+      btn.classList.add("filtered");
+      btn.textContent=`Books (${SELECTED_SOURCES.size}) ▾`;
     } else {
-      booksBtn.style.color="";
-      booksBtn.style.borderColor="";
-      booksBtn.textContent="Books ▾";
+      btn.classList.remove("filtered");
+      btn.textContent="Books ▾";
     }
-  }
+  });
   MFILTERED=filtered;
   MPAGE=0;
   MACTIVE_LETTER=null;
+  MLIST_OFFSET=null;
   renderMList();
   renderAlphaChips();
   renderPager();
@@ -2354,7 +2478,7 @@ function renderMList(){
     el.innerHTML='<div style="padding:12px 10px;font-family:\'Crimson Pro\',serif;font-size:13px;font-style:italic;color:var(--text-secondary);text-align:center">No monsters match these filters.</div>';
     return;
   }
-  const start=MPAGE*MPER_PAGE;
+  const start=MLIST_OFFSET!=null?MLIST_OFFSET:MPAGE*MPER_PAGE;
   const slice=MFILTERED.slice(start,start+MPER_PAGE);
   el.innerHTML=slice.map(m=>{
     const hasFull=EXT[m.slug]?.atkBonus!==undefined||m.atkBonus!=null||m._layer==="homebrew";
@@ -2392,7 +2516,8 @@ function renderAlphaChips(){
     // That letter stays highlighted until they paginate manually or change filters.
     if(MACTIVE_LETTER)return MACTIVE_LETTER;
     if(!MFILTERED.length)return null;
-    const first=MFILTERED[MPAGE*MPER_PAGE];
+    const firstIdx=MLIST_OFFSET!=null?MLIST_OFFSET:MPAGE*MPER_PAGE;
+    const first=MFILTERED[firstIdx];
     if(!first)return null;
     const c=(first.name||"").charAt(0).toUpperCase();
     return /[A-Z]/.test(c)?c:"#";
@@ -2430,8 +2555,9 @@ function renderPager(){
     html+=`<button class="pg-btn${n===cur?" active":""}" onclick="setMPage(${n})" title="Page ${n+1} of ${pageCount}">${n+1}</button>`;
   }
   html+=`<button class="pg-btn${cur>=pageCount-1?" disabled":""}" ${cur>=pageCount-1?"":`onclick="setMPage(${cur+1})"`} title="Next page">›</button>`;
-  const first=cur*MPER_PAGE+1;
-  const last=Math.min(total,first+MPER_PAGE-1);
+  const startIdx=MLIST_OFFSET!=null?MLIST_OFFSET:cur*MPER_PAGE;
+  const first=startIdx+1;
+  const last=Math.min(total,startIdx+MPER_PAGE);
   html+=`<span class="pg-info">${first}–${last} / ${total.toLocaleString()}</span>`;
   el.innerHTML=html;
 }
@@ -2440,6 +2566,7 @@ function setMPage(n){
   // Manual pagination — clear any sticky chip-jump highlight; the active chip
   // will recompute from whichever letter the new page begins with.
   MACTIVE_LETTER=null;
+  MLIST_OFFSET=null;
   const pageCount=Math.max(1,Math.ceil(MFILTERED.length/MPER_PAGE));
   MPAGE=Math.max(0,Math.min(pageCount-1,n|0));
   renderMList();renderAlphaChips();renderPager();
@@ -2454,26 +2581,14 @@ function jumpToLetter(ltr){
     if(key===ltr){idx=i;break;}
   }
   if(idx<0)return;
-  const page=Math.floor(idx/MPER_PAGE);
-  const rowInPage=idx-page*MPER_PAGE;
-  // Set page directly (bypass setMPage so the chip-jump highlight persists).
+  // Override the page-slice to start at the target letter so its first monster
+  // sits at row 0 of the visible list — scroll-clamping can't push it down.
+  // MPAGE still tracks the nearest real page for the pager highlight.
   const pageCount=Math.max(1,Math.ceil(MFILTERED.length/MPER_PAGE));
-  MPAGE=Math.max(0,Math.min(pageCount-1,page));
+  MPAGE=Math.max(0,Math.min(pageCount-1,Math.floor(idx/MPER_PAGE)));
+  MLIST_OFFSET=idx;
   MACTIVE_LETTER=ltr;
   renderMList();renderAlphaChips();renderPager();
-  // After render, scroll within the list so the target letter's first monster
-  // sits at the visible top. Use bounding rects — works regardless of which
-  // ancestor is the offset parent.
-  const results=document.getElementById("monsterResults");
-  if(results){
-    const rows=results.querySelectorAll(".mresult-row");
-    const target=rows[rowInPage];
-    if(target){
-      const cTop=results.getBoundingClientRect().top;
-      const tTop=target.getBoundingClientRect().top;
-      results.scrollTop+=(tTop-cTop);
-    }
-  }
 }
 let OPEN_SB=null;
 function toggleStatBlock(slug,sid){
@@ -2860,10 +2975,13 @@ const TMPLS={
     {groups:[{count:2,pool:"boss"},{count:2,pool:"main"}]},
     {groups:[{count:1,pool:"boss"},{count:1,pool:"lt"},{count:2,pool:"main"}]},
   ],
+  // Swarm = chaff-tier only. All groups pull from the grunt pool (which is CR-
+  // capped for swarm). Counts are high since individuals are very weak; sim
+  // mutation prunes or adds as needed to land on tier.
   swarm:[
-    {groups:[{count:"P2",pool:"main",horde:true}]},
-    {groups:[{count:1,pool:"main"},{count:"P2",pool:"grunt",horde:true}]},
     {groups:[{count:"P3",pool:"grunt",horde:true}]},
+    {groups:[{count:"P4",pool:"grunt",horde:true}]},
+    {groups:[{count:"P2",pool:"grunt",horde:true},{count:"P2",pool:"grunt",horde:true}]},
   ],
   // Elite: squad leaders + grunts — orc warlord, 2 captains, several orcs
   elite:[
@@ -2927,13 +3045,18 @@ function getSuggested(){
   const diff=GENDIFF||"moderate";
   const budget=partyBudget(diff)||partyBudget("moderate");
 
-  // For horde/swarm: CR sliders should show the GRUNT range (low CR), not boss CR
+  // For horde/swarm: CR sliders should show the GRUNT range (low CR), not boss CR.
+  // Swarm = always very low CR (chaff-grade), regardless of party level.
+  // Horde = scaled to party level but allows sub-CR-1 values for low-level parties
+  // (a party of level 1 hordes CR 1/4 monsters, not CR 1s).
   if(ETYPE==="horde"||ETYPE==="swarm"){
-    const gruntMaxCR=Math.max(1,Math.floor(avgLvl/2));
-    const gruntMinCR=Math.max(0,Math.floor(avgLvl/4));
-    const maxIdx=Math.min(33,CR_LIST.findIndex(cr=>CR_NUM[cr]>=gruntMaxCR)+1||10);
-    const minIdx=Math.max(0,CR_LIST.findIndex(cr=>CR_NUM[cr]>=gruntMinCR));
-    return{min:minIdx,max:maxIdx};
+    const isSwarm=ETYPE==="swarm";
+    const maxCR=isSwarm?Math.max(0.5,Math.min(2,avgLvl/6)):Math.max(0.5,avgLvl/2);
+    const minCR=isSwarm?0:Math.max(0,avgLvl/4-0.5);
+    const findIdx=cr=>{const i=CR_LIST.findIndex(c=>CR_NUM[c]>=cr);return i<0?CR_LIST.length-1:i;};
+    const maxIdx=Math.min(CR_LIST.length-1,findIdx(maxCR));
+    const minIdx=Math.max(0,findIdx(minCR));
+    return{min:minIdx,max:Math.max(minIdx,maxIdx)};
   }
 
   // For boss/boss_minions/elite: show boss CR range
@@ -2944,7 +3067,7 @@ function getSuggested(){
   const spread=isBossType?2:3;
   const minIdx=Math.max(0,targetIdx-spread);
   const maxIdx=Math.min(33,targetIdx+spread);
-  return{min:minIdx,max:Math.max(minIdx+1,maxIdx)};
+  return{min:minIdx,max:Math.max(minIdx,maxIdx)};
 }
 
 function resetCRSuggested(){
@@ -2954,12 +3077,7 @@ function resetCRSuggested(){
   }
   const s=getSuggested();
   RPCRMIN=s.min;RPCRMAX=s.max;
-  const mnEl=document.getElementById("rpCRMin");
-  const mxEl=document.getElementById("rpCRMax");
-  if(mnEl)mnEl.value=RPCRMIN;
-  if(mxEl)mxEl.value=RPCRMAX;
-  const disp=document.getElementById("rpCRDisp");
-  if(disp)disp.textContent=`CR ${CR_LIST[RPCRMIN]||"0"}–${CR_LIST[RPCRMAX]||"30"}`;
+  syncCRUI();
   searchMonsters();
 }
 
@@ -3031,8 +3149,16 @@ function generateEncounter(){
   const crMinNum=CR_NUM[CR_LIST[RPCRMIN]]??0;
   const crMaxNum=CR_NUM[CR_LIST[RPCRMAX]]??30;
 
-  const gruntMaxCR=Math.max(1,Math.floor(avgLvl/2));
-  const gruntMinCR=Math.max(0,Math.floor(avgLvl/4));
+  // Grunt CR range: swarms are chaff-tier (CR 0 up to ~avgLvl/6, capped at 2);
+  // everything else uses the party-scaled range. Horde gruntMinCR matches
+  // HORDE_FLOOR_BY_LVL so the initial candidate-pool minimum agrees with the
+  // mutation floor — otherwise the initial pick lands too high and every
+  // Generate spends refinement steps CR-downing from CR 1/2 to CR 1/4.
+  const isSwarmGen=ETYPE==="swarm";
+  const HORDE_FLOOR_BY_LVL=[0,0,0.125,0.125,0.25,0.25,0.5,0.5,1,1,2,2,2,3,3,3,5,5,5,5,5];
+  const hordeFloor=HORDE_FLOOR_BY_LVL[Math.min(20,Math.max(1,avgLvl))]||0;
+  const gruntMaxCR=isSwarmGen?Math.max(0.5,Math.min(2,avgLvl/6)):Math.max(0.5,avgLvl/2);
+  const gruntMinCR=isSwarmGen?0:(ETYPE==="horde"?hordeFloor:Math.max(0,avgLvl/4-0.5));
 
   // Pools draw from the slider range; per-group CR targeting happens via
   // pickClosest's XP-distance sort. Bosses, lieutenants, and mains all share
@@ -3044,7 +3170,17 @@ function generateEncounter(){
     const fallback=all.length?all:allM();
     const inSlider=fallback.filter(m=>m.crNum>=crMinNum&&m.crNum<=crMaxNum);
     if(poolTag==="lt"){const p=inSlider.filter(m=>!m.legendary);return p.length?p:inSlider;}
-    if(poolTag==="grunt"){const p=allM().filter(m=>!m.legendary&&(m.crNum??0)>=gruntMinCR&&(m.crNum??0)<=gruntMaxCR);return p.length?p:allM().filter(m=>!m.legendary&&(m.crNum??0)<=Math.max(2,gruntMaxCR));}
+    // Grunt pool: non-legendary, in-CR-range, AND not a named NPC (Arabelle-the-
+    // 5-year-old should never show up as a horde grunt). Also runs the grunt-
+    // tier stopgap filter that catches WotC named NPCs lacking the unique flag.
+    // Fallback tier drops the stricter filter if the pool empties under tight
+    // constraints, so we always produce something.
+    if(poolTag==="grunt"){
+      const p=allM().filter(m=>!m.legendary&&(m.crNum??0)>=gruntMinCR&&(m.crNum??0)<=gruntMaxCR&&!isLikelyNamedNPC(m)&&!isGrunTierNPC(m));
+      if(p.length)return p;
+      const p2=allM().filter(m=>!m.legendary&&(m.crNum??0)<=Math.max(2,gruntMaxCR)&&!isLikelyNamedNPC(m));
+      return p2.length?p2:allM().filter(m=>!m.legendary&&(m.crNum??0)<=Math.max(2,gruntMaxCR));
+    }
     return inSlider.length?inSlider:fallback;
   }
 
@@ -3057,11 +3193,56 @@ function generateEncounter(){
     return all.length?all:allM();
   }
 
-  function pickClosest(p,targetXP,used){
-    const elig=p.filter(m=>!used.has(m.slug));if(!elig.length)return null;
-    const sorted=elig.slice().sort((a,b)=>Math.abs((a.xp||0)-targetXP)-Math.abs((b.xp||0)-targetXP));
-    const cands=sorted.slice(0,Math.min(8,sorted.length));
-    return cands[Math.floor(Math.random()*cands.length)];
+  // Monsters from the previously generated encounter. We prefer picking fresh
+  // monsters so consecutive Generates actually reroll — but if filters are
+  // tight enough that everything's been excluded, fall back to the full pool
+  // so we can still produce something. (Iteration/mutation ignores this — it
+  // should be free to keep current picks and just tweak CR or count.)
+  const prevSlugs=new Set(ENC.map(e=>e.monster.slug));
+
+  // Two exclusion tiers, applied strongest-first with graceful fallback:
+  //   1. RECENT_PICKS — rolling log of the last ~30 monsters generated this
+  //      session. Prevents the same creature appearing across many Generates
+  //      even when the XP band contains hundreds of candidates.
+  //   2. prevSlugs — monsters in the current ENC. Prevents single-Generate
+  //      re-rolls from landing on the exact same set.
+  // If both tiers exclude the pool to < 8 candidates, we relax progressively.
+  const recentSet=new Set(RECENT_PICKS);
+  function pickClosest(p,targetXP,used,poolTag){
+    const elig=p.filter(m=>!used.has(m.slug));
+    if(!elig.length){
+      if(window.DEBUG_GEN)console.log(`[gen] ${poolTag||"?"} target=${Math.round(targetXP)}XP · pool=0 → null (no eligible)`);
+      return null;
+    }
+    let pool=elig.filter(m=>!prevSlugs.has(m.slug)&&!recentSet.has(m.slug));
+    const afterRecent=pool.length;
+    if(pool.length<8)pool=elig.filter(m=>!prevSlugs.has(m.slug));
+    const afterPrev=pool.length;
+    if(pool.length<1)pool=elig;
+    // Adaptive tolerance band. Start at ±35% of target XP; if that captures
+    // fewer than 8 candidates, widen repeatedly (×1.5 each step) until we
+    // have enough OR the band reaches 4× the target. Last-resort falls back
+    // to the full pool. This avoids the "always same top-8 in array order"
+    // bug: when grunt pool min-CR is above target XP (e.g. pool has CR 1/2
+    // = 100 XP but target is 68), the strict 35% band is empty, and the old
+    // code fell back to a deterministic top-8 slice. Adaptive widening just
+    // includes the nearest CR tier's full set — hundreds of monsters, real
+    // randomness.
+    const MIN_POOL=8;
+    let tol=Math.max(targetXP*0.35,1);
+    let inBand=pool.filter(m=>Math.abs((m.xp||0)-targetXP)<=tol);
+    let widenSteps=0;
+    while(inBand.length<MIN_POOL&&tol<targetXP*4&&widenSteps<12){
+      tol*=1.5;widenSteps++;
+      inBand=pool.filter(m=>Math.abs((m.xp||0)-targetXP)<=tol);
+    }
+    if(inBand.length<1)inBand=pool;
+    const picked=inBand[Math.floor(Math.random()*inBand.length)];
+    if(window.DEBUG_GEN){
+      const widened=widenSteps>0?` (widened ${widenSteps}×, tol=${Math.round(tol)})`:"";
+      console.log(`[gen] ${poolTag||"?"} target=${Math.round(targetXP)}XP · elig=${elig.length} → afterRecent=${afterRecent} → afterPrev=${afterPrev} → inBand=${inBand.length}${widened} → picked=${picked?.name} (CR ${picked?.cr}, ${picked?.xp}XP)`);
+    }
+    return picked;
   }
 
   function buildCandidate(){
@@ -3103,7 +3284,7 @@ function generateEncounter(){
     const enc=[];const used=new Set();
     for(const grp of tmpl.groups){
       const p=buildPool(grp.pool||"main");
-      const picked=pickClosest(p,getTargetXP(grp),used);
+      const picked=pickClosest(p,getTargetXP(grp),used,grp.pool||"main");
       if(!picked)continue;
       used.add(picked.slug);
       enc.push({monster:picked,count:Math.max(1,grp.count)});
@@ -3128,7 +3309,17 @@ function generateEncounter(){
   // Mutations use the relaxed pool — CR slider bounds shouldn't cap the
   // algorithm when it's hunting a specific tier (e.g. solo boss vs 6×L14
   // legitimately needs CR 28+ to be Deadly).
-  const mutPool=relaxedPool();
+  // Mutation pool: relaxed (no CR slider bounds) so refinement can walk past
+  // the user's browse preferences when the sim needs it. For horde/swarm, we
+  // apply a CR FLOOR tied to party level so a L7 horde can't CR-down into a
+  // pile of CR-0 chwingas. Named NPCs are also excluded — same rationale as
+  // the grunt pool above.
+  let mutPool=relaxedPool().filter(m=>!isLikelyNamedNPC(m)&&!isGrunTierNPC(m));
+  if(ETYPE==="horde"||ETYPE==="swarm"){
+    // Mutation CR floor reuses hordeFloor computed above — same table keeps
+    // generation and mutation in sync.
+    mutPool=mutPool.filter(m=>(m.crNum??0)>=hordeFloor);
+  }
   let best=null;            // {enc, trail, dc}
   let fallback=null;        // closest-tier candidate if no match
   let fallbackDist=99;
@@ -3194,6 +3385,17 @@ function generateEncounter(){
   // (e.g. solo Boss vs 6×L14 needs CR 28+ even when slider is 10–20).
   const crossNote=crossedSlider?` · refined past CR slider to reach ${diffSel}`:"";
   document.getElementById("genStatus").textContent=base+trailText+crossNote+warn;
+  // Record what we just picked so the next Generate avoids it. Trim to last
+  // RECENT_MAX entries — rolling window, not a lifetime ban.
+  for(const e of ENC)RECENT_PICKS.push(e.monster.slug);
+  while(RECENT_PICKS.length>RECENT_MAX)RECENT_PICKS.shift();
+  if(window.DEBUG_GEN){
+    console.log(`[gen] ===== DONE =====`);
+    console.log(`[gen] tier: requested=${diffSel} got=${picked.dc}${tierMatched?" ✓":" ⚠ fallback"}`);
+    console.log(`[gen] encounter: ${ENC.map(e=>`${e.count}× ${e.monster.name} (CR ${e.monster.cr})`).join(", ")}`);
+    console.log(`[gen] refinement steps: ${(picked.trail||[]).length}${picked.trail?.length?" ("+picked.trail.join(" ")+")":""}`);
+    console.log(`[gen] RECENT_PICKS (last ${RECENT_PICKS.length}): ${RECENT_PICKS.slice(-10).join(", ")}${RECENT_PICKS.length>10?" ...":""}`);
+  }
 }
 
 // ── Iterative-refinement helpers ──
@@ -3275,8 +3477,11 @@ function mutateEncounter(enc,direction,etype,mainPool,tierGap){
   const step=Math.min(3,Math.max(1,tierGap||1));
   const byType={
     boss:       harder?["bosscr"]                                 :["bosscr"],
-    horde:      harder?["count_add","count_adj","cr"]             :["count_adj","count_drop","cr"],
-    swarm:      harder?["count_add","count_adj","cr"]             :["count_adj","count_drop","cr"],
+    // Horde/swarm: when too hard, CR-DOWN grunts before reducing count so we
+    // don't strip the encounter of its "many weak" character. When too easy,
+    // add grunts or CR-up existing ones — again, count-preserving first.
+    horde:      harder?["count_add","cr","count_adj"]             :["cr","count_adj","count_drop"],
+    swarm:      harder?["count_add","cr","count_adj"]             :["cr","count_adj","count_drop"],
     boss_minions:harder?["bosscr","count_add","count_adj"]        :["count_adj","bosscr","count_drop"],
     elite:      harder?["bosscr","count_add","count_adj"]         :["count_adj","bosscr","count_drop"],
     duo:        harder?["cr","count_add"]                         :["cr","count_drop"],
@@ -3818,36 +4023,351 @@ function togSpellLevel(lv){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// MONSTER LIBRARY
+// MONSTER LIBRARY — 3-column rich filter UI
 // ═══════════════════════════════════════════════════════════════
-function renderLibList(){
+const LIB_TYPE_LIST=["aberration","beast","celestial","construct","dragon","elemental","fey","fiend","giant","humanoid","monstrosity","ooze","plant","undead"];
+const LIB_ENV_LIST=["arctic","cave","coastal","desert","dungeon","forest","grassland","hill","mountain","swamp","underdark","urban","underwater"];
+const LIB_SRC_LIST=[{k:"official",label:"Official"},{k:"community",label:"Community"},{k:"third-party",label:"3rd Party"},{k:"homebrew",label:"Homebrew"}];
+const LIB_SIZE_LIST=["Tiny","Small","Medium","Large","Huge","Gargantuan"];
+// Safe array access — some monsters in the DB have traits/actions stored as
+// a single object rather than an array, which crashes .some() calls. Coerce
+// to an empty array when not actually an Array so predicates never throw.
+const _arr=v=>Array.isArray(v)?v:[];
+
+// Predicate-based feature filters. Each takes a monster, returns true if the
+// monster has the feature. Used for the Abilities/Combat/Mobility chip groups —
+// lets you browse "all spellcasters" or "creatures with recharge abilities"
+// without memorizing which monsters have them.
+const LIB_ABIL_LIST=[
+  {k:"spellcasting", label:"Spellcasting", test:m=>_arr(m.spellcasting).length>0},
+  // After normalizeAll, m.legendaryActions is a NUMBER (count), not an array.
+  // The original array was moved to m.legendary_actions. Check both so we
+  // catch pre-normalized and normalized monsters.
+  {k:"legendary",    label:"Legendary Acts", test:m=>(+m.legendaryActions>0)||_arr(m.legendary_actions).length>0},
+  {k:"mythic",       label:"Mythic Acts",    test:m=>_arr(m.mythicActions).length>0},
+  // Lair actions live in traits OR on the preserved legendary_actions array.
+  {k:"lair",         label:"Lair Actions",   test:m=>_arr(m.traits).some(t=>/lair action/i.test(t&&t.name||""))||_arr(m.legendary_actions).some(a=>/lair/i.test(a&&a.name||""))},
+  {k:"legres",       label:"Legend. Resist", test:m=>_arr(m.traits).some(t=>/legendary resistance/i.test(t&&t.name||""))},
+  {k:"multiattack",  label:"Multiattack",    test:m=>m.multiattack===true||_arr(m.actions).some(a=>/multiattack/i.test(a&&a.name||""))},
+];
+const LIB_COMBAT_LIST=[
+  {k:"aoe",       label:"AoE Attack", test:m=>!!(m.aoeType&&String(m.aoeType).length)||!!(m.aoeDmg&&String(m.aoeDmg).length)},
+  {k:"recharge",  label:"Recharge",   test:m=>_arr(m.actions).some(a=>/recharge/i.test((a&&a.name||"")+(a&&a.desc||"")))},
+  {k:"reactions", label:"Reactions",  test:m=>_arr(m.reactions).length>0},
+  {k:"regen",     label:"Regeneration",test:m=>_arr(m.traits).some(t=>/regenerat/i.test(t&&t.name||""))},
+];
+const LIB_MOBILITY_LIST=[
+  {k:"fly",    label:"Flying",    test:m=>!!(m.speed&&+m.speed.fly>0)},
+  {k:"swim",   label:"Swimming",  test:m=>!!(m.speed&&+m.speed.swim>0)},
+  {k:"burrow", label:"Burrowing", test:m=>!!(m.speed&&+m.speed.burrow>0)},
+  {k:"climb",  label:"Climbing",  test:m=>!!(m.speed&&+m.speed.climb>0)},
+];
+// Exclusion filters — invert the match. A user adding "named" means "HIDE
+// these from the list", not "show only these".
+const LIB_EXCLUDE_LIST=[
+  {k:"named",    label:"Named NPCs", test:isLikelyNamedNPC},
+  {k:"legendary",label:"Legendary",  test:m=>!!m.legendary||(+m.legendaryActions>0)||_arr(m.legendary_actions).length>0},
+];
+// Multi-select filter state. Sets are empty = "no restriction" (match all).
+const LIB_F={types:new Set(),envs:new Set(),srcs:new Set(),sizes:new Set(),abilities:new Set(),combat:new Set(),mobility:new Set(),exclude:new Set(),crMin:0,crMax:33};
+let LIB_FILTERED=[];
+let LIB_PAGE=0;
+let LIB_ACTIVE_LETTER=null;
+let LIB_OFFSET=null;
+
+function initLibUI(){
+  // Populate CR dropdowns for library
+  const opts=CR_LIST.map((c,i)=>`<option value="${i}">${c}</option>`).join("");
+  const mn=document.getElementById("libCRMinSel"),mx=document.getElementById("libCRMaxSel");
+  if(mn){mn.innerHTML=opts;mn.value=LIB_F.crMin;}
+  if(mx){mx.innerHTML=opts;mx.value=LIB_F.crMax;}
+  syncLibCRUI();
+  renderLibChips();
+}
+
+function syncLibCRUI(){
+  const mnSl=document.getElementById("libCRMin"),mxSl=document.getElementById("libCRMax");
+  const mnSel=document.getElementById("libCRMinSel"),mxSel=document.getElementById("libCRMaxSel");
+  if(mnSl)mnSl.value=LIB_F.crMin;
+  if(mxSl)mxSl.value=LIB_F.crMax;
+  if(mnSel)mnSel.value=LIB_F.crMin;
+  if(mxSel)mxSel.value=LIB_F.crMax;
+  const d=document.getElementById("libCRDisp");
+  if(d)d.textContent=LIB_F.crMin===0&&LIB_F.crMax===CR_LIST.length-1?"All CR":(LIB_F.crMin===LIB_F.crMax?`CR ${CR_LIST[LIB_F.crMin]}`:`CR ${CR_LIST[LIB_F.crMin]}–${CR_LIST[LIB_F.crMax]}`);
+}
+
+function onLibCRSlider(){
+  LIB_F.crMin=parseInt(document.getElementById("libCRMin").value);
+  LIB_F.crMax=parseInt(document.getElementById("libCRMax").value);
+  if(LIB_F.crMin>LIB_F.crMax)LIB_F.crMax=LIB_F.crMin;
+  syncLibCRUI();renderLibraryView();
+}
+
+function onLibCRDropdown(){
+  const mn=parseInt(document.getElementById("libCRMinSel")?.value);
+  const mx=parseInt(document.getElementById("libCRMaxSel")?.value);
+  if(Number.isFinite(mn))LIB_F.crMin=mn;
+  if(Number.isFinite(mx))LIB_F.crMax=mx;
+  if(LIB_F.crMin>LIB_F.crMax)LIB_F.crMax=LIB_F.crMin;
+  syncLibCRUI();renderLibraryView();
+}
+
+// Safe count: runs a test against every monster and swallows per-monster
+// errors (some 3rd-party monsters have malformed fields). Returns 0 rather
+// than throwing, so one bad monster can't kill the entire chip rendering.
+function _libCount(all,test){
+  let n=0;
+  for(const m of all){try{if(test(m))n++;}catch(_e){}}
+  return n;
+}
+
+// Render filter chip rows with live counts. Counts reflect how many monsters
+// have that attribute in the database (ignores other active filters in the
+// same category — standard multi-facet UI pattern). Chip HTML matches the
+// spell library's .sp-chip style for visual consistency. Each section is
+// wrapped in try/catch so one failure can't blank out the rest.
+function renderLibChips(){
+  const all=allM();
+  const mk=(active,count,onclick,label)=>{
+    const cls=`sp-chip${active?" active":""}${count===0?" empty":""}`;
+    return `<span class="${cls}" ${count===0?"":`onclick="${onclick}"`} title="${count} monsters"><span>${label}</span><span class="sp-chip-ct">${count}</span></span>`;
+  };
+  const renderSection=(elId,items,activeSet,catKey,getCount,getLabel)=>{
+    try{
+      const el=document.getElementById(elId);
+      if(!el)return;
+      let html=items.map(item=>{
+        const key=typeof item==="string"?item:item.k;
+        const count=getCount(item);
+        return mk(activeSet.has(key),count,`libTogChip('${catKey}','${key}')`,getLabel(item));
+      }).join("");
+      // Inline per-section clear — mirrors the spell library pattern. Only
+      // renders when there's something to clear, so non-active sections stay
+      // visually quiet.
+      if(activeSet.size>0){
+        html+=`<span class="sp-chip" onclick="libClearSection('${catKey}')" style="background:var(--bg-deep);border-style:dashed;color:var(--text-secondary)" title="Clear this filter section">✕ Clear</span>`;
+      }
+      el.innerHTML=html;
+      // Update the label with active count if the grid has a labeled parent.
+      const parent=el.parentElement;
+      const label=parent?parent.querySelector(".sp-chip-label"):null;
+      if(label){
+        const baseText=label.dataset.base||label.textContent.replace(/\s*\(\d+\s+active\)$/,"");
+        label.dataset.base=baseText;
+        label.innerHTML=activeSet.size>0
+          ?`${baseText} <span style="font-size:9px;color:var(--accent-gold);font-family:'JetBrains Mono',monospace">(${activeSet.size} active)</span>`
+          :baseText;
+      }
+    }catch(e){console.error(`renderLibChips[${elId}] failed:`,e);}
+  };
+  renderSection("libChipTypes",LIB_TYPE_LIST,LIB_F.types,"types",
+    t=>_libCount(all,m=>(m.type||"").toLowerCase().includes(t)),t=>t);
+  renderSection("libChipSizes",LIB_SIZE_LIST,LIB_F.sizes,"sizes",
+    s=>_libCount(all,m=>(m.size||"")===s),s=>s);
+  renderSection("libChipAbilities",LIB_ABIL_LIST,LIB_F.abilities,"abilities",
+    a=>_libCount(all,a.test),a=>a.label);
+  renderSection("libChipCombat",LIB_COMBAT_LIST,LIB_F.combat,"combat",
+    c=>_libCount(all,c.test),c=>c.label);
+  renderSection("libChipMobility",LIB_MOBILITY_LIST,LIB_F.mobility,"mobility",
+    m=>_libCount(all,m.test),m=>m.label);
+  renderSection("libChipExclude",LIB_EXCLUDE_LIST,LIB_F.exclude,"exclude",
+    x=>_libCount(all,x.test),x=>x.label);
+  renderSection("libChipEnvs",LIB_ENV_LIST,LIB_F.envs,"envs",
+    e=>_libCount(all,m=>_arr(m.environment).includes(e)),e=>e);
+  renderSection("libChipSrcs",LIB_SRC_LIST,LIB_F.srcs,"srcs",
+    s=>_libCount(all,m=>(m._layer||m.sourceType)===s.k),s=>s.label);
+}
+
+function libTogChip(cat,val){
+  const set=LIB_F[cat];
+  if(!set)return;
+  if(set.has(val))set.delete(val);else set.add(val);
+  renderLibraryView();
+}
+
+// Clear one filter section's Set. Spell-library-style per-section clear.
+function libClearSection(cat){
+  const set=LIB_F[cat];
+  if(!set)return;
+  set.clear();
+  renderLibraryView();
+}
+
+function clearLibFilters(){
+  ["types","envs","srcs","sizes","abilities","combat","mobility","exclude"].forEach(k=>LIB_F[k].clear());
+  LIB_F.crMin=0;LIB_F.crMax=CR_LIST.length-1;
+  const s=document.getElementById("libSearch");if(s)s.value="";
+  syncLibCRUI();renderLibraryView();
+}
+
+// Helper: look up a predicate in a list by key. Used to evaluate active
+// boolean filters without re-scanning the whole list each match.
+function libPredsFor(cat){
+  const src={abilities:LIB_ABIL_LIST,combat:LIB_COMBAT_LIST,mobility:LIB_MOBILITY_LIST,exclude:LIB_EXCLUDE_LIST}[cat];
+  if(!src)return [];
+  return [...LIB_F[cat]].map(k=>src.find(x=>x.k===k)).filter(Boolean);
+}
+
+// Apply all active filters + sort alphabetically. Multi-select within a
+// category = OR (match any). Across categories = AND (must pass all).
+function libFilter(){
   const q=(document.getElementById("libSearch")?.value||"").trim().toLowerCase();
-  const src=document.getElementById("libSrcFilter")?.value||"";
-  const type=document.getElementById("libTypeFilter")?.value||"";
-  const filtered=allM().filter(m=>matchM(m,q,type,"",src)).slice(0,300);
+  const crMinN=CR_NUM[CR_LIST[LIB_F.crMin]]??0;
+  const crMaxN=CR_NUM[CR_LIST[LIB_F.crMax]]??30;
+  const abilPreds=libPredsFor("abilities");
+  const combatPreds=libPredsFor("combat");
+  const mobPreds=libPredsFor("mobility");
+  const excludePreds=libPredsFor("exclude");
+  return allM().filter(m=>{
+    if(q&&!(m.name||"").toLowerCase().includes(q))return false;
+    if(LIB_F.types.size){
+      const mt=(m.type||"").toLowerCase();
+      let hit=false;for(const t of LIB_F.types){if(mt.includes(t)){hit=true;break;}}
+      if(!hit)return false;
+    }
+    if(LIB_F.sizes.size&&!LIB_F.sizes.has(m.size||""))return false;
+    if(LIB_F.envs.size){
+      const me=m.environment||[];
+      let hit=false;for(const e of LIB_F.envs){if(me.includes(e)){hit=true;break;}}
+      if(!hit)return false;
+    }
+    if(LIB_F.srcs.size&&!LIB_F.srcs.has(m._layer||m.sourceType))return false;
+    if(abilPreds.length&&!abilPreds.some(p=>p.test(m)))return false;
+    if(combatPreds.length&&!combatPreds.some(p=>p.test(m)))return false;
+    if(mobPreds.length&&!mobPreds.some(p=>p.test(m)))return false;
+    // Exclude filters: if ANY active exclude-predicate matches, hide the monster
+    if(excludePreds.length&&excludePreds.some(p=>p.test(m)))return false;
+    const cn=m.crNum??CR_NUM[String(m.cr)]??0;
+    if(cn<crMinN||cn>crMaxN)return false;
+    return true;
+  }).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+// Top-level render for the Library tab. Recomputes the filter, renders the
+// list slice, alpha chips, pager, and chip grids (for live count updates).
+function renderLibraryView(){
+  LIB_FILTERED=libFilter();
+  LIB_PAGE=0;
+  LIB_ACTIVE_LETTER=null;
+  LIB_OFFSET=null;
+  renderLibList();
+  renderLibAlphaChips();
+  renderLibPager();
+  renderLibChips();
+  const tc=document.getElementById("libTotalCount");
+  if(tc)tc.textContent=`${LIB_FILTERED.length.toLocaleString()} shown`;
+}
+
+function renderLibList(){
   const el=document.getElementById("libMonsterList");
   if(!el)return;
-  if(!filtered.length){
-    el.innerHTML='<div style="padding:10px;font-family:\'Crimson Pro\',serif;font-size:13px;color:var(--text-dim);font-style:italic;text-align:center">No monsters found.</div>';
+  if(!LIB_FILTERED.length){
+    el.innerHTML='<div style="padding:16px;font-family:\'Crimson Pro\',serif;font-size:13px;color:var(--text-dim);font-style:italic;text-align:center">No monsters match these filters.</div>';
     return;
   }
-  el.innerHTML=filtered.map(m=>{
-    const hasFull=EXT[m.slug]?.atkBonus!==undefined;const isHB=m._layer==="homebrew";
-    return `<div class="lib-mrow${LIBSEL.has(m.slug)?" lib-sel":""}" onclick="selLibM('${m.slug}',event)">
-      <input type="checkbox" class="chk" style="flex-shrink:0"${LIBSEL.has(m.slug)?" checked":""} onclick="event.stopPropagation();togLibSel('${m.slug}')">
+  const start=LIB_OFFSET!=null?LIB_OFFSET:LIB_PAGE*MPER_PAGE;
+  const slice=LIB_FILTERED.slice(start,start+MPER_PAGE);
+  el.innerHTML=slice.map(m=>{
+    const hasFull=EXT[m.slug]?.atkBonus!==undefined||m.atkBonus!=null||m._layer==="homebrew";
+    const isHB=m._layer==="homebrew";
+    const sel=LIBSEL.has(m.slug);
+    // Source label: _layer is the canonical field; sourceType is fallback.
+    // Hide entirely when neither is set — no more stray "?" in rows.
+    const srcLabel=(m._layer||m.sourceType||"").slice(0,6);
+    return `<div class="lib-mrow${sel?" lib-sel":""}" onclick="selLibM('${m.slug}',event)">
+      <input type="checkbox" class="chk" style="flex-shrink:0"${sel?" checked":""} onclick="event.stopPropagation();togLibSel('${m.slug}')">
       <span class="lib-mname" title="${m.name}">${m.name}</span>
       <span class="lib-mcr">CR ${m.cr}</span>
-      <span class="lib-msrc">${(m._layer||"?").slice(0,6)}</span>
+      ${srcLabel?`<span class="lib-msrc">${srcLabel}</span>`:""}
       ${hasFull?'<span class="lib-mbadge badge-full">&#9679;</span>':""}
       ${isHB?'<span class="lib-mbadge" style="background:rgba(112,96,160,.1);color:var(--accent-purple);border:1px solid rgba(112,96,160,.25)">HB</span>':""}
     </div>`;
   }).join("");
+  el.scrollTop=0;
   const sc=document.getElementById("libSelCount");if(sc)sc.textContent=`${LIBSEL.size} selected`;
+}
+
+function renderLibAlphaChips(){
+  const el=document.getElementById("libAlphaChips");
+  if(!el)return;
+  const letters=["#","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const firstIdxByLetter=new Map();
+  for(let i=0;i<LIB_FILTERED.length;i++){
+    const c=(LIB_FILTERED[i].name||"").charAt(0).toUpperCase();
+    const key=/[A-Z]/.test(c)?c:"#";
+    if(!firstIdxByLetter.has(key))firstIdxByLetter.set(key,i);
+  }
+  const activeLetter=(()=>{
+    if(LIB_ACTIVE_LETTER)return LIB_ACTIVE_LETTER;
+    if(!LIB_FILTERED.length)return null;
+    const firstIdx=LIB_OFFSET!=null?LIB_OFFSET:LIB_PAGE*MPER_PAGE;
+    const first=LIB_FILTERED[firstIdx];if(!first)return null;
+    const c=(first.name||"").charAt(0).toUpperCase();
+    return /[A-Z]/.test(c)?c:"#";
+  })();
+  el.innerHTML=letters.map(ltr=>{
+    const empty=!firstIdxByLetter.has(ltr);
+    const active=ltr===activeLetter;
+    const cls=`alpha-chip${empty?" empty":""}${active?" active":""}`;
+    const click=empty?"":`onclick="libJumpToLetter('${ltr}')"`;
+    return `<span class="${cls}" ${click}>${ltr}</span>`;
+  }).join("");
+}
+
+function renderLibPager(){
+  const el=document.getElementById("libPager");
+  if(!el)return;
+  const total=LIB_FILTERED.length;
+  if(!total){el.innerHTML="";return;}
+  const pageCount=Math.max(1,Math.ceil(total/MPER_PAGE));
+  if(pageCount<=1){
+    el.innerHTML=`<span class="pg-info">${total} monster${total!==1?"s":""}</span>`;
+    return;
+  }
+  const cur=LIB_PAGE;
+  const pages=new Set([0,pageCount-1,cur,cur-1,cur+1]);
+  const shown=[...pages].filter(n=>n>=0&&n<pageCount).sort((a,b)=>a-b);
+  let html="";
+  html+=`<button class="pg-btn${cur===0?" disabled":""}" ${cur===0?"":`onclick="setLibPage(${cur-1})"`}>‹</button>`;
+  for(let i=0;i<shown.length;i++){
+    if(i>0&&shown[i]-shown[i-1]>1)html+='<span class="pg-ellip">…</span>';
+    const n=shown[i];
+    html+=`<button class="pg-btn${n===cur?" active":""}" onclick="setLibPage(${n})">${n+1}</button>`;
+  }
+  html+=`<button class="pg-btn${cur>=pageCount-1?" disabled":""}" ${cur>=pageCount-1?"":`onclick="setLibPage(${cur+1})"`}>›</button>`;
+  const startIdx=LIB_OFFSET!=null?LIB_OFFSET:cur*MPER_PAGE;
+  const first=startIdx+1;
+  const last=Math.min(total,startIdx+MPER_PAGE);
+  html+=`<span class="pg-info">${first}–${last} / ${total.toLocaleString()}</span>`;
+  el.innerHTML=html;
+}
+
+function setLibPage(n){
+  LIB_ACTIVE_LETTER=null;LIB_OFFSET=null;
+  const pageCount=Math.max(1,Math.ceil(LIB_FILTERED.length/MPER_PAGE));
+  LIB_PAGE=Math.max(0,Math.min(pageCount-1,n|0));
+  renderLibList();renderLibAlphaChips();renderLibPager();
+}
+
+function libJumpToLetter(ltr){
+  if(!LIB_FILTERED.length)return;
+  let idx=-1;
+  for(let i=0;i<LIB_FILTERED.length;i++){
+    const c=(LIB_FILTERED[i].name||"").charAt(0).toUpperCase();
+    const key=/[A-Z]/.test(c)?c:"#";
+    if(key===ltr){idx=i;break;}
+  }
+  if(idx<0)return;
+  const pageCount=Math.max(1,Math.ceil(LIB_FILTERED.length/MPER_PAGE));
+  LIB_PAGE=Math.max(0,Math.min(pageCount-1,Math.floor(idx/MPER_PAGE)));
+  LIB_OFFSET=idx;
+  LIB_ACTIVE_LETTER=ltr;
+  renderLibList();renderLibAlphaChips();renderLibPager();
 }
 
 function selLibM(slug,ev){if(ev?.target?.type==="checkbox")return;EDITSLUG=slug;const m=findM(slug);if(m)renderEditorForm(m);}
 function togLibSel(slug){if(LIBSEL.has(slug))LIBSEL.delete(slug);else LIBSEL.add(slug);renderLibList();}
-function selectAllLib(){allM().filter(m=>{const q=(document.getElementById("libSearch")?.value||"").trim().toLowerCase();const src=document.getElementById("libSrcFilter")?.value||"";const type=document.getElementById("libTypeFilter")?.value||"";return matchM(m,q,type,"",src)}).forEach(m=>LIBSEL.add(m.slug));renderLibList();}
+function selectAllLib(){LIB_FILTERED.forEach(m=>LIBSEL.add(m.slug));renderLibList();}
 function deselectAllLib(){LIBSEL.clear();renderLibList();}
 function deleteSelected(){
   if(!LIBSEL.size)return;
@@ -3855,7 +4375,21 @@ function deleteSelected(){
   MDB=MDB.filter(m=>!LIBSEL.has(m.slug));HB=HB.filter(m=>!LIBSEL.has(m.slug));
   LIBSEL.forEach(s=>delete EXT[s]);LIBSEL.clear();
   localStorage.setItem(DB_KEY,JSON.stringify(MDB.map(slimM)));safeSetLS(HB_KEY,JSON.stringify(HB));safeSetLS(EXT_KEY,JSON.stringify(EXT));
-  updateDBBar();renderLibList();updateLibStats();
+  updateDBBar();renderLibraryView();updateLibStats();
+}
+
+// ── Settings modal ──
+function openSettings(){
+  const m=document.getElementById("settingsModal");
+  if(m){m.style.display="flex";setSettingsTab("database");}
+}
+function closeSettings(){
+  const m=document.getElementById("settingsModal");
+  if(m)m.style.display="none";
+}
+function setSettingsTab(name){
+  document.querySelectorAll(".settings-tab").forEach(t=>t.classList.toggle("active",t.dataset.stab===name));
+  document.querySelectorAll(".settings-pane").forEach(p=>p.style.display=p.id===`settings-${name}`?"block":"none");
 }
 
 function renderEditorForm(m){
@@ -3953,7 +4487,7 @@ function saveMonsterEdit(){
     safeSetLS(HB_KEY,JSON.stringify(HB));
     EDITSLUG=slug;
   }
-  updateDBBar();renderLibList();updateLibStats();
+  updateDBBar();renderLibraryView();updateLibStats();
   const et=document.getElementById("edTitle");if(et){et.textContent="Saved ✓";setTimeout(()=>{if(et)et.textContent=`Editing: ${document.getElementById("ed-name")?.value||"Monster"}`;},1500);}
 }
 
@@ -4280,6 +4814,13 @@ function runOne(intel){
       }
     });
 
+    // Per-target attack cap for this round. Only N monsters can physically
+    // swing at the same PC per round (5-ft-square adjacency reality). Without
+    // this, a horde of 20 goblins stacking 20 attacks on one PC inflates the
+    // sim's threat rating for encounters that should feel trivial at the table.
+    const attackersOn=new Map();
+    const MAX_ATTACKERS_PER_PC=4;
+
     for(let ti=0;ti<order.length;ti++){
       const a=order[ti];
       if(a.isDead)continue;
@@ -4541,6 +5082,26 @@ function runOne(intel){
             }
           }
 
+          // Per-target attack cap (applies only to single-target melee/ranged
+          // attacks — AoE above already fired and exited). If this monster's
+          // target is saturated (MAX attackers already locked in this round),
+          // redirect to the next-priority unsaturated PC. If all PCs are
+          // saturated, this monster can't physically reach anyone and idles.
+          {
+            const n=attackersOn.get(tgt.id)||0;
+            if(n>=MAX_ATTACKERS_PER_PC){
+              const alt=alivePCs
+                .filter(p=>(attackersOn.get(p.id)||0)<MAX_ATTACKERS_PER_PC)
+                .sort((x,y)=>x.hp-y.hp)[0];
+              if(!alt){
+                rd.actions.push({t:"miss",s:`${a.name} can't reach an unblocked target — idles.`});
+                continue;
+              }
+              tgt=alt;
+            }
+            attackersOn.set(tgt.id,(attackersOn.get(tgt.id)||0)+1);
+          }
+
           // Regular attacks
           for(let atk=0;atk<a.numAtks;atk++){
             const roll=d20();
@@ -4790,6 +5351,7 @@ function renderEncSbPanel() {
     pane.innerHTML = `
       <div class="enc-sb-pane-hdr">
         <span class="enc-sb-pane-name" title="${m.name}">${m.name}</span>
+        ${m.source?`<span class="enc-sb-pane-src" title="Source: ${SOURCE_NAMES[m.source]||m.source}">${m.source}</span>`:""}
         <button class="enc-sb-pin${slot.pinned?' pinned':''}" onclick="pinEncSbSlot(${i})" title="${slot.pinned?'Unpin':'Pin'}">&#128204;</button>
         <button class="enc-sb-close" onclick="closeEncSbSlot(${i})" title="Close">&#10005;</button>
       </div>
@@ -4825,6 +5387,79 @@ function encSbSwitchTab(bodyId, idx) {
 }
 
 </script>
+<!-- ══ SETTINGS MODAL ══ -->
+<div id="settingsModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeSettings()">
+  <div style="background:var(--bg-card);border:1px solid var(--border-mid);border-radius:4px;width:720px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+    <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border-dim);flex-shrink:0">
+      <span style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--accent-gold);letter-spacing:.1em;flex:1">&#9881; SETTINGS</span>
+      <button onclick="closeSettings()" style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;background:var(--bg-input);border:1px solid var(--border-mid);border-radius:2px;color:var(--text-secondary);cursor:pointer">✕ Close</button>
+    </div>
+    <div style="display:flex;border-bottom:1px solid var(--border-dim);flex-shrink:0;padding:0 16px">
+      <button class="settings-tab active" data-stab="database" onclick="setSettingsTab('database')">Database</button>
+      <button class="settings-tab" data-stab="homebrew" onclick="setSettingsTab('homebrew')">Homebrew</button>
+      <button class="settings-tab" data-stab="export" onclick="setSettingsTab('export')">Export</button>
+      <button class="settings-tab" data-stab="stats" onclick="setSettingsTab('stats')">Stats</button>
+    </div>
+    <div style="overflow-y:auto;padding:14px 18px;flex:1">
+      <!-- Database tab -->
+      <div class="settings-pane" id="settings-database">
+        <div class="flbl" style="margin-top:0">Monster Database</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:6px" id="dbEmbedStatus">&#9989; Monsters baked in — no loading required.</div>
+        <div class="flbl">Import &amp; Merge</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:5px">Import a JSON to merge or overwrite monsters in memory this session. Use Download Updated App to make permanent.</div>
+        <input type="file" id="dbFilePicker" accept=".json" multiple style="display:none" onchange="loadMonsterFilesWithProgress(this.files)">
+        <button class="btn teal" style="width:100%;margin-bottom:4px" onclick="document.getElementById('dbFilePicker').click()">&#128194; Import Monster JSON</button>
+        <div id="loadProgress" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-teal);text-align:center;padding:4px;background:rgba(58,138,122,.07);border-radius:3px;margin-bottom:6px"><span id="loadProgressText">Reading file&#8230;</span></div>
+        <button class="btn gold" style="width:100%;margin-bottom:4px" onclick="exportFullDB()">&#11015; Export Monster JSON</button>
+        <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
+        <div class="flbl">Reset</div>
+        <button class="btn red" style="width:100%" onclick="resetLayer('kobold')">Reset to Baked-In Monsters</button>
+      </div>
+      <!-- Homebrew tab -->
+      <div class="settings-pane" id="settings-homebrew" style="display:none">
+        <div class="flbl" style="margin-top:0">Homebrew Monsters</div>
+        <button class="btn teal" style="width:100%;margin-bottom:6px" onclick="newMonster();closeSettings()">+ New Homebrew Monster</button>
+        <div class="flbl">Paste JSON to pre-fill editor</div>
+        <textarea class="import-area" id="importTA" placeholder='{"name":"My Monster","cr":"5","hp":100,"ac":15}'></textarea>
+        <input type="file" id="hbFilePicker" accept=".json" style="display:none" onchange="loadHBFile(this.files[0])">
+        <div style="display:flex;gap:4px;margin-top:5px">
+          <button class="btn" onclick="document.getElementById('hbFilePicker').click()" style="flex:1">&#128194; File</button>
+          <button class="btn teal" onclick="prefillFromJSON()" style="flex:1">Fill</button>
+          <button class="btn gold" onclick="importHomebrew()" style="flex:1">Import</button>
+        </div>
+        <div class="import-preview" id="importPreview">Preview will appear here.</div>
+        <hr style="border:none;border-top:1px solid var(--border-dim);margin:10px 0">
+        <div class="flbl">Reset</div>
+        <button class="btn red" style="width:100%" onclick="resetLayer('homebrew')">Clear All Homebrew</button>
+      </div>
+      <!-- Export tab -->
+      <div class="settings-pane" id="settings-export" style="display:none">
+        <div class="flbl" style="margin-top:0">Download Updated App</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-secondary);margin-bottom:8px">Creates a new self-contained HTML with selected data baked in permanently.</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px" id="downloadChecks">
+          <label class="chk-row"><input type="checkbox" class="chk" id="dl-monsters" checked><span class="chk-lbl">Monster Database (with EXT merged in)</span></label>
+          <label class="chk-row"><input type="checkbox" class="chk" id="dl-homebrew" checked><span class="chk-lbl">Homebrew Monsters</span></label>
+          <label class="chk-row"><input type="checkbox" class="chk" id="dl-parties" checked><span class="chk-lbl">Saved Parties</span></label>
+          <label class="chk-row"><input type="checkbox" class="chk" id="dl-encounters" checked><span class="chk-lbl">Saved Encounters</span></label>
+          <label class="chk-row"><input type="checkbox" class="chk" id="dl-srcprefs" checked><span class="chk-lbl">Source Filter Preferences</span></label>
+        </div>
+        <button class="btn-run" style="width:100%;margin-bottom:4px" onclick="downloadUpdatedApp()">&#11123; Download Updated App</button>
+        <div id="dlStatus" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);text-align:center;min-height:12px"></div>
+      </div>
+      <!-- Stats tab -->
+      <div class="settings-pane" id="settings-stats" style="display:none">
+        <div class="flbl" style="margin-top:0">Database Composition</div>
+        <div class="db-stats-block" style="margin-top:6px">
+          <div class="db-srow"><span class="db-slbl">Official</span><span class="db-sval" id="stat-official">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Community</span><span class="db-sval" id="stat-community">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Third Party</span><span class="db-sval" id="stat-third">0</span></div>
+          <div class="db-srow"><span class="db-slbl">Homebrew</span><span class="db-sval" id="stat-homebrew">0</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ SOURCE FILTER MODAL ══ -->
 <div id="sourceModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeSourceModal()">
   <div style="background:var(--bg-card);border:1px solid var(--border-mid);border-radius:4px;width:600px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
