@@ -55,6 +55,34 @@ def get_source_type(source):
         return "community"
     return "third-party"
 
+# ── Third-party whitelist ─────────────────────────────────────────────────────
+# Only these third-party sources are retained. Everything else (Monster-A-Day
+# reddit, Nerzugal's, Critter Compendium, Monsters of the Guild, Frog God's
+# Fifth Edition Foes / Quests of Doom, Primeval Thule, Misplaced Monsters,
+# Flee Mortals, Demon Cults, FRAiF, etc.) is dropped. The user's crawler is
+# pulling fully-parseable data from physical books they own, so the low-
+# quality scraped third-party entries add noise without adding real value.
+# Match is done on the NORMALIZED source (no URL suffix, no page number).
+THIRD_PARTY_KEEP = {
+    "Tome of Beasts",
+    "Tome of Beasts 2",
+    "Tome of Beasts 3",
+    "Tome of Beasts (2023)",
+}
+
+# Normalize a raw source string the same way the in-browser normaliseSource
+# does: strip URL suffixes and page-number tails so comparisons against the
+# whitelist work.
+def normalise_source(s):
+    if not s:
+        return ""
+    if "http://" in s or "https://" in s:
+        cut = s.find(":")
+        return s[:cut].strip() if cut > 0 else s.strip()
+    s = re.sub(r':\s*\d+.*$', '', s)
+    s = re.sub(r',.*$', '', s)
+    return s.strip()
+
 
 # ── Attack parsing from plain text desc ──────────────────────────────────────
 hit_re      = re.compile(r'([+-]\d+) to hit', re.IGNORECASE)
@@ -189,7 +217,11 @@ def main():
         v2_monsters = json.load(f)
     print(f"  {len(v2_monsters):,} monsters loaded")
 
-    # Clean v2: drop community, no-CR, no-AC, normalize HP
+    # Clean v2: drop community, no-CR, no-AC, normalize HP.
+    # v2 is built directly from the 5etools bestiary, so every surviving
+    # monster is WotC-official. Force sourceType="official" on the way in —
+    # our OFFICIAL_SOURCES set is not exhaustive for every short-module code
+    # and some WotC monsters were getting mislabeled third-party otherwise.
     v2_clean = []
     v2_dropped = 0
     for m in v2_monsters:
@@ -210,6 +242,7 @@ def main():
         elif isinstance(hp, dict) and hp.get("average") is None:
             v2_dropped += 1
             continue
+        m["sourceType"] = "official"
         v2_clean.append(m)
     print(f"  Dropped {v2_dropped} (community/no-CR/no-AC) from v2")
     v2_monsters = v2_clean
@@ -227,11 +260,13 @@ def main():
         old_monsters = json.load(f)
     print(f"  {len(old_monsters):,} monsters loaded")
 
-    # Filter old file: keep only true third-party, skip official and community
+    # Filter old file: keep only WHITELISTED third-party, skip official/community/rest
     third_party_new = []
     skipped_official = 0
     skipped_community = 0
     skipped_duplicate = 0
+    skipped_not_whitelisted = 0
+    dropped_by_source = {}  # for reporting which sources were cut
 
     for m in old_monsters:
         source = m.get("source", "")
@@ -248,6 +283,13 @@ def main():
             skipped_official += 1
             continue
 
+        # Whitelist check — only keep specified third-party sources
+        norm = normalise_source(source)
+        if norm not in THIRD_PARTY_KEEP:
+            skipped_not_whitelisted += 1
+            dropped_by_source[norm] = dropped_by_source.get(norm, 0) + 1
+            continue
+
         # Drop duplicates already in v2
         key = (m["name"].lower(), source_upper)
         if key in v2_keys:
@@ -256,7 +298,7 @@ def main():
 
         # Drop monsters with no CR or no AC — unusable in sim
         if m.get("cr") is None or m.get("ac") is None:
-            skipped_duplicate += 1  # reuse counter, rename below
+            skipped_duplicate += 1
             continue
 
         # Normalize HP int → dict
@@ -270,8 +312,13 @@ def main():
 
     print(f"\n  Skipped official (v2 has better): {skipped_official:,}")
     print(f"  Skipped community/homebrew:        {skipped_community:,}")
-    print(f"  Skipped duplicates already in v2:  {skipped_duplicate:,}")
+    print(f"  Skipped not-whitelisted 3rd party: {skipped_not_whitelisted:,}")
+    print(f"  Skipped duplicates / missing data: {skipped_duplicate:,}")
     print(f"  Third-party to merge in:           {len(third_party_new):,}")
+    if dropped_by_source:
+        print(f"\n  Dropped 3rd-party sources (top 15):")
+        for src, n in sorted(dropped_by_source.items(), key=lambda x:-x[1])[:15]:
+            print(f"    {n:>5}  {src or '(unknown)'}")
 
     # Enrich third-party monsters with missing fields
     print(f"\nEnriching third-party monsters...")

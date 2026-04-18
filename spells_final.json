@@ -38,7 +38,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Acid Splash",
@@ -80,7 +81,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade Ward",
@@ -118,7 +120,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade Ward",
@@ -156,7 +159,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Booming Blade",
@@ -199,7 +203,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chill Touch",
@@ -241,7 +246,8 @@
       "healing",
       "necromancy",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chill Touch",
@@ -283,7 +289,8 @@
       "healing",
       "melee-attack",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Flames",
@@ -319,7 +326,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": "36e461a22f71.png"
   },
   {
     "name": "Create Bonfire",
@@ -357,7 +365,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dancing Lights",
@@ -397,7 +406,8 @@
       "buff",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dancing Lights",
@@ -437,7 +447,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Druidcraft",
@@ -473,7 +484,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Druidcraft",
@@ -509,7 +521,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Eldritch Blast",
@@ -548,7 +561,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Eldritch Blast",
@@ -587,7 +601,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elementalism",
@@ -627,7 +642,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Encode Thoughts",
@@ -661,7 +677,8 @@
     "tags": [
       "enchantment",
       "utility"
-    ]
+    ],
+    "imagePath": "9da4bcebd6ea.png"
   },
   {
     "name": "Fire Bolt",
@@ -702,7 +719,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fire Bolt",
@@ -743,7 +761,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Friends",
@@ -783,7 +802,8 @@
       "buff",
       "control",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Friends",
@@ -823,7 +843,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Frostbite",
@@ -860,7 +881,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Green-Flame Blade",
@@ -903,7 +925,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guidance",
@@ -941,7 +964,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guidance",
@@ -978,7 +1002,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gust",
@@ -1013,7 +1038,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Infestation",
@@ -1050,7 +1076,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Light",
@@ -1091,7 +1118,8 @@
       "buff",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Light",
@@ -1131,7 +1159,8 @@
     "tags": [
       "buff",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lightning Lure",
@@ -1174,7 +1203,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mage Hand",
@@ -1213,7 +1243,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mage Hand",
@@ -1252,7 +1283,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Stone",
@@ -1289,7 +1321,8 @@
       "damage",
       "ranged-attack",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mending",
@@ -1329,7 +1362,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mending",
@@ -1368,7 +1402,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Message",
@@ -1407,7 +1442,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Message",
@@ -1447,7 +1483,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Sliver",
@@ -1484,7 +1521,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Sliver",
@@ -1525,7 +1563,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Minor Illusion",
@@ -1564,7 +1603,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Minor Illusion",
@@ -1603,7 +1643,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mold Earth",
@@ -1637,7 +1678,8 @@
     "tags": [
       "aoe",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Poison Spray",
@@ -1680,7 +1722,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Poison Spray",
@@ -1723,7 +1766,8 @@
       "damage",
       "necromancy",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prestidigitation",
@@ -1763,7 +1807,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prestidigitation",
@@ -1803,7 +1848,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Primal Savagery",
@@ -1840,7 +1886,8 @@
       "damage",
       "melee-attack",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Produce Flame",
@@ -1879,7 +1926,8 @@
       "conjuration",
       "damage",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Produce Flame",
@@ -1918,7 +1966,8 @@
       "conjuration",
       "damage",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Frost",
@@ -1959,7 +2008,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Frost",
@@ -2000,7 +2050,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Resistance",
@@ -2038,7 +2089,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Resistance",
@@ -2075,7 +2127,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sacred Flame",
@@ -2114,7 +2167,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sacred Flame",
@@ -2153,7 +2207,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sapping Sting",
@@ -2191,7 +2246,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shape Water",
@@ -2226,7 +2282,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": "b873cf28f2e0.png"
   },
   {
     "name": "Shillelagh",
@@ -2261,7 +2318,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shillelagh",
@@ -2299,7 +2357,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shocking Grasp",
@@ -2340,7 +2399,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shocking Grasp",
@@ -2381,7 +2441,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sorcerous Burst",
@@ -2426,7 +2487,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spare the Dying",
@@ -2462,7 +2524,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spare the Dying",
@@ -2499,7 +2562,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Starry Wisp",
@@ -2539,7 +2603,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sword Burst",
@@ -2582,7 +2647,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thaumaturgy",
@@ -2618,7 +2684,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thaumaturgy",
@@ -2655,7 +2722,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thorn Whip",
@@ -2695,7 +2763,8 @@
       "damage",
       "melee-attack",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thorn Whip",
@@ -2735,7 +2804,8 @@
       "damage",
       "melee-attack",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderclap",
@@ -2773,7 +2843,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderclap",
@@ -2818,7 +2889,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Toll the Dead",
@@ -2855,7 +2927,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Toll the Dead",
@@ -2896,7 +2969,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Strike",
@@ -2935,7 +3009,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Strike",
@@ -2977,7 +3052,8 @@
     "tags": [
       "damage",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vicious Mockery",
@@ -3016,7 +3092,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vicious Mockery",
@@ -3055,7 +3132,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Word of Radiance",
@@ -3093,7 +3171,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Word of Radiance",
@@ -3133,7 +3212,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Absorb Elements",
@@ -3168,7 +3248,8 @@
       "abjuration",
       "buff",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Alarm",
@@ -3207,7 +3288,8 @@
       "abjuration",
       "aoe",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Alarm",
@@ -3246,7 +3328,8 @@
       "abjuration",
       "aoe",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Friendship",
@@ -3285,7 +3368,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Friendship",
@@ -3325,7 +3409,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Armor of Agathys",
@@ -3363,7 +3448,8 @@
     "tags": [
       "abjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Armor of Agathys",
@@ -3401,7 +3487,8 @@
     "tags": [
       "abjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arms of Hadar",
@@ -3441,7 +3528,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arms of Hadar",
@@ -3481,7 +3569,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bane",
@@ -3519,7 +3608,8 @@
       "aoe",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bane",
@@ -3558,7 +3648,8 @@
       "aoe",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Beast Bond",
@@ -3593,7 +3684,8 @@
       "buff",
       "control",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bless",
@@ -3631,7 +3723,8 @@
       "aoe",
       "buff",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bless",
@@ -3669,7 +3762,8 @@
       "aoe",
       "buff",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Burning Hands",
@@ -3711,7 +3805,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Burning Hands",
@@ -3752,7 +3847,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Catapult",
@@ -3789,7 +3885,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cause Fear",
@@ -3824,7 +3921,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ceremony",
@@ -3860,7 +3958,8 @@
       "buff",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chaos Bolt",
@@ -3904,7 +4003,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Charm Person",
@@ -3946,7 +4046,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Charm Person",
@@ -3988,7 +4089,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chromatic Orb",
@@ -4033,7 +4135,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chromatic Orb",
@@ -4078,7 +4181,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Color Spray",
@@ -4116,7 +4220,8 @@
       "aoe",
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Color Spray",
@@ -4156,7 +4261,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Command",
@@ -4194,7 +4300,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Command",
@@ -4234,7 +4341,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Compelled Duel",
@@ -4270,7 +4378,8 @@
     "tags": [
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Compelled Duel",
@@ -4306,7 +4415,8 @@
     "tags": [
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Comprehend Languages",
@@ -4346,7 +4456,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Comprehend Languages",
@@ -4386,7 +4497,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create or Destroy Water",
@@ -4424,7 +4536,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create or Destroy Water",
@@ -4462,7 +4575,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cure Wounds",
@@ -4503,7 +4617,8 @@
     "tags": [
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cure Wounds",
@@ -4544,7 +4659,8 @@
     "tags": [
       "abjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Evil and Good",
@@ -4580,7 +4696,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Evil and Good",
@@ -4617,7 +4734,8 @@
     "tags": [
       "aoe",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Magic",
@@ -4661,7 +4779,8 @@
       "buff",
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Magic",
@@ -4708,7 +4827,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Poison and Disease",
@@ -4747,7 +4867,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Poison and Disease",
@@ -4787,7 +4908,8 @@
       "aoe",
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Disguise Self",
@@ -4827,7 +4949,8 @@
       "buff",
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Disguise Self",
@@ -4867,7 +4990,8 @@
       "buff",
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dissonant Whispers",
@@ -4907,7 +5031,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dissonant Whispers",
@@ -4946,7 +5071,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Distort Value",
@@ -4985,7 +5111,8 @@
     "tags": [
       "buff",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divine Favor",
@@ -5023,7 +5150,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divine Favor",
@@ -5061,7 +5189,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divine Smite",
@@ -5099,7 +5228,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Earth Tremor",
@@ -5138,7 +5268,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ensnaring Strike",
@@ -5178,7 +5309,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ensnaring Strike",
@@ -5218,7 +5350,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Entangle",
@@ -5256,7 +5389,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Entangle",
@@ -5295,7 +5429,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Expeditious Retreat",
@@ -5334,7 +5469,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Expeditious Retreat",
@@ -5373,7 +5509,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Faerie Fire",
@@ -5414,7 +5551,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Faerie Fire",
@@ -5455,7 +5593,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "False Life",
@@ -5493,7 +5632,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "False Life",
@@ -5531,7 +5671,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Feather Fall",
@@ -5570,7 +5711,8 @@
     "tags": [
       "aoe",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Feather Fall",
@@ -5609,7 +5751,8 @@
     "tags": [
       "aoe",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Familiar",
@@ -5647,7 +5790,8 @@
       "conjuration",
       "control",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Familiar",
@@ -5685,7 +5829,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fog Cloud",
@@ -5725,7 +5870,8 @@
       "aoe",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fog Cloud",
@@ -5765,7 +5911,8 @@
       "aoe",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Frost Fingers",
@@ -5803,7 +5950,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gift of Alacrity",
@@ -5837,7 +5985,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Goodberry",
@@ -5874,7 +6023,8 @@
     "tags": [
       "healing",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Goodberry",
@@ -5911,7 +6061,8 @@
     "tags": [
       "conjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Grease",
@@ -5950,7 +6101,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Grease",
@@ -5990,7 +6142,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guiding Bolt",
@@ -6029,7 +6182,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guiding Bolt",
@@ -6068,7 +6222,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hail of Thorns",
@@ -6108,7 +6263,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hail of Thorns",
@@ -6148,7 +6304,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Healing Word",
@@ -6186,7 +6343,8 @@
     "tags": [
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Healing Word",
@@ -6224,7 +6382,8 @@
     "tags": [
       "abjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hellish Rebuke",
@@ -6263,7 +6422,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hellish Rebuke",
@@ -6302,7 +6462,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heroism",
@@ -6339,7 +6500,8 @@
     "tags": [
       "control",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heroism",
@@ -6376,7 +6538,8 @@
     "tags": [
       "control",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hex",
@@ -6414,7 +6577,8 @@
     "tags": [
       "damage",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hex",
@@ -6452,7 +6616,8 @@
     "tags": [
       "damage",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hunter's Mark",
@@ -6489,7 +6654,8 @@
       "buff",
       "damage",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hunter's Mark",
@@ -6527,7 +6693,8 @@
     "tags": [
       "damage",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ice Knife",
@@ -6566,7 +6733,8 @@
       "damage",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ice Knife",
@@ -6609,7 +6777,8 @@
       "damage",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Identify",
@@ -6648,7 +6817,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Identify",
@@ -6687,7 +6857,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Illusory Script",
@@ -6726,7 +6897,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Illusory Script",
@@ -6765,7 +6937,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Inflict Wounds",
@@ -6804,7 +6977,8 @@
       "damage",
       "melee-attack",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Inflict Wounds",
@@ -6843,7 +7017,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Jim's Magic Missile",
@@ -6882,7 +7057,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Jump",
@@ -6921,7 +7097,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Jump",
@@ -6960,7 +7137,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Longstrider",
@@ -7000,7 +7178,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Longstrider",
@@ -7040,7 +7219,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mage Armor",
@@ -7076,7 +7256,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mage Armor",
@@ -7112,7 +7293,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Missile",
@@ -7151,7 +7333,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Missile",
@@ -7190,7 +7373,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magnify Gravity",
@@ -7228,7 +7412,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Evil and Good",
@@ -7268,7 +7453,8 @@
       "abjuration",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Evil and Good",
@@ -7309,7 +7495,8 @@
       "abjuration",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Purify Food and Drink",
@@ -7350,7 +7537,8 @@
       "ritual",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Purify Food and Drink",
@@ -7391,7 +7579,8 @@
       "ritual",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Sickness",
@@ -7432,7 +7621,8 @@
       "necromancy",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Sickness",
@@ -7472,7 +7662,8 @@
       "damage",
       "necromancy",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sanctuary",
@@ -7510,7 +7701,8 @@
       "abjuration",
       "buff",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sanctuary",
@@ -7548,7 +7740,8 @@
       "abjuration",
       "buff",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Searing Smite",
@@ -7587,7 +7780,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Searing Smite",
@@ -7626,7 +7820,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shield",
@@ -7664,7 +7859,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shield",
@@ -7701,7 +7897,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shield of Faith",
@@ -7738,7 +7935,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shield of Faith",
@@ -7775,7 +7973,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Silent Image",
@@ -7813,7 +8012,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Silent Image",
@@ -7851,7 +8051,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Silvery Barbs",
@@ -7889,7 +8090,8 @@
     "tags": [
       "buff",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sleep",
@@ -7928,7 +8130,8 @@
       "aoe",
       "control",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sleep",
@@ -7968,7 +8171,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Snare",
@@ -8003,7 +8207,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Animals",
@@ -8043,7 +8248,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Animals",
@@ -8083,7 +8289,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spellfire Flare",
@@ -8120,7 +8327,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Caustic Brew",
@@ -8160,7 +8368,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Hideous Laughter",
@@ -8199,7 +8408,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Hideous Laughter",
@@ -8239,7 +8449,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tenser's Floating Disk",
@@ -8276,7 +8487,8 @@
       "conjuration",
       "control",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tenser's Floating Disk",
@@ -8313,7 +8525,8 @@
       "conjuration",
       "control",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderous Smite",
@@ -8353,7 +8566,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderous Smite",
@@ -8393,7 +8607,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderwave",
@@ -8436,7 +8651,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunderwave",
@@ -8479,7 +8695,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Unseen Servant",
@@ -8519,7 +8736,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Unseen Servant",
@@ -8559,7 +8777,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wardaway",
@@ -8596,7 +8815,8 @@
       "abjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Witch Bolt",
@@ -8637,7 +8857,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Witch Bolt",
@@ -8678,7 +8899,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wrathful Smite",
@@ -8718,7 +8940,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wrathful Smite",
@@ -8758,7 +8981,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Zephyr Strike",
@@ -8794,7 +9018,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aganazzar's Scorcher",
@@ -8832,7 +9057,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aid",
@@ -8871,7 +9097,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aid",
@@ -8913,7 +9140,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Air Bubble",
@@ -8953,7 +9181,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Alter Self",
@@ -8995,7 +9224,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Alter Self",
@@ -9037,7 +9267,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Messenger",
@@ -9076,7 +9307,8 @@
       "enchantment",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Messenger",
@@ -9116,7 +9348,8 @@
       "ritual",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Lock",
@@ -9154,7 +9387,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Lock",
@@ -9191,7 +9425,8 @@
     "tags": [
       "abjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Vigor",
@@ -9229,7 +9464,8 @@
     "tags": [
       "abjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Augury",
@@ -9266,7 +9502,8 @@
       "buff",
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Augury",
@@ -9304,7 +9541,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Barkskin",
@@ -9340,7 +9578,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Barkskin",
@@ -9376,7 +9615,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Beast Sense",
@@ -9415,7 +9655,8 @@
       "control",
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Beast Sense",
@@ -9452,7 +9693,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blindness/Deafness",
@@ -9492,7 +9734,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blindness/Deafness",
@@ -9532,7 +9775,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blur",
@@ -9569,7 +9813,8 @@
     "isUtility": false,
     "tags": [
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blur",
@@ -9606,7 +9851,8 @@
     "isUtility": false,
     "tags": [
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Borrowed Knowledge",
@@ -9644,7 +9890,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Branding Smite",
@@ -9682,7 +9929,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Calm Emotions",
@@ -9721,7 +9969,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Calm Emotions",
@@ -9761,7 +10010,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cloud of Daggers",
@@ -9803,7 +10053,8 @@
       "aoe",
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cloud of Daggers",
@@ -9845,7 +10096,8 @@
       "aoe",
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Continual Flame",
@@ -9883,7 +10135,8 @@
     "tags": [
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Continual Flame",
@@ -9923,7 +10176,8 @@
       "buff",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cordon of Arrows",
@@ -9963,7 +10217,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cordon of Arrows",
@@ -10003,7 +10258,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Crown of Madness",
@@ -10043,7 +10299,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Crown of Madness",
@@ -10083,7 +10340,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Darkness",
@@ -10122,7 +10380,8 @@
       "aoe",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Darkness",
@@ -10161,7 +10420,8 @@
       "aoe",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Darkvision",
@@ -10201,7 +10461,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Darkvision",
@@ -10240,7 +10501,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Death Armor",
@@ -10277,7 +10539,8 @@
       "aoe",
       "damage",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Deryan's Helpful Homunculi",
@@ -10312,7 +10575,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Thoughts",
@@ -10352,7 +10616,8 @@
       "divination",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Detect Thoughts",
@@ -10391,7 +10656,8 @@
       "divination",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dragon's Breath",
@@ -10432,7 +10698,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dragon's Breath",
@@ -10477,7 +10744,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dust Devil",
@@ -10514,7 +10782,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Earthbind",
@@ -10548,7 +10817,8 @@
     "tags": [
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elminster's Elusion",
@@ -10582,7 +10852,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enhance Ability",
@@ -10623,7 +10894,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enhance Ability",
@@ -10665,7 +10937,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enlarge/Reduce",
@@ -10705,7 +10978,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enlarge/Reduce",
@@ -10747,7 +11021,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enthrall",
@@ -10787,7 +11062,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enthrall",
@@ -10825,7 +11101,8 @@
       "aoe",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Steed",
@@ -10861,7 +11138,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Steed",
@@ -10898,7 +11176,8 @@
       "buff",
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Traps",
@@ -10935,7 +11214,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Traps",
@@ -10973,7 +11253,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flame Blade",
@@ -11012,7 +11293,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flame Blade",
@@ -11052,7 +11334,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flaming Sphere",
@@ -11093,7 +11376,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flaming Sphere",
@@ -11135,7 +11419,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flock of Familiars",
@@ -11172,7 +11457,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fortune's Favor",
@@ -11206,7 +11492,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gentle Repose",
@@ -11243,7 +11530,8 @@
     "tags": [
       "necromancy",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gentle Repose",
@@ -11281,7 +11569,8 @@
     "tags": [
       "necromancy",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gift of Gab",
@@ -11319,7 +11608,8 @@
       "aoe",
       "enchantment",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gust of Wind",
@@ -11359,7 +11649,8 @@
       "buff",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gust of Wind",
@@ -11400,7 +11691,8 @@
       "buff",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Healing Spirit",
@@ -11435,7 +11727,8 @@
       "aoe",
       "conjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heat Metal",
@@ -11476,7 +11769,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heat Metal",
@@ -11517,7 +11811,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hold Person",
@@ -11559,7 +11854,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hold Person",
@@ -11601,7 +11897,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Homunculus Servant",
@@ -11639,7 +11936,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Immovable Object",
@@ -11673,7 +11971,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Invisibility",
@@ -11713,7 +12012,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Invisibility",
@@ -11753,7 +12053,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Jim's Glowing Coin",
@@ -11790,7 +12091,8 @@
       "aoe",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Kinetic Jaunt",
@@ -11831,7 +12133,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Knock",
@@ -11869,7 +12172,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Knock",
@@ -11907,7 +12211,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lesser Restoration",
@@ -11948,7 +12253,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lesser Restoration",
@@ -11989,7 +12295,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Levitate",
@@ -12027,7 +12334,8 @@
     "tags": [
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Levitate",
@@ -12065,7 +12373,8 @@
     "tags": [
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Animals or Plants",
@@ -12103,7 +12412,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Animals or Plants",
@@ -12141,7 +12451,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Object",
@@ -12181,7 +12492,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Object",
@@ -12221,7 +12533,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Mouth",
@@ -12260,7 +12573,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Mouth",
@@ -12299,7 +12613,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Weapon",
@@ -12337,7 +12652,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Weapon",
@@ -12377,7 +12693,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Maximilian's Earthen Grasp",
@@ -12415,7 +12732,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Melf's Acid Arrow",
@@ -12454,7 +12772,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Melf's Acid Arrow",
@@ -12493,7 +12812,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Spike",
@@ -12530,7 +12850,8 @@
       "damage",
       "divination",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Spike",
@@ -12571,7 +12892,8 @@
       "damage",
       "divination",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mirror Image",
@@ -12608,7 +12930,8 @@
     "isUtility": false,
     "tags": [
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mirror Image",
@@ -12647,7 +12970,8 @@
     "tags": [
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Misty Step",
@@ -12685,7 +13009,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Misty Step",
@@ -12723,7 +13048,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Moonbeam",
@@ -12763,7 +13089,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Moonbeam",
@@ -12803,7 +13130,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Nathair's Mischief",
@@ -12838,7 +13166,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Nystul's Magic Aura",
@@ -12875,7 +13204,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Nystul's Magic Aura",
@@ -12912,7 +13242,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Pass without Trace",
@@ -12951,7 +13282,8 @@
       "aoe",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Pass without Trace",
@@ -12989,7 +13321,8 @@
       "abjuration",
       "aoe",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantasmal Force",
@@ -13030,7 +13363,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantasmal Force",
@@ -13071,7 +13405,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prayer of Healing",
@@ -13108,7 +13443,8 @@
       "aoe",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prayer of Healing",
@@ -13146,7 +13482,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Poison",
@@ -13186,7 +13523,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Poison",
@@ -13226,7 +13564,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Pyrotechnics",
@@ -13262,7 +13601,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Enfeeblement",
@@ -13300,7 +13640,8 @@
       "necromancy",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ray of Enfeeblement",
@@ -13337,7 +13678,8 @@
     "tags": [
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Rime's Binding Ice",
@@ -13375,7 +13717,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Rope Trick",
@@ -13412,7 +13755,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Rope Trick",
@@ -13449,7 +13793,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Scorching Ray",
@@ -13489,7 +13834,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Scorching Ray",
@@ -13529,7 +13875,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "See Invisibility",
@@ -13568,7 +13915,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "See Invisibility",
@@ -13607,7 +13955,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shadow Blade",
@@ -13643,7 +13992,8 @@
     "tags": [
       "damage",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shatter",
@@ -13686,7 +14036,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shatter",
@@ -13728,7 +14079,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shining Smite",
@@ -13766,7 +14118,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Silence",
@@ -13806,7 +14159,8 @@
       "control",
       "illusion",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Silence",
@@ -13846,7 +14200,8 @@
       "control",
       "illusion",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Skywrite",
@@ -13880,7 +14235,8 @@
     "tags": [
       "ritual",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Snilloc's Snowball Swarm",
@@ -13918,7 +14274,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spider Climb",
@@ -13956,7 +14313,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spider Climb",
@@ -13994,7 +14352,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spike Growth",
@@ -14034,7 +14393,8 @@
       "aoe",
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spike Growth",
@@ -14074,7 +14434,8 @@
       "aoe",
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spiritual Weapon",
@@ -14113,7 +14474,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spiritual Weapon",
@@ -14152,7 +14514,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spray of Cards",
@@ -14191,7 +14554,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Suggestion",
@@ -14231,7 +14595,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Suggestion",
@@ -14272,7 +14637,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Beast",
@@ -14306,7 +14672,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Beast",
@@ -14344,7 +14711,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Mind Whip",
@@ -14381,7 +14749,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vortex Warp",
@@ -14419,7 +14788,8 @@
     "tags": [
       "conjuration",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Warding Bond",
@@ -14456,7 +14826,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Warding Bond",
@@ -14494,7 +14865,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Warding Wind",
@@ -14528,7 +14900,8 @@
     "tags": [
       "control",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Warp Sense",
@@ -14562,7 +14935,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Web",
@@ -14605,7 +14979,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Web",
@@ -14648,7 +15023,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wither and Bloom",
@@ -14690,7 +15066,8 @@
       "healing",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wristpocket",
@@ -14725,7 +15102,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Zone of Truth",
@@ -14765,7 +15143,8 @@
       "enchantment",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Zone of Truth",
@@ -14805,7 +15184,8 @@
       "enchantment",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animate Dead",
@@ -14843,7 +15223,8 @@
       "buff",
       "necromancy",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animate Dead",
@@ -14880,7 +15261,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antagonize",
@@ -14917,7 +15299,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ashardalon's Stride",
@@ -14953,7 +15336,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Vitality",
@@ -14990,7 +15374,8 @@
       "aoe",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Vitality",
@@ -15029,7 +15414,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Beacon of Hope",
@@ -15066,7 +15452,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Beacon of Hope",
@@ -15103,7 +15490,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bestow Curse",
@@ -15144,7 +15532,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bestow Curse",
@@ -15185,7 +15574,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blinding Smite",
@@ -15225,7 +15615,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blinding Smite",
@@ -15265,7 +15656,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blink",
@@ -15302,7 +15694,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blink",
@@ -15339,7 +15732,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cacophonic Shield",
@@ -15378,7 +15772,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Call Lightning",
@@ -15418,7 +15813,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Call Lightning",
@@ -15458,7 +15854,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Catnap",
@@ -15493,7 +15890,8 @@
       "aoe",
       "control",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Clairvoyance",
@@ -15532,7 +15930,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Clairvoyance",
@@ -15572,7 +15971,8 @@
       "buff",
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Animals",
@@ -15609,7 +16009,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Animals",
@@ -15650,7 +16051,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Barrage",
@@ -15689,7 +16091,8 @@
       "damage",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Barrage",
@@ -15729,7 +16132,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Constructs",
@@ -15767,7 +16171,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Counterspell",
@@ -15804,7 +16209,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Counterspell",
@@ -15843,7 +16249,8 @@
       "abjuration",
       "buff",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Food and Water",
@@ -15881,7 +16288,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Food and Water",
@@ -15919,7 +16327,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Crusader's Mantle",
@@ -15958,7 +16367,8 @@
       "aoe",
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Crusader's Mantle",
@@ -15997,7 +16407,8 @@
       "aoe",
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Daylight",
@@ -16039,7 +16450,8 @@
       "buff",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Daylight",
@@ -16081,7 +16493,8 @@
       "buff",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dispel Magic",
@@ -16123,7 +16536,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dispel Magic",
@@ -16166,7 +16580,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elemental Weapon",
@@ -16209,7 +16624,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elemental Weapon",
@@ -16254,7 +16670,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enemies Abound",
@@ -16289,7 +16706,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Erupting Earth",
@@ -16327,7 +16745,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": "927ad8d5d207.png"
   },
   {
     "name": "Fast Friends",
@@ -16367,7 +16786,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fear",
@@ -16408,7 +16828,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fear",
@@ -16449,7 +16870,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Feign Death",
@@ -16490,7 +16912,8 @@
       "control",
       "necromancy",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Feign Death",
@@ -16531,7 +16954,8 @@
       "control",
       "necromancy",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fireball",
@@ -16572,7 +16996,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fireball",
@@ -16613,7 +17038,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flame Arrows",
@@ -16649,7 +17075,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fly",
@@ -16687,7 +17114,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fly",
@@ -16725,7 +17153,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Galder's Tower",
@@ -16761,7 +17190,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gaseous Form",
@@ -16800,7 +17230,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gaseous Form",
@@ -16839,7 +17270,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Glyph of Warding",
@@ -16886,7 +17318,8 @@
       "aoe",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Glyph of Warding",
@@ -16933,7 +17366,8 @@
       "aoe",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Haste",
@@ -16971,7 +17405,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Haste",
@@ -17010,7 +17445,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hunger of Hadar",
@@ -17052,7 +17488,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hunger of Hadar",
@@ -17094,7 +17531,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hypnotic Pattern",
@@ -17135,7 +17573,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hypnotic Pattern",
@@ -17176,7 +17615,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Incite Greed",
@@ -17216,7 +17656,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Intellect Fortress",
@@ -17252,7 +17693,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Laeral's Silver Lance",
@@ -17291,7 +17733,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Leomund's Tiny Hut",
@@ -17329,7 +17772,8 @@
       "aoe",
       "evocation",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Leomund's Tiny Hut",
@@ -17367,7 +17811,8 @@
       "aoe",
       "evocation",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Life Transference",
@@ -17404,7 +17849,8 @@
       "damage",
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lightning Arrow",
@@ -17444,7 +17890,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lightning Arrow",
@@ -17484,7 +17931,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lightning Bolt",
@@ -17525,7 +17973,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Lightning Bolt",
@@ -17566,7 +18015,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Linked Glyphs",
@@ -17601,7 +18051,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Circle",
@@ -17642,7 +18093,8 @@
       "aoe",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Circle",
@@ -17684,7 +18136,8 @@
       "buff",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Major Image",
@@ -17723,7 +18176,8 @@
     "tags": [
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Major Image",
@@ -17762,7 +18216,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Healing Word",
@@ -17799,7 +18254,8 @@
       "aoe",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Healing Word",
@@ -17837,7 +18293,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Meld into Stone",
@@ -17878,7 +18335,8 @@
       "damage",
       "ritual",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Meld into Stone",
@@ -17920,7 +18378,8 @@
       "damage",
       "ritual",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Melf's Minute Meteors",
@@ -17958,7 +18417,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": "21b62cb97f62.png"
   },
   {
     "name": "Motivational Speech",
@@ -17996,7 +18456,8 @@
       "aoe",
       "buff",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Nondetection",
@@ -18033,7 +18494,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Nondetection",
@@ -18070,7 +18532,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantom Steed",
@@ -18107,7 +18570,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantom Steed",
@@ -18144,7 +18608,8 @@
       "illusion",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Plant Growth",
@@ -18182,7 +18647,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Plant Growth",
@@ -18220,7 +18686,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Energy",
@@ -18261,7 +18728,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Protection from Energy",
@@ -18302,7 +18770,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Pulse Wave",
@@ -18340,7 +18809,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Remove Curse",
@@ -18378,7 +18848,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Remove Curse",
@@ -18416,7 +18887,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Revivify",
@@ -18454,7 +18926,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Revivify",
@@ -18494,7 +18967,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sending",
@@ -18531,7 +19005,8 @@
     "isUtility": false,
     "tags": [
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sending",
@@ -18568,7 +19043,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sleet Storm",
@@ -18608,7 +19084,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sleet Storm",
@@ -18648,7 +19125,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Slow",
@@ -18688,7 +19166,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Slow",
@@ -18729,7 +19208,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Dead",
@@ -18767,7 +19247,8 @@
       "buff",
       "necromancy",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Dead",
@@ -18806,7 +19287,8 @@
       "buff",
       "necromancy",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Plants",
@@ -18846,7 +19328,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Speak with Plants",
@@ -18885,7 +19368,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spirit Guardians",
@@ -18926,7 +19410,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spirit Guardians",
@@ -18967,7 +19452,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spirit Shroud",
@@ -19006,7 +19492,8 @@
       "damage",
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stinking Cloud",
@@ -19046,7 +19533,8 @@
       "conjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stinking Cloud",
@@ -19087,7 +19575,8 @@
       "conjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Fey",
@@ -19120,7 +19609,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Fey",
@@ -19159,7 +19649,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Lesser Demons",
@@ -19192,7 +19683,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Shadowspawn",
@@ -19225,7 +19717,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Undead",
@@ -19258,7 +19751,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Undead",
@@ -19295,7 +19789,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Syluné's Viper",
@@ -19333,7 +19828,8 @@
       "control",
       "damage",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Thunder Step",
@@ -19371,7 +19867,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tidal Wave",
@@ -19410,7 +19907,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tiny Servant",
@@ -19444,7 +19942,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tongues",
@@ -19483,7 +19982,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tongues",
@@ -19522,7 +20022,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vampiric Touch",
@@ -19563,7 +20064,8 @@
       "healing",
       "melee-attack",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vampiric Touch",
@@ -19605,7 +20107,8 @@
       "healing",
       "melee-attack",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Sand",
@@ -19640,7 +20143,8 @@
       "aoe",
       "control",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Water",
@@ -19675,7 +20179,8 @@
       "aoe",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Water Breathing",
@@ -19716,7 +20221,8 @@
       "aoe",
       "ritual",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Water Breathing",
@@ -19757,7 +20263,8 @@
       "aoe",
       "ritual",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Water Walk",
@@ -19800,7 +20307,8 @@
       "ritual",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Water Walk",
@@ -19843,7 +20351,8 @@
       "ritual",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wind Wall",
@@ -19884,7 +20393,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wind Wall",
@@ -19925,7 +20435,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Eye",
@@ -19962,7 +20473,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Eye",
@@ -20000,7 +20512,8 @@
       "buff",
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Life",
@@ -20037,7 +20550,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Life",
@@ -20075,7 +20589,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Purity",
@@ -20113,7 +20628,8 @@
       "aoe",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Aura of Purity",
@@ -20152,7 +20668,8 @@
       "aoe",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Backlash",
@@ -20189,7 +20706,8 @@
       "abjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Banishment",
@@ -20230,7 +20748,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Banishment",
@@ -20271,7 +20790,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blight",
@@ -20313,7 +20833,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blight",
@@ -20355,7 +20876,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Charm Monster",
@@ -20391,7 +20913,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Charm Monster",
@@ -20433,7 +20956,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Compulsion",
@@ -20472,7 +20996,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Compulsion",
@@ -20511,7 +21036,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Confusion",
@@ -20551,7 +21077,8 @@
       "aoe",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Confusion",
@@ -20592,7 +21119,8 @@
       "buff",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Minor Elementals",
@@ -20629,7 +21157,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Minor Elementals",
@@ -20672,7 +21201,8 @@
       "aoe",
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Woodland Beings",
@@ -20709,7 +21239,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Woodland Beings",
@@ -20749,7 +21280,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Water",
@@ -20791,7 +21323,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Water",
@@ -20833,7 +21366,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Death Ward",
@@ -20870,7 +21404,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Death Ward",
@@ -20907,7 +21442,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dimension Door",
@@ -20948,7 +21484,8 @@
     "tags": [
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dimension Door",
@@ -20989,7 +21526,8 @@
     "tags": [
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divination",
@@ -21026,7 +21564,8 @@
       "buff",
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divination",
@@ -21064,7 +21603,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Beast",
@@ -21103,7 +21643,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Beast",
@@ -21143,7 +21684,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Doomtide",
@@ -21181,7 +21723,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elemental Bane",
@@ -21222,7 +21765,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Evard's Black Tentacles",
@@ -21263,7 +21807,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Evard's Black Tentacles",
@@ -21304,7 +21849,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fabricate",
@@ -21341,7 +21887,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fabricate",
@@ -21378,7 +21925,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find Greater Steed",
@@ -21412,7 +21960,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fire Shield",
@@ -21451,7 +22000,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fire Shield",
@@ -21492,7 +22042,8 @@
     "tags": [
       "damage",
       "evocation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fount of Moonlight",
@@ -21533,7 +22084,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Freedom of Movement",
@@ -21573,7 +22125,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Freedom of Movement",
@@ -21613,7 +22166,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Galder's Speedy Courier",
@@ -21650,7 +22204,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gate Seal",
@@ -21684,7 +22239,8 @@
     "tags": [
       "abjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Giant Insect",
@@ -21721,7 +22277,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": "c3f4a67c6095.png"
   },
   {
     "name": "Giant Insect",
@@ -21758,7 +22315,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": "c3f4a67c6095.png"
   },
   {
     "name": "Grasping Vine",
@@ -21797,7 +22355,8 @@
       "conjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Grasping Vine",
@@ -21838,7 +22397,8 @@
       "control",
       "damage",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gravity Sinkhole",
@@ -21876,7 +22436,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Greater Invisibility",
@@ -21914,7 +22475,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Greater Invisibility",
@@ -21952,7 +22514,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guardian of Faith",
@@ -21991,7 +22554,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guardian of Faith",
@@ -22030,7 +22594,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guardian of Nature",
@@ -22066,7 +22631,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hallucinatory Terrain",
@@ -22106,7 +22672,8 @@
       "aoe",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hallucinatory Terrain",
@@ -22146,7 +22713,8 @@
       "aoe",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ice Storm",
@@ -22189,7 +22757,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ice Storm",
@@ -22232,7 +22801,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Leomund's Secret Chest",
@@ -22268,7 +22838,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Leomund's Secret Chest",
@@ -22304,7 +22875,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Creature",
@@ -22345,7 +22917,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Locate Creature",
@@ -22385,7 +22958,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Faithful Hound",
@@ -22424,7 +22998,8 @@
     "tags": [
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Faithful Hound",
@@ -22464,7 +23039,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Private Sanctum",
@@ -22502,7 +23078,8 @@
       "abjuration",
       "aoe",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Private Sanctum",
@@ -22540,7 +23117,8 @@
       "abjuration",
       "aoe",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otiluke's Resilient Sphere",
@@ -22577,7 +23155,8 @@
     "tags": [
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otiluke's Resilient Sphere",
@@ -22614,7 +23193,8 @@
     "tags": [
       "abjuration",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantasmal Killer",
@@ -22654,7 +23234,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Phantasmal Killer",
@@ -22694,7 +23275,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Polymorph",
@@ -22734,7 +23316,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Polymorph",
@@ -22774,7 +23357,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Raulothim's Psychic Lance",
@@ -22812,7 +23396,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shadow of Moil",
@@ -22849,7 +23434,8 @@
       "aoe",
       "damage",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sickening Radiance",
@@ -22887,7 +23473,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spellfire Storm",
@@ -22925,7 +23512,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Spirit of Death",
@@ -22958,7 +23546,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Staggering Smite",
@@ -22997,7 +23586,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Staggering Smite",
@@ -23037,7 +23627,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stone Shape",
@@ -23076,7 +23667,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stone Shape",
@@ -23115,7 +23707,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stoneskin",
@@ -23155,7 +23748,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Stoneskin",
@@ -23195,7 +23789,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Storm Sphere",
@@ -23235,7 +23830,8 @@
       "evocation",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": "e33767080ce7.png"
   },
   {
     "name": "Summon Aberration",
@@ -23268,7 +23864,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Aberration",
@@ -23305,7 +23902,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Construct",
@@ -23340,7 +23938,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Construct",
@@ -23377,7 +23976,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Elemental",
@@ -23411,7 +24011,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Elemental",
@@ -23450,7 +24051,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Greater Demon",
@@ -23485,7 +24087,8 @@
       "conjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vitriolic Sphere",
@@ -23523,7 +24126,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Vitriolic Sphere",
@@ -23564,7 +24168,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Fire",
@@ -23606,7 +24211,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Fire",
@@ -23648,7 +24254,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Watery Sphere",
@@ -23684,7 +24291,8 @@
       "conjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Alustriel's Mooncloak",
@@ -23720,7 +24328,8 @@
       "aoe",
       "control",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animate Objects",
@@ -23765,7 +24374,8 @@
       "control",
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animate Objects",
@@ -23809,7 +24419,8 @@
       "aoe",
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antilife Shell",
@@ -23845,7 +24456,8 @@
     "tags": [
       "abjuration",
       "aoe"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antilife Shell",
@@ -23882,7 +24494,8 @@
       "abjuration",
       "aoe",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Awaken",
@@ -23919,7 +24532,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Awaken",
@@ -23957,7 +24571,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Banishing Smite",
@@ -23996,7 +24611,8 @@
       "abjuration",
       "control",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Banishing Smite",
@@ -24035,7 +24651,8 @@
       "conjuration",
       "control",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bigby's Hand",
@@ -24077,7 +24694,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bigby's Hand",
@@ -24121,7 +24739,8 @@
       "evocation",
       "melee-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Circle of Power",
@@ -24158,7 +24777,8 @@
       "abjuration",
       "aoe",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Circle of Power",
@@ -24198,7 +24818,8 @@
       "abjuration",
       "aoe",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cloudkill",
@@ -24240,7 +24861,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cloudkill",
@@ -24281,7 +24903,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Commune",
@@ -24317,7 +24940,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Commune",
@@ -24353,7 +24977,8 @@
     "tags": [
       "divination",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Commune with Nature",
@@ -24392,7 +25017,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Commune with Nature",
@@ -24431,7 +25057,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cone of Cold",
@@ -24472,7 +25099,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Cone of Cold",
@@ -24514,7 +25142,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Elemental",
@@ -24551,7 +25180,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Elemental",
@@ -24595,7 +25225,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Volley",
@@ -24633,7 +25264,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Volley",
@@ -24673,7 +25305,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contact Other Plane",
@@ -24714,7 +25347,8 @@
       "divination",
       "ritual",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contact Other Plane",
@@ -24756,7 +25390,8 @@
       "divination",
       "ritual",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contagion",
@@ -24795,7 +25430,8 @@
       "melee-attack",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contagion",
@@ -24835,7 +25471,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Winds",
@@ -24872,7 +25509,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Spelljamming Helm",
@@ -24908,7 +25546,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Creation",
@@ -24946,7 +25585,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Creation",
@@ -24984,7 +25624,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Danse Macabre",
@@ -25018,7 +25659,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dawn",
@@ -25056,7 +25698,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Destructive Wave",
@@ -25099,7 +25742,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Destructive Wave",
@@ -25142,7 +25786,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dispel Evil and Good",
@@ -25181,7 +25826,8 @@
       "control",
       "melee-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dispel Evil and Good",
@@ -25219,7 +25865,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Person",
@@ -25259,7 +25906,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Person",
@@ -25299,7 +25947,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dream",
@@ -25341,7 +25990,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dream",
@@ -25383,7 +26033,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Enervation",
@@ -25421,7 +26072,8 @@
       "healing",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Far Step",
@@ -25456,7 +26108,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flame Strike",
@@ -25497,7 +26150,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flame Strike",
@@ -25538,7 +26192,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Geas",
@@ -25582,7 +26237,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Geas",
@@ -25626,7 +26282,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Greater Restoration",
@@ -25665,7 +26322,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Greater Restoration",
@@ -25706,7 +26364,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hallow",
@@ -25744,7 +26403,8 @@
       "control",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hallow",
@@ -25781,7 +26441,8 @@
       "abjuration",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hold Monster",
@@ -25821,7 +26482,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Hold Monster",
@@ -25861,7 +26523,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Holy Weapon",
@@ -25900,7 +26563,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Immolation",
@@ -25937,7 +26601,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Infernal Calling",
@@ -25972,7 +26637,8 @@
       "buff",
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Insect Plague",
@@ -26014,7 +26680,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Insect Plague",
@@ -26056,7 +26723,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Jallarzi's Storm of Radiance",
@@ -26099,7 +26767,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Legend Lore",
@@ -26137,7 +26806,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Legend Lore",
@@ -26174,7 +26844,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Maelstrom",
@@ -26212,7 +26883,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Cure Wounds",
@@ -26251,7 +26923,8 @@
       "aoe",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Cure Wounds",
@@ -26290,7 +26963,8 @@
       "abjuration",
       "aoe",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mislead",
@@ -26328,7 +27002,8 @@
       "buff",
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mislead",
@@ -26367,7 +27042,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Modify Memory",
@@ -26406,7 +27082,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Modify Memory",
@@ -26445,7 +27122,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Negative Energy Flood",
@@ -26482,7 +27160,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Passwall",
@@ -26518,7 +27197,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Passwall",
@@ -26554,7 +27234,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Planar Binding",
@@ -26594,7 +27275,8 @@
       "abjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Planar Binding",
@@ -26635,7 +27317,8 @@
       "abjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Raise Dead",
@@ -26673,7 +27356,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Raise Dead",
@@ -26711,7 +27395,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Rary's Telepathic Bond",
@@ -26749,7 +27434,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Rary's Telepathic Bond",
@@ -26788,7 +27474,8 @@
       "divination",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Reincarnate",
@@ -26824,7 +27511,8 @@
     "tags": [
       "healing",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Reincarnate",
@@ -26860,7 +27548,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Scrying",
@@ -26901,7 +27590,8 @@
       "control",
       "divination",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Scrying",
@@ -26942,7 +27632,8 @@
       "control",
       "divination",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Seeming",
@@ -26983,7 +27674,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Seeming",
@@ -27024,7 +27716,8 @@
       "control",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Skill Empowerment",
@@ -27058,7 +27751,8 @@
     "tags": [
       "buff",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Songal's Elemental Suffusion",
@@ -27100,7 +27794,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Steel Wind Strike",
@@ -27138,7 +27833,8 @@
       "conjuration",
       "damage",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Steel Wind Strike",
@@ -27179,7 +27875,8 @@
       "conjuration",
       "damage",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Celestial",
@@ -27212,7 +27909,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Celestial",
@@ -27249,7 +27947,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Draconic Spirit",
@@ -27283,7 +27982,8 @@
     "tags": [
       "conjuration",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Dragon",
@@ -27319,7 +28019,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Swift Quiver",
@@ -27356,7 +28057,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Swift Quiver",
@@ -27393,7 +28095,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Synaptic Static",
@@ -27431,7 +28134,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Synaptic Static",
@@ -27474,7 +28178,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Telekinesis",
@@ -27512,7 +28217,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Telekinesis",
@@ -27551,7 +28257,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Teleportation Circle",
@@ -27590,7 +28297,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Teleportation Circle",
@@ -27630,7 +28338,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Temporal Shunt",
@@ -27664,7 +28373,8 @@
     "tags": [
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Transmute Rock",
@@ -27703,7 +28413,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tree Stride",
@@ -27740,7 +28451,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tree Stride",
@@ -27777,7 +28489,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Force",
@@ -27814,7 +28527,8 @@
       "aoe",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Force",
@@ -27851,7 +28565,8 @@
       "aoe",
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Light",
@@ -27891,7 +28606,8 @@
       "evocation",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Stone",
@@ -27932,7 +28648,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Stone",
@@ -27973,7 +28690,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wrath of Nature",
@@ -28014,7 +28732,8 @@
       "evocation",
       "ranged-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Yolande's Regal Presence",
@@ -28056,7 +28775,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Gate",
@@ -28095,7 +28815,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Arcane Gate",
@@ -28134,7 +28855,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade Barrier",
@@ -28174,7 +28896,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade Barrier",
@@ -28214,7 +28937,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Bones of the Earth",
@@ -28253,7 +28977,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chain Lightning",
@@ -28293,7 +29018,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Chain Lightning",
@@ -28333,7 +29059,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Circle of Death",
@@ -28375,7 +29102,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Circle of Death",
@@ -28417,7 +29145,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Fey",
@@ -28454,7 +29183,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Fey",
@@ -28493,7 +29223,8 @@
       "conjuration",
       "control",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contingency",
@@ -28529,7 +29260,8 @@
     "tags": [
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Contingency",
@@ -28565,7 +29297,8 @@
     "tags": [
       "abjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Homunculus",
@@ -28600,7 +29333,8 @@
       "buff",
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Undead",
@@ -28638,7 +29372,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Undead",
@@ -28676,7 +29411,8 @@
     "tags": [
       "buff",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dirge",
@@ -28716,7 +29452,8 @@
       "enchantment",
       "healing",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Disintegrate",
@@ -28756,7 +29493,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Disintegrate",
@@ -28796,7 +29534,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Drawmij's Instant Summons",
@@ -28833,7 +29572,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Drawmij's Instant Summons",
@@ -28870,7 +29610,8 @@
       "conjuration",
       "ritual",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Druid Grove",
@@ -28906,7 +29647,8 @@
       "aoe",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Elminster's Effulgent Spheres",
@@ -28947,7 +29689,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Eyebite",
@@ -28987,7 +29730,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Eyebite",
@@ -29027,7 +29771,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find the Path",
@@ -29064,7 +29809,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Find the Path",
@@ -29101,7 +29847,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fizban's Platinum Shield",
@@ -29136,7 +29883,8 @@
       "abjuration",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flesh to Stone",
@@ -29174,7 +29922,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Flesh to Stone",
@@ -29213,7 +29962,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Forbiddance",
@@ -29253,7 +30003,8 @@
       "abjuration",
       "damage",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Forbiddance",
@@ -29293,7 +30044,8 @@
       "abjuration",
       "damage",
       "ritual"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Globe of Invulnerability",
@@ -29330,7 +30082,8 @@
     "tags": [
       "abjuration",
       "aoe"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Globe of Invulnerability",
@@ -29368,7 +30121,8 @@
       "abjuration",
       "aoe",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gravity Fissure",
@@ -29406,7 +30160,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guards and Wards",
@@ -29445,7 +30200,8 @@
       "aoe",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Guards and Wards",
@@ -29484,7 +30240,8 @@
       "aoe",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Harm",
@@ -29523,7 +30280,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Harm",
@@ -29562,7 +30320,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heal",
@@ -29600,7 +30359,8 @@
       "control",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heal",
@@ -29638,7 +30398,8 @@
       "abjuration",
       "control",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heroes' Feast",
@@ -29677,7 +30438,8 @@
       "conjuration",
       "control",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Heroes' Feast",
@@ -29717,7 +30479,8 @@
       "conjuration",
       "control",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Investiture of Flame",
@@ -29755,7 +30518,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Investiture of Ice",
@@ -29793,7 +30557,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Investiture of Stone",
@@ -29830,7 +30595,8 @@
       "control",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Investiture of Wind",
@@ -29868,7 +30634,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Jar",
@@ -29905,7 +30672,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Magic Jar",
@@ -29942,7 +30710,8 @@
       "control",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Suggestion",
@@ -29983,7 +30752,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Suggestion",
@@ -30024,7 +30794,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mental Prison",
@@ -30062,7 +30833,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Move Earth",
@@ -30101,7 +30873,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Move Earth",
@@ -30140,7 +30913,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otiluke's Freezing Sphere",
@@ -30180,7 +30954,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otiluke's Freezing Sphere",
@@ -30222,7 +30997,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otto's Irresistible Dance",
@@ -30261,7 +31037,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Otto's Irresistible Dance",
@@ -30300,7 +31077,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Planar Ally",
@@ -30337,7 +31115,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Planar Ally",
@@ -30374,7 +31153,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Primordial Ward",
@@ -30408,7 +31188,8 @@
     "tags": [
       "abjuration",
       "buff"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Programmed Illusion",
@@ -30445,7 +31226,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Programmed Illusion",
@@ -30482,7 +31264,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Scatter",
@@ -30518,7 +31301,8 @@
       "conjuration",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Soul Cage",
@@ -30552,7 +31336,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Fiend",
@@ -30585,7 +31370,8 @@
     "isUtility": false,
     "tags": [
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Summon Fiend",
@@ -30622,7 +31408,8 @@
     "tags": [
       "buff",
       "conjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sunbeam",
@@ -30665,7 +31452,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sunbeam",
@@ -30709,7 +31497,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Bubbling Cauldron",
@@ -30746,7 +31535,8 @@
     "tags": [
       "conjuration",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tasha's Otherworldly Guise",
@@ -30781,7 +31571,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tenser's Transformation",
@@ -30818,7 +31609,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Transport via Plants",
@@ -30854,7 +31646,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Transport via Plants",
@@ -30890,7 +31683,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Seeing",
@@ -30929,7 +31723,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Seeing",
@@ -30968,7 +31763,8 @@
     "isUtility": false,
     "tags": [
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Ice",
@@ -31008,7 +31804,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Ice",
@@ -31048,7 +31845,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Thorns",
@@ -31089,7 +31887,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wall of Thorns",
@@ -31130,7 +31929,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wind Walk",
@@ -31168,7 +31968,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wind Walk",
@@ -31206,7 +32007,8 @@
       "buff",
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Word of Recall",
@@ -31242,7 +32044,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Word of Recall",
@@ -31278,7 +32081,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Celestial",
@@ -31314,7 +32118,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Conjure Celestial",
@@ -31355,7 +32160,8 @@
       "damage",
       "healing",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Create Magen",
@@ -31389,7 +32195,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Crown of Stars",
@@ -31426,7 +32233,8 @@
       "damage",
       "evocation",
       "ranged-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Delayed Blast Fireball",
@@ -31467,7 +32275,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Delayed Blast Fireball",
@@ -31508,7 +32317,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divine Word",
@@ -31546,7 +32356,8 @@
       "control",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Divine Word",
@@ -31584,7 +32395,8 @@
       "control",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Draconic Transformation",
@@ -31622,7 +32434,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dream of the Blue Veil",
@@ -31656,7 +32469,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Etherealness",
@@ -31698,7 +32512,8 @@
     "tags": [
       "damage",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Etherealness",
@@ -31740,7 +32555,8 @@
     "tags": [
       "conjuration",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Finger of Death",
@@ -31781,7 +32597,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Finger of Death",
@@ -31822,7 +32639,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fire Storm",
@@ -31864,7 +32682,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Fire Storm",
@@ -31906,7 +32725,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Forcecage",
@@ -31946,7 +32766,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Forcecage",
@@ -31986,7 +32807,8 @@
       "evocation",
       "saving-throw",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mirage Arcane",
@@ -32025,7 +32847,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mirage Arcane",
@@ -32064,7 +32887,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Magnificent Mansion",
@@ -32101,7 +32925,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Magnificent Mansion",
@@ -32138,7 +32963,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Sword",
@@ -32178,7 +33004,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mordenkainen's Sword",
@@ -32218,7 +33045,8 @@
       "damage",
       "evocation",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Plane Shift",
@@ -32260,7 +33088,8 @@
       "control",
       "melee-attack",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Plane Shift",
@@ -32300,7 +33129,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Fortify",
@@ -32337,7 +33167,8 @@
     "tags": [
       "aoe",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Pain",
@@ -32372,7 +33203,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prismatic Spray",
@@ -32418,7 +33250,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prismatic Spray",
@@ -32465,7 +33298,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Project Image",
@@ -32503,7 +33337,8 @@
       "buff",
       "control",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Project Image",
@@ -32540,7 +33375,8 @@
     "tags": [
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Regenerate",
@@ -32579,7 +33415,8 @@
       "control",
       "healing",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Regenerate",
@@ -32617,7 +33454,8 @@
     "tags": [
       "healing",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Resurrection",
@@ -32654,7 +33492,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Resurrection",
@@ -32691,7 +33530,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Reverse Gravity",
@@ -32730,7 +33570,8 @@
       "aoe",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Reverse Gravity",
@@ -32769,7 +33610,8 @@
       "aoe",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sequester",
@@ -32805,7 +33647,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sequester",
@@ -32841,7 +33684,8 @@
     "tags": [
       "control",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Simbul's Synostodweomer",
@@ -32875,7 +33719,8 @@
     "tags": [
       "healing",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Simulacrum",
@@ -32911,7 +33756,8 @@
     "tags": [
       "healing",
       "illusion"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Simulacrum",
@@ -32948,7 +33794,8 @@
       "buff",
       "illusion",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Symbol",
@@ -32991,7 +33838,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Symbol",
@@ -33035,7 +33883,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Teleport",
@@ -33077,7 +33926,8 @@
       "conjuration",
       "control",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Teleport",
@@ -33119,7 +33969,8 @@
       "conjuration",
       "control",
       "damage"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Temple of the Gods",
@@ -33154,7 +34005,8 @@
       "conjuration",
       "healing",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tether Essence",
@@ -33189,7 +34041,8 @@
       "aoe",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Whirlwind",
@@ -33228,7 +34081,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": "3a328111ab7b.png"
   },
   {
     "name": "Abi-Dalzim's Horrid Wilting",
@@ -33266,7 +34120,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Shapes",
@@ -33303,7 +34158,8 @@
       "aoe",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Animal Shapes",
@@ -33341,7 +34197,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antimagic Field",
@@ -33379,7 +34236,8 @@
       "abjuration",
       "aoe",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antimagic Field",
@@ -33418,7 +34276,8 @@
       "aoe",
       "buff",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antipathy/Sympathy",
@@ -33458,7 +34317,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Antipathy/Sympathy",
@@ -33497,7 +34357,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Befuddlement",
@@ -33539,7 +34400,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Clone",
@@ -33574,7 +34436,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Clone",
@@ -33609,7 +34472,8 @@
     "isUtility": false,
     "tags": [
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Weather",
@@ -33647,7 +34511,8 @@
     "tags": [
       "aoe",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Control Weather",
@@ -33685,7 +34550,8 @@
     "tags": [
       "aoe",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dark Star",
@@ -33724,7 +34590,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Demiplane",
@@ -33761,7 +34628,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Demiplane",
@@ -33799,7 +34667,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Monster",
@@ -33840,7 +34709,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Dominate Monster",
@@ -33881,7 +34751,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Earthquake",
@@ -33924,7 +34795,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Earthquake",
@@ -33967,7 +34839,8 @@
       "damage",
       "saving-throw",
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Feeblemind",
@@ -34009,7 +34882,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Glibness",
@@ -34045,7 +34919,8 @@
     "isUtility": false,
     "tags": [
       "transmutation"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Glibness",
@@ -34081,7 +34956,8 @@
     "isUtility": false,
     "tags": [
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Holy Aura",
@@ -34120,7 +34996,8 @@
       "buff",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Holy Aura",
@@ -34159,7 +35036,8 @@
       "buff",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Holy Star of Mystra",
@@ -34195,7 +35073,8 @@
       "evocation",
       "ranged-attack",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Illusory Dragon",
@@ -34238,7 +35117,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Incendiary Cloud",
@@ -34279,7 +35159,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Incendiary Cloud",
@@ -34321,7 +35202,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Maddening Darkness",
@@ -34359,7 +35241,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Maze",
@@ -34395,7 +35278,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Maze",
@@ -34431,7 +35315,8 @@
     "tags": [
       "conjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mighty Fortress",
@@ -34465,7 +35350,8 @@
     "tags": [
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Blank",
@@ -34503,7 +35389,8 @@
       "abjuration",
       "buff",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mind Blank",
@@ -34540,7 +35427,8 @@
     "tags": [
       "abjuration",
       "control"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Stun",
@@ -34580,7 +35468,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Stun",
@@ -34620,7 +35509,8 @@
       "control",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Reality Break",
@@ -34660,7 +35550,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sunburst",
@@ -34703,7 +35594,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Sunburst",
@@ -34747,7 +35639,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Telepathy",
@@ -34783,7 +35676,8 @@
     "tags": [
       "evocation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Telepathy",
@@ -34819,7 +35713,8 @@
     "tags": [
       "divination",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tsunami",
@@ -34859,7 +35754,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Tsunami",
@@ -34899,7 +35795,8 @@
       "conjuration",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Astral Projection",
@@ -34939,7 +35836,8 @@
       "aoe",
       "control",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Astral Projection",
@@ -34978,7 +35876,8 @@
       "aoe",
       "control",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade of Disaster",
@@ -35016,7 +35915,8 @@
       "conjuration",
       "damage",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Blade of Disaster",
@@ -35054,7 +35954,8 @@
       "conjuration",
       "damage",
       "melee-attack"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Foresight",
@@ -35093,7 +35994,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Foresight",
@@ -35132,7 +36034,8 @@
     "tags": [
       "buff",
       "divination"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gate",
@@ -35171,7 +36074,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Gate",
@@ -35211,7 +36115,8 @@
       "buff",
       "conjuration",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Imprisonment",
@@ -35249,7 +36154,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Imprisonment",
@@ -35287,7 +36193,8 @@
       "abjuration",
       "control",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Invulnerability",
@@ -35320,7 +36227,8 @@
     "isUtility": false,
     "tags": [
       "abjuration"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Heal",
@@ -35358,7 +36266,8 @@
       "control",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Heal",
@@ -35396,7 +36305,8 @@
       "aoe",
       "control",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Mass Polymorph",
@@ -35432,7 +36342,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Meteor Swarm",
@@ -35474,7 +36385,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Meteor Swarm",
@@ -35516,7 +36428,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Heal",
@@ -35553,7 +36466,8 @@
       "control",
       "evocation",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Heal",
@@ -35591,7 +36505,8 @@
       "control",
       "enchantment",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Kill",
@@ -35629,7 +36544,8 @@
     "isUtility": false,
     "tags": [
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Power Word Kill",
@@ -35670,7 +36586,8 @@
     "tags": [
       "damage",
       "enchantment"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prismatic Wall",
@@ -35716,7 +36633,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Prismatic Wall",
@@ -35763,7 +36681,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Psychic Scream",
@@ -35802,7 +36721,8 @@
       "damage",
       "enchantment",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Ravenous Void",
@@ -35841,7 +36761,8 @@
       "damage",
       "evocation",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shapechange",
@@ -35879,7 +36800,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Shapechange",
@@ -35917,7 +36839,8 @@
       "buff",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Storm of Vengeance",
@@ -35962,7 +36885,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Storm of Vengeance",
@@ -36007,7 +36931,8 @@
       "control",
       "damage",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Time Ravage",
@@ -36044,7 +36969,8 @@
       "damage",
       "necromancy",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Time Stop",
@@ -36081,7 +37007,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Time Stop",
@@ -36118,7 +37045,8 @@
     "tags": [
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Polymorph",
@@ -36157,7 +37085,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Polymorph",
@@ -36197,7 +37126,8 @@
       "saving-throw",
       "transmutation",
       "utility"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Resurrection",
@@ -36234,7 +37164,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "True Resurrection",
@@ -36271,7 +37202,8 @@
     "tags": [
       "healing",
       "necromancy"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Weird",
@@ -36312,7 +37244,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Weird",
@@ -36354,7 +37287,8 @@
       "damage",
       "illusion",
       "saving-throw"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wish",
@@ -36394,7 +37328,8 @@
       "conjuration",
       "damage",
       "healing"
-    ]
+    ],
+    "imagePath": null
   },
   {
     "name": "Wish",
@@ -36434,6 +37369,7 @@
       "conjuration",
       "damage",
       "healing"
-    ]
+    ],
+    "imagePath": null
   }
 ]
