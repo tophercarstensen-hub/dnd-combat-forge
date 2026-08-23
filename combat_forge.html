@@ -824,6 +824,10 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
                       <button class="etype-btn" data-etype="horde" onclick="setEncType(this,'horde')" title="Many low-CR grunts — party-scaled CR floor, monster count adjusted for difficulty">&#128128; Horde</button>
                       <button class="etype-btn active" data-etype="random" onclick="setEncType(this,'random')" title="Mixed composition — 1 to 6 equal-strength monsters. Default.">&#127922; Random</button>
                     </div>
+                    <label style="display:flex;align-items:center;gap:5px;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-secondary);cursor:pointer" title="Warband/Elite/Squad only: picks the boss first, then theme-matches lieutenants and grunts to it (family/type/environment) instead of drawing from the generic pool. Refinement stays off the boss unless nothing else can hit the target tier — then it swaps to a stronger/weaker monster in the same theme, never a random one.">
+                      <input type="checkbox" checked onchange="THEME_BOSS=this.checked">
+                      &#127917; Themed boss (Warband/Elite/Squad)
+                    </label>
                   </div>
                   <!-- RIGHT: Difficulty -->
                   <div style="flex:1;min-width:0">
@@ -1261,6 +1265,10 @@ const SOURCE_PREFS_KEY="cf_srcprefs6";
 let EZO=true;
 let ETYPE="random";
 let GENDIFF="moderate";      // selected difficulty for generator
+// Warband/Elite/Squad: pick the boss first, theme-match the lieutenants/grunts
+// to it (family/type/environment), and keep refinement off the boss unless
+// nothing else can hit the target tier. On by default.
+let THEME_BOSS=true;
 let RPCRMIN=0,RPCRMAX=33;    // right panel / generator CR filter
 let LIBSEL=new Set();
 let EDITSLUG=null;
@@ -3352,11 +3360,33 @@ function generateEncounter(){
   // the same candidate pool — their *target XP per monster* differs, so
   // pickClosest naturally lands on bigger monsters for bosses and smaller for
   // mains. No arbitrary CR-percentile gates that force over-budget picks.
-  function buildPool(poolTag){
+  // Lieutenant CR band — a real step below the boss, not just "whatever's in
+  // the browse slider minus legendary." Previously "lt" reused the exact same
+  // CR-slider range as the boss (just non-legendary), so a narrow high-CR
+  // slider set for solo-boss hunting (e.g. CR 19-23) gave the lieutenant
+  // nowhere lower to land — it came back "matching" the boss's tier instead
+  // of a distinctly weaker-but-still-solid second tier. Scale relative to the
+  // ACTUAL picked boss's CR (steep CR→XP curve means even a modest CR gap is
+  // a real power drop) with a party-level-based fallback for templates where
+  // no boss has been picked yet when the lt group is built.
+  function ltCRBand(bossM){
+    const bossCR=bossM?bossM.crNum??0:0;
+    if(bossCR>0){
+      return{minCR:Math.max(0,bossCR*0.35),maxCR:Math.max(1,bossCR*0.65)};
+    }
+    return{minCR:Math.max(0,avgLvl/3),maxCR:Math.max(1,avgLvl*0.75)};
+  }
+  function buildPool(poolTag,bossM){
     const all=allM().filter(m=>matchM(m,q,type,env,RSRC));
     const fallback=all.length?all:allM();
     const inSlider=fallback.filter(m=>m.crNum>=crMinNum&&m.crNum<=crMaxNum);
-    if(poolTag==="lt"){const p=inSlider.filter(m=>!m.legendary);return p.length?p:inSlider;}
+    if(poolTag==="lt"){
+      const{minCR,maxCR}=ltCRBand(bossM);
+      const p=allM().filter(m=>!m.legendary&&(m.crNum??0)>=minCR&&(m.crNum??0)<=maxCR);
+      if(p.length)return p;
+      const p2=inSlider.filter(m=>!m.legendary);
+      return p2.length?p2:inSlider;
+    }
     // Grunt pool: non-legendary, in-CR-range, AND not a named NPC (Arabelle-the-
     // 5-year-old should never show up as a horde grunt). Also runs the grunt-
     // tier stopgap filter that catches WotC named NPCs lacking the unique flag.
@@ -3469,14 +3499,70 @@ function generateEncounter(){
       return effectiveBudget*w/Math.max(1,wTotal);
     }
     const enc=[];const used=new Set();
+    let bossPicked=null;
     for(const grp of tmpl.groups){
-      const p=buildPool(grp.pool||"main");
-      const picked=pickClosest(p,getTargetXP(grp),used,grp.pool||"main");
+      const pool=grp.pool||"main";
+      const p=buildPool(pool,bossPicked);
+      const picked=pickClosest(p,getTargetXP(grp),used,pool);
       if(!picked)continue;
       used.add(picked.slug);
+      if(pool==="boss"&&!bossPicked)bossPicked=picked;
       enc.push({monster:picked,count:Math.max(1,grp.count)});
     }
     return enc;
+  }
+
+  // Themed boss flow — pick the boss via the same pool/weighting the untamed
+  // path uses, theme-score the rest against it (reusing the Seed Monster
+  // flow's scoring), and refine with the boss pinned. Returns true on
+  // success (ENC is already updated + rendered); false means "couldn't build
+  // a themed candidate, fall through to the untamed generator."
+  function runThemedBossFlow(){
+    // Only template variants that actually have a boss slot — Elite's
+    // lt×2+grunt variant has none, and a boss picked against one template's
+    // XP weighting shouldn't get orphaned by re-rolling into that one.
+    const withBoss=(TMPLS[ETYPE]||[]).filter(t=>t.groups.some(g=>(g.pool||"main")==="boss"));
+    if(!withBoss.length)return false;
+    const tmpl=JSON.parse(JSON.stringify(withBoss[Math.floor(Math.random()*withBoss.length)]));
+    tmpl.groups.forEach(g=>{
+      if(typeof g.count==="string"){
+        if(g.count==="P")g.count=np;
+        else if(g.count==="P2")g.count=np*2;
+        else if(g.count==="P3")g.count=Math.max(3,np*3);
+        else if(g.count==="P4")g.count=Math.max(4,np*4);
+      }
+    });
+    const totalMonsters=tmpl.groups.reduce((s,g)=>s+g.count,0);
+    const ratio=np/Math.max(1,totalMonsters);
+    const actionAdj=ratio>=4?1.5:ratio>=2?1.2:ratio<=0.5?0.6:ratio<=0.75?0.8:1.0;
+    const effectiveBudget=totalXP*actionAdj;
+    const W={boss:3,lt:2,main:2,grunt:1};
+    const wTotal=tmpl.groups.reduce((s,g)=>s+(W[g.pool||"main"]||2)*g.count,0);
+    const bossTargetXP=effectiveBudget*W.boss/Math.max(1,wTotal);
+
+    const boss=pickClosest(buildPool("boss"),bossTargetXP,new Set(),"boss");
+    if(!boss)return false;
+
+    const baseEligible=allM().filter(c=>!isLikelyNamedNPC(c)&&!isGrunTierNPC(c)&&c.slug!==boss.slug);
+    const scored=baseEligible.map(c=>({m:c,score:seedThemeScore(c,boss)})).filter(x=>x.score>=THEME_MIN_SCORE);
+    scored.sort((a,b)=>b.score-a.score);
+    const themedPool=scored.length>=10?scored.slice(0,Math.max(60,scored.length>>1)).map(x=>x.m):baseEligible;
+
+    const result=runSeedGenerationCore(boss,"boss",ETYPE,themedPool,diffSel,()=>{},true,tmpl);
+    if(!result||!result.candidate||!result.candidate.length)return false;
+
+    ENC=result.candidate;
+    renderEnc();updateKobold();updateEncDiv();updateRunBtn();
+    const totalM=ENC.reduce((s,e)=>s+e.count,0);
+    const base=`${totalM} monster${totalM!==1?"s":""} (themed): `+ENC.map(e=>`${e.count>1?e.count+"× ":""}${e.monster.name} (CR ${e.monster.cr})`).join(", ");
+    const warn=!result.tierMatched?` ⚠ closest tier — simmed as ${result.finalDc}`:"";
+    const swapNote=result.bossSwapped?" ⚠ boss swapped to a same-theme alternative during refinement":"";
+    const statusEl=document.getElementById("genStatus");
+    statusEl.textContent=base+warn+swapNote;
+    statusEl.title=`Themed boss anchor: ${result.seed.name} (CR ${result.seed.cr}). Refinement steps: ${result.refineSteps}.`;
+    for(const e of ENC)RECENT_PICKS.push(e.monster.slug);
+    while(RECENT_PICKS.length>RECENT_MAX)RECENT_PICKS.shift();
+    return true;
   }
 
   // Iterative refinement: pick a seed encounter, sim it, and mutate toward
@@ -3489,6 +3575,24 @@ function generateEncounter(){
   // — same total quicksim cost (~26 max), but each seed gets to walk much
   // further from its starting XP before being abandoned.
   const canSimCheck=PCS.length>0;
+
+  // Themed boss anchoring — Warband/Elite/Squad only. Pick the boss FIRST
+  // (same pool/weighting the untamed path uses), theme-score everything else
+  // against it (family/type/environment — same scoring the manual Seed
+  // Monster flow uses), and refine with the boss pinned instead of letting
+  // the role-agnostic mutator treat "whichever monster currently has the
+  // highest CR" as fair game (that's what let the lieutenant creep up to
+  // match the boss's CR before the earlier lt-banding fix, and is a distinct
+  // problem from theme coherence — this branch replaces the WHOLE untamed
+  // path below for these three types when the toggle is on, not just the lt
+  // pool). Falls through to the untamed path if no boss slot / no party.
+  if(THEME_BOSS&&canSimCheck&&["boss_minions","elite","squad"].includes(ETYPE)){
+    const themedResult=runThemedBossFlow();
+    if(themedResult)return;
+    // else: no themed candidate could be built (e.g. no boss slot in any
+    // variant, or pools too thin) — fall through to the untamed generator.
+  }
+
   const chosenIdx=TIER_IDX[diffSel]??2;
   // Boss-type (single monster) pools are much sparser at high CR than
   // multi-monster templates — most iconic named villains are tuned as solo
@@ -4882,9 +4986,35 @@ function seedLog(kind,html){
   el.scrollTop=el.scrollHeight;
 }
 
+// Minimum seedThemeScore to count as "themed" — a family or type match (3 or
+// 2 pts) clears this alone; a single shared environment tag (1 pt) does not.
+const THEME_MIN_SCORE=2;
+
+// Terrain pairs that are similar-but-not-identical — worth a half-match
+// (0.5) rather than a full one (1.0 for an exact shared tag). Uses the real
+// environment vocabulary in the data (see the Environment filter dropdown);
+// there's no literal "sea"/"lake" tag, so water-adjacent terrain is
+// approximated via coastal/underwater/aquatic instead.
+const NEAR_ENV_PAIRS=[
+  ["mountain","hill"],["mountain","arctic"],["hill","badlands"],
+  ["desert","badlands"],["forest","grassland"],["grassland","plains"],
+  ["forest","swamp"],["swamp","marshes"],
+  ["coastal","underwater"],["coastal","aquatic"],["underwater","aquatic"],
+  ["cave","underdark"],["cave","dungeon"],["underdark","dungeon"],
+  ["underdark","underground"],["dungeon","underground"],
+];
+const NEAR_ENV=new Set(NEAR_ENV_PAIRS.map(p=>p.slice().sort().join("|")));
+function isNearEnv(a,b){return NEAR_ENV.has([a,b].sort().join("|"));}
+
 // Score a candidate against the seed's theme. Higher = more thematic.
 // Family is worth most (goblinoid + hobgoblin = great match), then type,
-// then environment, then same source book.
+// then environment, then same source book. Environment scores per seed tag —
+// an exact match on that tag is worth 1, a "near" match (mountain↔hill,
+// arctic↔mountain, coastal↔underwater, etc.) is worth 0.5 — summed and
+// capped at 2 so environment alone can equal but never beat a type match.
+// THEME_MIN_SCORE (above) is the bar callers filter against: family or type
+// match alone already clears it; environment alone needs either two exact
+// overlaps, four near-matches, or some mix that adds up to 2.
 function seedThemeScore(c,seed){
   let score=0;
   const sf=monsterFamily(seed),cf=monsterFamily(c);
@@ -4893,7 +5023,12 @@ function seedThemeScore(c,seed){
   const ct=(c.type||"").split(/[\s(]/)[0].toLowerCase();
   if(st&&ct&&st===ct)score+=2;
   const se=_arr(seed.environment),ce=_arr(c.environment);
-  if(se.some(e=>ce.includes(e)))score+=1;
+  let envScore=0;
+  for(const e of se){
+    if(ce.includes(e)){envScore+=1;continue;}
+    if(ce.some(x=>isNearEnv(e,x)))envScore+=0.5;
+  }
+  score+=Math.min(2,envScore);
   if(seed.source&&c.source===seed.source)score+=1;
   return score;
 }
@@ -4931,7 +5066,7 @@ function runSeedGenerate(){
 
   // Score eligible candidates for theme match
   const baseEligible=allM().filter(c=>!isLikelyNamedNPC(c)&&!isGrunTierNPC(c)&&c.slug!==seed.slug);
-  const scored=baseEligible.map(c=>({m:c,score:seedThemeScore(c,seed)})).filter(x=>x.score>0);
+  const scored=baseEligible.map(c=>({m:c,score:seedThemeScore(c,seed)})).filter(x=>x.score>=THEME_MIN_SCORE);
   scored.sort((a,b)=>b.score-a.score);
   seedLog("step",`Scored ${baseEligible.length} eligible monsters for theme match. <b>${scored.length}</b> share at least one tag.`);
   if(scored.length<10){
@@ -4951,18 +5086,62 @@ function runSeedGenerate(){
     seedLog("step",`Selected <b>${encType.replace("_"," + ")}</b> template — fits the <b>${role}</b> role.`);
   }
 
-  runSeedGenerationCore(seed,role,encType,themedPool,diff);
+  const result=runSeedGenerationCore(seed,role,encType,themedPool,diff);
+  if(result&&result.candidate&&result.candidate.length){
+    SEED_LAST_ENC=result.candidate;
+    seedLog("info",`Click <b>Keep &amp; Close</b> to push this encounter into the main builder, or <b>Build Encounter</b> again for a fresh roll.`);
+    document.getElementById("seedAcceptBtn").style.display="";
+  }
 }
 
-// Core algorithm — builds the encounter around the pinned seed, runs tier
-// iteration, logs everything. Commits to SEED_LAST_ENC; the main ENC only
-// updates when the user hits Keep.
-function runSeedGenerationCore(seed,role,encType,themedPool,diff){
+// Find a monster sharing the seed's family or type, at a CR that would push
+// the encounter in `direction` (+1 harder / -1 easier) by roughly `tierGap`
+// steps. Used only when nothing else (support monsters, count/CR mutation of
+// the non-seed rows) can close the gap — the theme-preserving fallback for
+// "this boss turned out too weak/strong, but keep it in the same category"
+// (mummy → lich, not mummy → dragon).
+function findThemedBossSwap(seed,direction,tierGap){
+  const family=monsterFamily(seed);
+  const typeCore=(seed.type||"").split(/[\s(]/)[0].toLowerCase();
+  if(!family&&!typeCore)return null;
+  const seedCR=seed.crNum||0;
+  const stepSize=Math.max(1,Math.round(seedCR*0.15))*Math.min(3,Math.max(1,tierGap||1));
+  const targetCR=Math.max(0,seedCR+direction*stepSize);
+  const candidates=allM().filter(m=>{
+    if(m.slug===seed.slug)return false;
+    const mf=monsterFamily(m);
+    const mt=(m.type||"").split(/[\s(]/)[0].toLowerCase();
+    if(!(family&&mf&&mf===family)&&!(typeCore&&mt&&mt===typeCore))return false;
+    const cr=m.crNum??0;
+    return direction>0?cr>seedCR:(cr<seedCR&&cr>=0);
+  });
+  if(!candidates.length)return null;
+  const familyMatches=family?candidates.filter(m=>monsterFamily(m)===family):[];
+  const pool=familyMatches.length?familyMatches:candidates;
+  return pool.slice().sort((a,b)=>Math.abs((a.crNum??0)-targetCR)-Math.abs((b.crNum??0)-targetCR))[0];
+}
+
+// Core algorithm — builds the encounter around the pinned seed and runs tier
+// iteration. Returns {candidate, finalDc, tierMatched, refineSteps, stopReason}
+// rather than touching any DOM/global state itself — callers decide what to
+// do with the result (the manual Seed Monster modal writes it to
+// SEED_LAST_ENC + shows its Accept button; the auto-Warband/Elite/Squad path
+// writes straight into ENC). `logFn` defaults to the seed-modal's build log;
+// pass a no-op for silent auto-generation. `allowBossSwap` enables the
+// theme-preserving swap above — off by default so a manually hand-picked
+// seed is never swapped out from under the user without asking; the
+// auto-generated-boss path opts in since nothing there was a deliberate pick.
+function runSeedGenerationCore(seed,role,encType,themedPool,diff,logFn,allowBossSwap,presetTmpl){
+  logFn=logFn||seedLog;
+  allowBossSwap=!!allowBossSwap;
   const np=Math.max(1,PCS.length);
   const totalXP=partyBudget(diff);
-  // Pick a template variant
+  // Pick a template variant — or use the caller-supplied one so an
+  // auto-picked boss (chosen against a specific template's XP weighting)
+  // doesn't get orphaned by re-rolling into a template variant with no
+  // "boss" slot (Elite has one such variant: lt×2 + grunt, no boss).
   const tmplArr=TMPLS[encType]||TMPLS.random;
-  const tmpl=JSON.parse(JSON.stringify(tmplArr[Math.floor(Math.random()*tmplArr.length)]));
+  const tmpl=presetTmpl?JSON.parse(JSON.stringify(presetTmpl)):JSON.parse(JSON.stringify(tmplArr[Math.floor(Math.random()*tmplArr.length)]));
   // Expand "P" / "P2" / "P3" / "P4" counts
   tmpl.groups.forEach(g=>{
     if(typeof g.count==="string"){
@@ -4997,8 +5176,8 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
     if(pick){used.add(pick.slug);enc.push({monster:pick,count:Math.max(1,g.count)});}
   });
   let candidate=enc.filter(Boolean);
-  if(!candidate.length){seedLog("warn","Couldn't fill the template — pool too thin.");return;}
-  seedLog("step",`Filled template: ${candidate.map(e=>`${e.count>1?e.count+"× ":""}<b>${e.monster.name}</b> (CR ${e.monster.cr})`).join(" + ")}.`);
+  if(!candidate.length){logFn("warn","Couldn't fill the template — pool too thin.");return{candidate:[],finalDc:"",tierMatched:false,refineSteps:0,stopReason:"empty_pool"};}
+  logFn("step",`Filled template: ${candidate.map(e=>`${e.count>1?e.count+"× ":""}<b>${e.monster.name}</b> (CR ${e.monster.cr})`).join(" + ")}.`);
 
   // ── Iterate to tier with the seed PINNED. ──
   // Key rules the old version got wrong:
@@ -5026,7 +5205,7 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
       .slice(0,8);
     return cands.length?cands[Math.floor(Math.random()*cands.length)]:null;
   };
-  let finalDc=null,refineSteps=0,stopReason="exact";
+  let finalDc=null,refineSteps=0,stopReason="exact",bossSwapped=false;
   for(let step=0;step<MAX_REFINES;step++){
     const prevENC=ENC;ENC=candidate;
     const dc=quickSimDC(candidate);
@@ -5047,14 +5226,14 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
     // of attempts that might succeed.
     if(tierGap<=1&&step>=7){
       stopReason="adjacent";
-      seedLog("info",`Close enough — sim says <b>${dc}</b>, you wanted <b>${diff}</b> (one tier off, ${step} steps in). Stopping to avoid oscillation.`);
+      logFn("info",`Close enough — sim says <b>${dc}</b>, you wanted <b>${diff}</b> (one tier off, ${step} steps in). Stopping to avoid oscillation.`);
       break;
     }
     // Oscillation check — if we've seen this encounter signature before, stop.
     const curSig=sigOf(candidate);
     if(seenSigs.has(curSig)){
       stopReason="cycle";
-      seedLog("warn",`Iteration is cycling through the same options. Stopping at <b>${dc}</b>.`);
+      logFn("warn",`Iteration is cycling through the same options. Stopping at <b>${dc}</b>.`);
       break;
     }
     seenSigs.add(curSig);
@@ -5065,32 +5244,47 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
     const nonSeed=candidate.filter(e=>e.monster.slug!==seed.slug);
     let mutation=null;
     if(nonSeed.length){
-      mutation=mutateEncounter(nonSeed,direction,encType,mutPool,tierGap);
+      mutation=mutateEncounter(nonSeed,direction,encType,mutPool.filter(m=>m.slug!==seed.slug),tierGap);
     }
     if(!mutation){
-      // Solo-seed case. Three sub-paths:
-      //   - Need harder: add a small themed support monster.
-      //   - Need easier: we're already at the minimum (just the seed); accept.
+      // Solo-seed (or support-mutation exhausted) case.
       if(direction>0){
         const support=pickSmallSupport(tierGap);
-        if(!support){
-          stopReason="no_support";
-          seedLog("warn",`Solo seed is too easy for <b>${diff}</b> (simmed <b>${dc}</b>) but the themed pool has no suitable small support monsters.`);
-          break;
+        if(support){
+          candidate=[seedRow,{monster:support,count:1}];
+          refineSteps++;
+          logFn("step",`↑ add support <b>${support.name}</b> (CR ${support.cr}) <span style="color:var(--text-dim)">(simmed <b>${dc}</b>, solo seed too easy)</span>`);
+          continue;
         }
-        candidate=[seedRow,{monster:support,count:1}];
-        refineSteps++;
-        seedLog("step",`↑ add support <b>${support.name}</b> (CR ${support.cr}) <span style="color:var(--text-dim)">(simmed <b>${dc}</b>, solo seed too easy)</span>`);
-        continue;
+      }
+      // Nothing left to add/adjust — last resort: swap the boss itself for a
+      // stronger/weaker monster in the SAME family/type, so the encounter
+      // still hits the target tier without abandoning its theme (mummy too
+      // weak → lich, not mummy → dragon).
+      if(allowBossSwap&&!bossSwapped){
+        const upgrade=findThemedBossSwap(seed,direction,tierGap);
+        if(upgrade){
+          bossSwapped=true;
+          const oldName=seed.name,oldCR=seed.cr;
+          seed=upgrade;
+          candidate=[{monster:seed,count:seedRow.count},...nonSeed];
+          refineSteps++;
+          logFn("step",`${direction>0?"↑":"↓"} boss swap (same theme): <b>${oldName}</b> (CR ${oldCR}) → <b>${seed.name}</b> (CR ${seed.cr}) <span style="color:var(--text-dim)">(simmed <b>${dc}</b>)</span>`);
+          continue;
+        }
+      }
+      if(direction>0){
+        stopReason="no_support";
+        logFn("warn",`Solo seed is too easy for <b>${diff}</b> (simmed <b>${dc}</b>) and no themed support or stronger same-theme boss was available.`);
       } else {
         stopReason="min_reached";
-        seedLog("warn",`Can't go lower — the seed alone is already too strong for <b>${diff}</b> (simmed <b>${dc}</b>).`);
-        break;
+        logFn("warn",`Can't go lower — the seed alone is already too strong for <b>${diff}</b> (simmed <b>${dc}</b>) and no weaker same-theme boss was available.`);
       }
+      break;
     }
     candidate=[seedRow,...mutation.newEnc];
     refineSteps++;
-    seedLog("step",`${direction>0?"↑":"↓"} ${mutation.description} <span style="color:var(--text-dim)">(simmed <b>${dc}</b>)</span>`);
+    logFn("step",`${direction>0?"↑":"↓"} ${mutation.description} <span style="color:var(--text-dim)">(simmed <b>${dc}</b>)</span>`);
   }
 
   // Final confirmation sim
@@ -5101,15 +5295,15 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
   const tierMatched=finalDc===diff;
   const summary={exact:"matches your target exactly",adjacent:"one tier off — acceptable given the seed pin",cycle:"oscillation detected",min_reached:"seed too strong for this tier even alone",no_support:"no themed support available"};
   if(tierMatched){
-    seedLog("ok",`Final tier: <b>${finalDc.replace(/^./,c=>c.toUpperCase())}</b> after ${refineSteps} refinement step${refineSteps===1?"":"s"}. ${summary[stopReason]||"Done."}`);
+    logFn("ok",`Final tier: <b>${finalDc.replace(/^./,c=>c.toUpperCase())}</b> after ${refineSteps} refinement step${refineSteps===1?"":"s"}. ${summary[stopReason]||"Done."}`);
   } else {
-    seedLog("warn",`Final tier: <b>${finalDc.replace(/^./,c=>c.toUpperCase())}</b> (target was <b>${diff}</b>) — ${summary[stopReason]||"close as achievable"}.`);
+    logFn("warn",`Final tier: <b>${finalDc.replace(/^./,c=>c.toUpperCase())}</b> (target was <b>${diff}</b>) — ${summary[stopReason]||"close as achievable"}.`);
   }
   // Always log the final composition so the DM doesn't have to scroll back
   // through the iteration steps to see what the encounter landed on.
   const finalTotalXP=candidate.reduce((s,e)=>s+((e.monster.xp||0)*e.count),0);
   const finalCount=candidate.reduce((s,e)=>s+e.count,0);
-  seedLog("info",`<b>Final encounter:</b> ${candidate.map(e=>`${e.count>1?e.count+"× ":""}<b style="color:var(--accent-gold)">${e.monster.name}</b> <span style="color:var(--text-dim)">(CR ${e.monster.cr})</span>`).join(" + ")} — ${finalCount} monster${finalCount===1?"":"s"}, ${finalTotalXP.toLocaleString()} XP total.`);
+  logFn("info",`<b>Final encounter:</b> ${candidate.map(e=>`${e.count>1?e.count+"× ":""}<b style="color:var(--accent-gold)">${e.monster.name}</b> <span style="color:var(--text-dim)">(CR ${e.monster.cr})</span>`).join(" + ")} — ${finalCount} monster${finalCount===1?"":"s"}, ${finalTotalXP.toLocaleString()} XP total.`);
 
   // Post-iteration diagnosis — explain WHY the tier missed when the seed is
   // budget-dominant. Only surfaces if the final tier ended harder than the
@@ -5119,15 +5313,13 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff){
   if(endedHarder){
     const cls=classifySeedRole(seed);
     if(cls.overPowered){
-      seedLog("warn",`<b>Why:</b> the seed's XP (${cls.seedXP.toLocaleString()}) exceeds the party's entire <b>${diff}</b> budget (${cls.budget.toLocaleString()}). No combination of support monsters — including zero — can bring this below <b>Death</b> for this party. Consider picking a lower-CR seed, raising party level, or accepting the higher tier.`);
+      logFn("warn",`<b>Why:</b> the seed's XP (${cls.seedXP.toLocaleString()}) exceeds the party's entire <b>${diff}</b> budget (${cls.budget.toLocaleString()}). No combination of support monsters — including zero — can bring this below <b>Death</b> for this party. Consider picking a lower-CR seed, raising party level, or accepting the higher tier.`);
     } else if(cls.seedXP>=cls.budget*0.6){
-      seedLog("warn",`<b>Why:</b> the seed alone consumes ${Math.round(cls.seedXP/cls.budget*100)}% of the <b>${diff}</b> budget (${cls.seedXP.toLocaleString()} of ${cls.budget.toLocaleString()}). Very little room for support means adding almost anything pushes past the target. Consider a lower-CR seed or a higher difficulty target.`);
+      logFn("warn",`<b>Why:</b> the seed alone consumes ${Math.round(cls.seedXP/cls.budget*100)}% of the <b>${diff}</b> budget (${cls.seedXP.toLocaleString()} of ${cls.budget.toLocaleString()}). Very little room for support means adding almost anything pushes past the target. Consider a lower-CR seed or a higher difficulty target.`);
     }
   }
 
-  SEED_LAST_ENC=candidate;
-  seedLog("info",`Click <b>Keep &amp; Close</b> to push this encounter into the main builder, or <b>Build Encounter</b> again for a fresh roll.`);
-  document.getElementById("seedAcceptBtn").style.display="";
+  return{candidate,finalDc,tierMatched,refineSteps,stopReason,seed,bossSwapped};
 }
 
 // Commit the last-built encounter to the main ENC and close the modal.
