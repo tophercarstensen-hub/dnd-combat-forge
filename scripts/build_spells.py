@@ -228,11 +228,12 @@ DICE_TAG_RE    = re.compile(r'\{@dice ([^}]+)\}')
 # targets (a single-target DPR multiplier there would be wrong).
 SINGLE_TARGET_CONCENTRATION_RE = re.compile(
     r'\b(?:one (?:target|creature)\b(?:\s+\w+){0,3}?\s+or\b(?:\s+at)?\s+(?:several|more)|'
-    r'same target or (?:at )?different)\b',
+    r'same target or (?:at )?different|'
+    r'each (?:\w+\s+){0,2}targets? a creature of your choice)\b',
     re.I
 )
 INSTANCE_COUNT_RE = re.compile(
-    r'\b(two|three|four|five|six)\s+(?:\w+\s+){0,2}'
+    r'\b(two|three|four|five|six)\s+(?:\S+\s+){0,6}'
     r'(?:dart|ray|bolt|beam|missile|shard|orb|meteor|blade|bead|mote|thorn|spike|arrow|globe|spear)s?\b',
     re.I
 )
@@ -724,9 +725,13 @@ def build_spell(spell, sources_map):
     components_str = parse_components(spell.get("components", {}))
     ritual = is_ritual(spell)
 
-    # Description: combine main entries
+    # Description: combine main entries. Each top-level entry is a separate
+    # paragraph in 5etools' schema — join those with blank lines so long
+    # descriptions (Fireball, upcast text, etc.) don't run together into
+    # one wall of text. strip_entries() itself still space-joins *within*
+    # a single entry (list items, nested blocks), which is correct there.
     all_entries = list(spell.get("entries", []))
-    desc = strip_entries(all_entries).strip()
+    desc = "\n\n".join(p for p in (strip_entries(e).strip() for e in all_entries if e is not None) if p)
     # Truncate to reasonable length for app use
     if len(desc) > 2000:
         desc = desc[:2000].rsplit(" ", 1)[0] + "…"
