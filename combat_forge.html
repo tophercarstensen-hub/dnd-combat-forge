@@ -3489,8 +3489,20 @@ function generateEncounter(){
   // — same total quicksim cost (~26 max), but each seed gets to walk much
   // further from its starting XP before being abandoned.
   const canSimCheck=PCS.length>0;
-  const accepted=TIER_ACCEPT[diffSel]||[TIER_IDX[diffSel]];
   const chosenIdx=TIER_IDX[diffSel]??2;
+  // Boss-type (single monster) pools are much sparser at high CR than
+  // multi-monster templates — most iconic named villains are tuned as solo
+  // bosses for a standard 4-person party and swing a full tier off-target
+  // once party size deviates (e.g. 6 PCs), so an exact-tier-only match
+  // starves the candidate pool down to whichever monster family happens to
+  // scale smoothly across CR (dragons, almost exclusively). Accept ±1 tier
+  // for boss-type so "Dangerous" can also land Deadly/High and actually
+  // surface non-dragon bosses instead of converging on the one family that
+  // always hits exactly.
+  const isBossType=["boss","boss_minions","elite"].includes(ETYPE);
+  const accepted=isBossType
+    ?[chosenIdx-1,chosenIdx,chosenIdx+1].filter(i=>i>=0&&i<=7)
+    :(TIER_ACCEPT[diffSel]||[chosenIdx]);
   const MAX_SEEDS=2;
   const MAX_REFINES=12;
   // Mutations use the relaxed pool — CR slider bounds shouldn't cap the
