@@ -1,5 +1,11 @@
 # Combat Forge Changelog
 
+## v17.19 (2026-08-23)
+### Themed boss generation for Warband/Elite/Squad
+- **Lieutenant CR fix.** The "lt" pool had no CR scaling of its own — it reused the boss's CR-slider range (minus legendary monsters), so a narrow high-CR slider set for solo-boss hunting left the lieutenant nowhere lower to land and it came back matching the boss's tier. Now scales off the actual picked boss's CR (35-65% of it).
+- **New "Themed boss" toggle** (on by default, Warband/Elite/Squad only). Picks the boss first, theme-scores the rest against it (family/type/environment/source), and keeps refinement off the boss unless nothing else can hit the target tier — then swaps it for a stronger/weaker monster in the *same* family/type (mummy → lich, not mummy → dragon) rather than an unconstrained swap.
+- **Theme-match threshold raised.** A single shared environment tag was too weak a signal to call two monsters "themed" (a lava elemental and a desert gnoll both listing "hill"). Family or type match alone still qualifies; environment now needs 2+ exact tag overlaps, or a mix including "near" terrain pairs (mountain↔hill, mountain↔arctic, coastal↔underwater/aquatic, cave↔underdark↔dungeon↔underground, desert↔badlands, forest↔grassland↔plains, forest↔swamp↔marshes) worth half a point each.
+
 ## v17.18 (2026-08-23)
 ### Kobold Press re-sourcing, sim accuracy fixes, boss variety
 - **Ability scores fixed everywhere.** `normalizeAll()` never flattened `m.abilities` onto the flat `m.str/dex/con/int/wis/cha` fields several call sites read directly — every monster's stat panel showed 10/+0 across the board, and the sim silently defaulted CON/DEX save bonuses and the INT-based "dumb monster" targeting override to 10 as well.
