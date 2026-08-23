@@ -1,5 +1,14 @@
 # Combat Forge Changelog
 
+## v17.18 (2026-08-23)
+### Kobold Press re-sourcing, sim accuracy fixes, boss variety
+- **Ability scores fixed everywhere.** `normalizeAll()` never flattened `m.abilities` onto the flat `m.str/dex/con/int/wis/cha` fields several call sites read directly — every monster's stat panel showed 10/+0 across the board, and the sim silently defaulted CON/DEX save bonuses and the INT-based "dumb monster" targeting override to 10 as well.
+- **Lore restored everywhere.** `normalizeAll()` treated any string `lore` field as missing and wiped it to an empty object — every monster's Lore tab was silently blank regardless of source.
+- **Kobold Press data replaced.** Tome of Beasts 1/2/3 previously came from a "Kobold Fight Club" vendor dataset, not 5etools — 1,261 of 1,447 had their `source` field polluted with a literal page number (e.g. `"Tome of Beasts 2: 188"`), breaking the Source Filter modal's grouping. Replaced with 1,242 clean records built directly from the real 5etools homebrew data (`TheGiddyLimit/homebrew`). Linked official art for 1,199 of them.
+- **435 unrecoverable "MME" stub monsters removed** (no AC/HP/CR/abilities — confirmed unrecoverable from the original Roll20 crawl). **237 of 319 official-book "reskin table" monsters backfilled** (MTF's Cultists of the Archdevils, QftIS's Android variants, etc.) by matching each to its real base creature; 4 near-matches were deliberately left unfixed rather than applied with wrong stats.
+- **Spell damage fixes.** Multi-hit spells (Magic Missile, Scorching Ray, Eldritch Blast's beam scaling) were undercounted by only reading the first `{@damage}` tag instead of all hits — fixed, plus a widened detector that catches non-standard phrasing (Jim's Magic Missile). Removed 45 duplicate spell entries and restored paragraph breaks lost in description formatting.
+- **Boss encounter variety fixed.** Boss-type generation required an exact sim-tier match; most iconic named villains at high CR are tuned as solo bosses for a 4-person party and swing off-target once party size differs, so only dragons (which scale smoothly) reliably landed in-tier — verified live, 30/30 Generates returned a dragon for a 6-PC party. Boss/boss_minions/elite now accept ±1 tier, restoring real variety (13 distinct bosses across the same 30-Generate test post-fix).
+
 ## v17.17 (2026-04-19)
 ### Roll20 module data integration
 - **488 monsters got new lore** backfilled from Roll20 adventure-module character sheets. Union-merge rule: DB lore shorter than 120 chars (or missing) gets replaced by the Roll20 narrative; anything longer is left alone. Biggest wins on Baldur's Gate devils (Bearded Devil +10,498ch, Bitter Breath +11,158ch) and utility creatures (Commoner +15,247ch from Ghosts of Saltmarsh).
