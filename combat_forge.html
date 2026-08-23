@@ -1410,7 +1410,16 @@ function normalizeAll(){
     if(!Array.isArray(m.legendary_actions))m.legendary_actions=[];
     if(!Array.isArray(m.mythic_actions))m.mythic_actions=[];
     if(!Array.isArray(m.spellcasting))m.spellcasting=[];
-    if(!m.lore||typeof m.lore!=="object")m.lore={paragraphs:[],images:[]};
+    // Data stores lore as a plain string on most records (official + KP
+    // ingestion both produce this); only the lore-editor UI writes the
+    // {paragraphs,images} object form. Wrap the string instead of
+    // discarding it, or every monster's lore silently vanishes.
+    if(typeof m.lore==="string"){
+      const text=m.lore.trim();
+      m.lore={paragraphs:text?[text]:[],images:[]};
+    } else if(!m.lore||typeof m.lore!=="object"){
+      m.lore={paragraphs:[],images:[]};
+    }
     if(!Array.isArray(m.lore.paragraphs))m.lore.paragraphs=[];
     // Cache best damaging spell info for each monster — used by the sim to
     // pick higher of weapon-DPR vs spell-DPR per round (so a war cleric who
