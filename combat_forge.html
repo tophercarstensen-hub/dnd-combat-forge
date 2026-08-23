@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Combat Forge v17.16</title>
+<title>Combat Forge v17.17</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -160,8 +160,8 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
 .mresults::-webkit-scrollbar-thumb{background:var(--border-mid)}
 .mresult-row{display:flex;flex-direction:column;transition:background var(--ease)}
 .mr-name{font-family:'Crimson Pro',serif;font-size:12px;color:var(--text-primary);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mr-cr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-amber);flex-shrink:0}
-.mr-type{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);flex-shrink:0}
+.mr-cr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent-amber);flex-shrink:0}.mr-source{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-teal);flex-shrink:0;letter-spacing:.5px;font-weight:600}
+.mr-type{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-secondary);flex-shrink:0;letter-spacing:.5px}
 .mr-leg{color:var(--accent-gold);font-size:9px;flex-shrink:0}
 .kob-baseline{background:var(--bg-deep);border-top:1px solid var(--border-dim);padding:8px 10px;flex-shrink:0}
 .kob-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
@@ -569,7 +569,7 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
 .enc-sb-panel{width:0;overflow:hidden;transition:width .3s ease;flex-shrink:0;border-left:0px solid var(--border-dim);display:flex;flex-direction:column;max-height:calc(100vh - 180px);align-self:flex-start}
 .enc-sb-panel.open-single{width:270px;border-left-width:1px}
 .enc-sb-panel.open-double{width:520px;border-left-width:1px}
-.enc-sb-panes{display:flex;flex-direction:row;height:100%;gap:0}
+.enc-sb-panes{display:flex;flex-direction:row;flex:1;min-height:0;gap:0}
 .enc-sb-pane{flex:1;min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--border-dim);overflow:hidden}
 .enc-sb-pane:last-child{border-right:none}
 /* Stat panel header: name row on top (with pin/close), source row beneath.
@@ -583,7 +583,9 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
 .enc-sb-pin.pinned{border-color:var(--accent-gold);color:var(--accent-gold);background:rgba(212,175,55,.12)}
 .enc-sb-close{font-size:10px;background:none;border:none;color:var(--text-dim);cursor:pointer;padding:1px 4px;line-height:1}
 .enc-sb-close:hover{color:var(--accent-red)}
-.enc-sb-body{flex:1;overflow-y:auto;padding:8px 10px;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent;font-size:11px}
+.enc-sb-body{flex:1;min-height:0;overflow-y:auto;padding:8px 10px;scrollbar-width:thin;scrollbar-color:var(--border-mid) transparent;font-size:11px}
+/* Narrow stat panels (270px/260px wide) can't fit the full 180x260 image. Shrink it here. */
+.enc-sb-body .mon-art-lg{max-width:130px;max-height:190px}
 .enc-sb-body::-webkit-scrollbar{width:3px}
 .enc-sb-body::-webkit-scrollbar-thumb{background:var(--border-mid)}
 /* Seed modal's stat panel reuses the .mr-tab-panel mechanism but lives
@@ -620,17 +622,19 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
 .enc-ccard-name:hover{color:var(--accent-gold)}
 .enc-ccard-name.sb-active{color:var(--accent-gold)}
 
-/* Monster art thumbnails */
-.mon-art-sm,.mon-art-md,.mon-art-lg{display:inline-block;object-fit:cover;background:var(--panel-bg);flex-shrink:0;border:1px solid var(--border);border-radius:3px;vertical-align:middle}
+/* Monster art thumbnails. Small sizes use object-fit:cover for consistent
+   row heights; the large stat-block image uses contain + natural aspect so
+   portrait art doesn't get chopped. */
+.mon-art-sm,.mon-art-md{display:inline-block;object-fit:cover;background:var(--panel-bg);flex-shrink:0;border:1px solid var(--border);border-radius:3px;vertical-align:middle}
 .mon-art-sm{width:28px;height:28px}
 .mon-art-md{width:64px;height:64px}
-.mon-art-lg{width:160px;height:160px;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.mon-art-lg{display:block;max-width:180px;max-height:260px;width:auto;height:auto;object-fit:contain;background:var(--panel-bg);flex-shrink:0;border:1px solid var(--border);border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.25);vertical-align:top}
 
 /* Type-icon fallback (when monster has no image) */
 .mon-ti{display:inline-flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff;flex-shrink:0;border-radius:3px;user-select:none}
 .mon-ti.mon-art-sm{font-size:10px}
 .mon-ti.mon-art-md{font-size:18px}
-.mon-ti.mon-art-lg{font-size:44px;border-radius:4px}
+.mon-ti.mon-art-lg{font-size:44px;border-radius:4px;width:160px;height:160px;max-width:160px;max-height:160px}
 .mti-aberration{background:#4a7a3c}
 .mti-beast{background:#7a5838}
 .mti-celestial{background:#b8933a}
@@ -659,7 +663,7 @@ input[type="range"]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;b
   <span class="tb-orn">&#9876;</span>
   <span class="tb-title">Combat Forge</span>
   <span class="tb-orn">&#10022;</span>
-  <span class="tb-sub">D&amp;D 5e Simulator v17.16</span>
+  <span class="tb-sub">D&amp;D 5e Simulator v17.17</span>
   <div class="center-tabs">
     <button class="ctab active" id="ctab-builder" onclick="switchTab('builder')" title="Main encounter workspace — build a party, add monsters, generate encounters, run combat simulations">&#9876; Builder + Sim</button>
     <button class="ctab" id="ctab-library" onclick="switchTab('library')" title="Browse the full monster database with rich filters (type, CR, abilities, size, etc.). Create or edit homebrew monsters here.">&#128218; Monster Library</button>
@@ -1361,6 +1365,16 @@ function normalizeAll(){
       m.hp=+m.hp.average||+m.hp.value||10;
     }
     if(typeof m.hp!=="number"||!isFinite(m.hp))m.hp=parseFloat(m.hp)||10;
+    // Flatten m.abilities.{str,dex,con,int,wis,cha} onto the monster object
+    // itself. Several call sites (stat panel, CON/DEX save-bonus fallback,
+    // INT-based targeting-AI override) read m.str/m.con/etc directly rather
+    // than via m.abilities — without this they silently see undefined and
+    // fall back to a flat 10, showing every monster as average-everything.
+    if(m.abilities&&typeof m.abilities==="object"){
+      for(const k of ["str","dex","con","int","wis","cha"]){
+        if(m[k]==null&&m.abilities[k]!=null)m[k]=m.abilities[k];
+      }
+    }
     // Flatten dmgPerAtk if stored as a dice formula string ("1d8 + 3" → 7).
     // Preserve the original string in dmgPerAtkFormula so UI can surface it.
     if(typeof m.dmgPerAtk==="string"){
@@ -2146,8 +2160,8 @@ const SOURCE_NAMES={
   "ABH":"A Binding of Boughs and Hoarfrost","XPHB":"Player's Handbook (2024)","HoL":"The House of Lament",
   "TftYP":"Tales from the Yawning Portal","XGE":"Xanathar's Guide to Everything","DMG":"Dungeon Master's Guide",
   // Kobold Press
-  "Tome of Beasts":"Tome of Beasts (Kobold Press)","Tome of Beasts 2":"Tome of Beasts 2 (Kobold Press)",
-  "Tome of Beasts 3":"Tome of Beasts 3 (Kobold Press)","Tome of Beasts (2023)":"Tome of Beasts 2023 Edition",
+  "ToB":"Tome of Beasts (Kobold Press)","ToB2":"Tome of Beasts 2 (Kobold Press)",
+  "ToB3":"Tome of Beasts 3 (Kobold Press)","CCodex":"Creature Codex (Kobold Press)",
   "Flee Mortals":"Flee, Mortals! (MCDM)","Flee, Mortals":"Flee, Mortals! (MCDM)",
   // Community / 3rd party
   "Critter Compendium":"Critter Compendium (Community)","Monster-A-Day":"Monster-A-Day (Reddit)",
@@ -2167,7 +2181,7 @@ const SOURCE_GROUPS=[
   {label:"WotC — Core Books",keys:["MM","XMM","MTF","VGM","MPMM","TCE","XGE","DMG","PHB","XPHB","FTD","BGG","BMT","MFF"]},
   {label:"WotC — Adventure Modules",keys:["CoS","WDH","WDMM","ToA","OotA","SKT","PotA","GoS","BGDIA","WBtW","IDRotF","CRCotN","DSotDQ","PaBTSO","QftIS","CoA","KftGV","VEoR","EGW","MOT","GGR","SCC","ERLW","CM","VRGR","TftYP","HotDQ","RoT","AI","LMoP","DoSI","DIP"]},
   {label:"WotC — Spelljammer / Planescape / Other",keys:["BAM","JttRC","MaBJoV","MPP","ToFW","OoW","LoX","EFA","IMR","WttHC","LLK","AWM","HotB","LFL","HAT-TG","TTP","HoL","RMBRE","NF","MisMV1","MGELFT","ABH","DC","PSX","PSZ","PSK","PSA","PSI","PSD","MCV1SC","MCV2DC","MCV3MC","MCV4EC","LR","BAM","BGG"]},
-  {label:"Kobold Press",keys:["Tome of Beasts","Tome of Beasts 2","Tome of Beasts 3","Tome of Beasts (2023)","Demon Cults & Secret Societies","Flee Mortals","Flee, Mortals"]},
+  {label:"Kobold Press",keys:["ToB","ToB2","ToB3","CCodex","Demon Cults & Secret Societies","Flee Mortals","Flee, Mortals"]},
   {label:"MCDM / Other Publishers",keys:["Fifth Edition Foes","Quests of Doom Volume 1","Quests of Doom Volume 2","Ultimate Bestiary Revenge of the Horde","Primeval Thule Campaign Setting","Primeval Thule Gamemaster's Companion"]},
   {label:"Community / DMs Guild",keys:["Critter Compendium","Monster-A-Day","Monsters of the Guild","Monster Module","Nerzugal's Dungeon Master Toolkit 2","Nerzugal's Extended Bestiary","FRAiF"]},
 ];
@@ -2632,6 +2646,7 @@ function renderMList(){
         ${monsterArtHtml(m,"sm")}
         <span class="mr-name" onclick="toggleStatBlock('${m.slug}','${sid}')" title="${m.name}">${m.name}</span>
         <span class="mr-type">${(m.type||"").toLowerCase().slice(0,8)}</span>
+        <span class="mr-source" title="${m.source||''}">${((m.source||"").match(/^[A-Za-z][\w-]{0,6}/)||[""])[0]}</span>
         <span class="mr-cr">CR ${m.cr}</span>
         ${m.legendary?'<span class="mr-leg">&#9733;</span>':""}
         ${hasFull?'<span style="color:var(--accent-green);font-size:8px">&#9679;</span>':""}
@@ -4686,8 +4701,10 @@ function renderSeedList(){
   const crMaxIdx=parseInt(document.getElementById("seedCRMax")?.value);
   const crMinN=CR_NUM[CR_LIST[Number.isFinite(crMinIdx)?crMinIdx:0]]??0;
   const crMaxN=CR_NUM[CR_LIST[Number.isFinite(crMaxIdx)?crMaxIdx:CR_LIST.length-1]]??30;
+  // Named NPCs (Strahd, Acererak, etc.) ARE pickable as seeds — that's the
+  // whole point of the modal. The !isLikelyNamedNPC filter only applies to
+  // the supporting-monster selection later (line ~4900 baseEligible).
   let filtered=allM()
-    .filter(m=>!isLikelyNamedNPC(m))
     .filter(m=>matchM(m,q,type,env,RSRC))
     .filter(m=>{const cn=m.crNum??0;return cn>=crMinN&&cn<=crMaxN;});
   // Sort

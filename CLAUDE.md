@@ -46,6 +46,24 @@ script bakes monsters back in on demand.
 2. Run `python bake_monsters.py` (defaults: reads `combat_forge.html` + `monsters_final.json`, writes `combat_forge_baked.html`)
 3. Open `combat_forge_baked.html` in browser to test
 4. Bump the version label in `combat_forge.html` (`<title>` and `.tb-sub`) when shipping meaningful changes — filename stays unversioned.
+5. **Archive the previous version before bumping** (see Archive Rule below).
+
+## Archive Rule — IMPORTANT
+
+**Before bumping the version, archive the CURRENT `combat_forge.html` + `combat_forge_baked.html` to `Old/v<prev-version>/` so reverting is one `cp` away.**
+
+**Keep only the 3 most recent archives — delete older ones to keep disk usage down.**
+
+When bumping from (say) v17.17 → v17.18:
+
+1. `mkdir -p "Old/v17.17"`
+2. Copy the currently-on-disk `combat_forge.html` and `combat_forge_baked.html` into `Old/v17.17/`
+3. Count directories under `Old/v*/` — if more than 3, delete the oldest (by version number) until exactly 3 remain
+4. Then bump the version in `combat_forge.html`, bake, commit
+
+This is a hard rule — DO NOT skip the archive step. Quick revert without git is important for DM sessions; git revert is too slow if something breaks mid-game.
+
+Only archive release-numbered changes (v17.17 → v17.18), not every intermediate commit. Sub-patches (v17.17.1) don't need archives unless they become the long-lived version.
 
 Bake-script flags: `--in`, `--monsters`, `--out`. Re-baking an already-baked
 HTML works (regex matches both stripped and baked forms).
