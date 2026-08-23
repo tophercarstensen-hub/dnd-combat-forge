@@ -1,5 +1,9 @@
 # Combat Forge Changelog
 
+## v17.20 (2026-08-23)
+### Artificer class added
+- The party-builder class dropdown was missing Artificer entirely. It's generated dynamically from the class-data table, so it was never gated by the 2014/2024 ruleset toggle — Artificer just wasn't in that table, despite the project's own docs claiming 13 classes including it. Added with a d8 hit die, AC 14→16 (medium armor + shield + Enhanced Defense infusion, same profile as Cleric), and the same hybrid weapon/spell damage curve as Cleric/Druid/Bard.
+
 ## v17.19 (2026-08-23)
 ### Themed boss generation for Warband/Elite/Squad
 - **Lieutenant CR fix.** The "lt" pool had no CR scaling of its own — it reused the boss's CR-slider range (minus legendary monsters), so a narrow high-CR slider set for solo-boss hunting left the lieutenant nowhere lower to land and it came back matching the boss's tier. Now scales off the actual picked boss's CR (35-65% of it).
