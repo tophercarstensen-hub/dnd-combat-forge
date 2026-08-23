@@ -1,5 +1,22 @@
 # Combat Forge Changelog
 
+## v17.17 (2026-04-19)
+### Roll20 module data integration
+- **488 monsters got new lore** backfilled from Roll20 adventure-module character sheets. Union-merge rule: DB lore shorter than 120 chars (or missing) gets replaced by the Roll20 narrative; anything longer is left alone. Biggest wins on Baldur's Gate devils (Bearded Devil +10,498ch, Bitter Breath +11,158ch) and utility creatures (Commoner +15,247ch from Ghosts of Saltmarsh).
+- **130 monsters got traits filled** — parsed from Roll20 character MDs' `## Traits` sections. Same union-merge rule: only fills DB entries whose traits array was empty.
+- **9 actions / 2 reactions filled** on a handful of monsters whose DB records lacked them.
+- **541 named NPCs added to the DB as new entries**, each flagged `unique: true` so the encounter generator never summons them as fodder (no more "two Strahds in one encounter" bug). Entries include name + lore + traits + actions + reactions parsed from the MD files. **Stats (AC/HP/CR/abilities) are null** on these records — they live in Roll20 character-sheet attributes (`character.attribs.models`), not in the bio text, and require a separate CDP extraction pass.
+- New sourceType `"adventure"` distinguishes module-sourced NPCs from compendium bestiary entries.
+- DB: 6,291 → **6,832 entries**; unique=True: 623 → **1,164**.
+- NPC unique-flag audit across all 28 crawled modules: **0 bestiary/NPC records in the DB had a missing unique flag.** Existing flag_unique_npcs pass was already correct — nothing to patch.
+- Backups: `monsters_final.json.bak-modules` (pre-enrichment), `monsters_final.json.bak-named-npcs` (pre-NPC-add).
+
+### NPCs schema
+Adventure-sourced entries store `source` as short module code (`LMoP`, `BGDiA`, `CoA`, `IDRotF`, `WDH`, etc.) and `roll20Source` as the full module folder name. `_needsStats: true` marker on all 541 to make the follow-up stat-pull pass idempotent.
+
+## v17.0 – v17.16.x (2026-04-18)
+Intermediate versions shipped between v16.9 and v17.16.3 are not individually documented here. Major themes were: Roll20 export integration scaffolding, monster-token/art plumbing, and UI iteration. See git log for specifics if needed.
+
 ## v16.9 (2026-04-17)
 ### Legendary Acts chip + per-section filter controls
 - **Legendary Acts chip showed 0 — fixed.** The earlier `legendaryActions=3` bug fix canonicalized the field to a number, which broke the library chip predicate that was still calling `_arr(m.legendaryActions)`. Predicate now checks `+m.legendaryActions > 0 || _arr(m.legendary_actions).length > 0`. Same fix for the "Hide Legendary" exclusion chip.

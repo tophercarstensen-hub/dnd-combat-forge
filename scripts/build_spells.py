@@ -175,10 +175,10 @@ def strip_entries(obj):
 # DICE MATH  (reused from build_monsters_enriched.py)
 # ─────────────────────────────────────────────
 
-def _avg_dice(expr):
-    """Average of a dice expression like '8d6' or '2d6+4' or '1d8 + 1d6'."""
+def _avg_dice_raw(expr):
+    """Unrounded average of a dice expression like '8d6' or '2d6+4'."""
     if not expr:
-        return 0
+        return 0.0
     expr = str(expr).strip()
     total = 0.0
     for part in re.split(r'(?=[+-])', expr):
@@ -205,7 +205,12 @@ def _avg_dice(expr):
                 total += sign * float(part)
             except ValueError:
                 pass
-    return int(round(total))
+    return total
+
+
+def _avg_dice(expr):
+    """Average of a dice expression like '8d6' or '2d6+4' or '1d8 + 1d6'."""
+    return int(round(_avg_dice_raw(expr)))
 
 # ─────────────────────────────────────────────
 # PARSING HELPERS
@@ -213,6 +218,35 @@ def _avg_dice(expr):
 
 DAMAGE_TAG_RE  = re.compile(r'\{@damage ([^}]+)\}')
 DICE_TAG_RE    = re.compile(r'\{@dice ([^}]+)\}')
+
+# ── Multi-instance single-target detection ──
+# Spells like Magic Missile (3 darts) and Scorching Ray (3 rays) fire
+# several identical damage instances that the caster CAN aim entirely at
+# one target ("hurl them at one target or several"). That phrase is the
+# key signal: it's what separates these from spells like Chain Lightning
+# or Storm of Vengeance, whose multiple bolts/rays MUST hit different
+# targets (a single-target DPR multiplier there would be wrong).
+SINGLE_TARGET_CONCENTRATION_RE = re.compile(
+    r'\b(?:one (?:target|creature)\b(?:\s+\w+){0,3}?\s+or\b(?:\s+at)?\s+(?:several|more)|'
+    r'same target or (?:at )?different)\b',
+    re.I
+)
+INSTANCE_COUNT_RE = re.compile(
+    r'\b(two|three|four|five|six)\s+(?:\w+\s+){0,2}'
+    r'(?:dart|ray|bolt|beam|missile|shard|orb|meteor|blade|bead|mote|thorn|spike|arrow|globe|spear)s?\b',
+    re.I
+)
+_COUNT_WORDS = {"two": 2, "three": 3, "four": 4, "five": 5, "six": 6}
+
+def _detect_instance_count(entries_raw):
+    """Return N>1 if the spell fires N simultaneous damage instances that
+    can all be aimed at a single target, else 1."""
+    if not SINGLE_TARGET_CONCENTRATION_RE.search(entries_raw):
+        return 1
+    m = INSTANCE_COUNT_RE.search(entries_raw)
+    if not m:
+        return 1
+    return _COUNT_WORDS.get(m.group(1).lower(), 1)
 
 # AOE area tag -> (shape, est_targets)
 AREA_TAG_MAP = {
@@ -385,12 +419,15 @@ def extract_damage_formula(spell):
     dmg_matches_raw = DAMAGE_TAG_RE.findall(entries_raw)
     if level == 0 and dmg_matches_raw and "SCL" in (spell.get("miscTags") or []):
         base_formula = dmg_matches_raw[0].strip()
-        # Detect beam-count pattern: "two beams at 5th level" -> 2 beams
+        # Detect beam-count pattern: "two beams at 5th level" -> 2 beams.
+        # 2024-format (XPHB) spells move this into a "Cantrip Upgrade"
+        # entry under entriesHigherLevel rather than entries, so search
+        # both.
         beam_re = re.compile(
             r'(two|three|four|five)\s+beam(?:s)?\s+(?:at|when you reach)\s+(?:5th|level 5)',
             re.I
         )
-        beam_match = beam_re.search(entries_raw)
+        beam_match = beam_re.search(entries_raw) or beam_re.search(higher_raw)
         beam_words = {"two": 2, "three": 3, "four": 4, "five": 5}
         if beam_match:
             count = beam_words.get(beam_match.group(1).lower(), 1)
@@ -423,6 +460,18 @@ def extract_damage_formula(spell):
     unique = list(dict.fromkeys(d.strip() for d in dmg_matches))
     formula = unique[0] if unique else None
     avg = _avg_dice(formula) if formula else 0
+
+    # Multi-instance spells (Magic Missile's 3 darts, Scorching Ray's 3
+    # rays) — the {@damage} tag only ever captures ONE instance's dice,
+    # so scale up when the text confirms all instances can land on one
+    # target. See _detect_instance_count for the exclusion logic. Scale
+    # the unrounded per-instance average before rounding to avoid
+    # compounding rounding error (e.g. 3x round(3.5) != round(3x3.5)).
+    if formula:
+        instance_count = _detect_instance_count(entries_raw)
+        if instance_count > 1:
+            avg = int(round(_avg_dice_raw(formula) * instance_count))
+            formula = f"{instance_count}x ({formula})"
 
     # ── Higher-level scaling ──
     scaling_formula = None
