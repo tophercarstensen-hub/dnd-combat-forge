@@ -1,5 +1,10 @@
 # Combat Forge Changelog
 
+## v17.21 (2026-09-01)
+### Legendary action accuracy, canon lore pairings
+- **Legendary actions were dealing roughly full-turn damage up to 3x/round.** A cost-parsing bug read every newer-style "(N Actions)" legendary option (no "Costs" word, used by MPMM-era stat blocks) as costing 1 instead of its real cost, and the DPR calculator drained the whole budget into whichever single option had the best damage ratio instead of using each distinct option once. Combined, a Githyanki Supreme Commander's one legendary greatsword swing was firing 3 times a round (93 DPR instead of the correct 31); an Adult Red Dragon was Tail-Attacking 3x and never using Wing Attack (51 instead of 32). The sim now consumes each monster's real per-round legendary plan directly — correct costs, genuinely non-damaging options (Detect, Command Ally), and the right attack-roll-vs-save mechanic per option.
+- **New "canon lore pairing" theme signal** for Seed Monster / Themed Boss generation — some real D&D pairings (githyanki riding red dragons) share no type/family/environment/source tag at all, so the theme scorer always missed them. Added a growing, human-reviewed list of these pairings, mined from the existing monster lore text and approved through a review pass.
+
 ## v17.20 (2026-08-23)
 ### Artificer class added
 - The party-builder class dropdown was missing Artificer entirely. It's generated dynamically from the class-data table, so it was never gated by the 2014/2024 ruleset toggle — Artificer just wasn't in that table, despite the project's own docs claiming 13 classes including it. Added with a d8 hit die, AC 14→16 (medium armor + shield + Enhanced Defense infusion, same profile as Cleric), and the same hybrid weapon/spell damage curve as Cleric/Druid/Bard.
