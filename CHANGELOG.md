@@ -1,5 +1,10 @@
 # Combat Forge Changelog
 
+## v17.23 (2026-09-01)
+### Lieutenant scaling in Themed Boss path, Rolled HP consistency
+- **Lieutenant CR fix in the Seed Monster / Themed Boss path.** A Warband encounter could pair a very high-CR boss with a lone low-CR straggler instead of anything resembling "a real step below the boss" — the earlier lieutenant-CR-banding fix only lived in the untamed generator; the Themed Boss path (on by default) runs a different, older engine that never got it. Root cause: when a boss lands well above its planned XP share, the lieutenant/grunt slots kept filling against stale pre-boss-pick targets instead of scaling to the boss that actually got picked. Fixed — lieutenants now consistently land at 35-65% of the actual boss's CR in both paths.
+- **Rolled HP mode no longer re-rolls itself during simulation.** Switching to Rolled HP correctly displayed a rolled value, but the simulator was generating its own independent roll on every one of the 1000 Monte Carlo iterations instead of using what was shown. Now both display and simulation share the same cached roll for the whole run — "Rolled" means the DM rolled HP once for this encounter, with combat-tactical variance still coming from the 1000 runs as normal.
+
 ## v17.22 (2026-09-01)
 ### HP mode accuracy and visibility
 - **HP formula parsing bug fixed.** Max HP mode and Rolled HP mode both silently dropped a monster's flat HP bonus whenever the source formula had a space before the sign (`"19d12 + 133"` instead of `"19d12+133"`) — checked against the live DB: **84.8% of monsters with an HP formula (5,155 of 6,080) were affected.** Max mode was often computing *less* HP than Avg mode; Rolled mode's samples clustered far below the real average. Adult Red Dragon (`19d12 + 133`, true average 256): Max was returning 228 instead of 361, Rolled was sampling 96–157 instead of ~217–267.
