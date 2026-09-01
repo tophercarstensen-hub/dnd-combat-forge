@@ -1802,7 +1802,12 @@ function resolveMonsterStats(m,ext){
   // Best single-attack damage for legendary actions — falls back to dmgPerAtk
   // if the analyzer didn't find anything bigger (which is the common case).
   const bestAttackDmg=Math.max(dmgPerAtk,m.bestAttackDmg||0);
-  return{atkBonus,numAtks,dmgPerAtk,bestAttackDmg,saveDC,legAct,legRes,aoeType,aoeDmg,aoeTargets,aoeFreq,res,imm,condImm,bonusActionDpr:+m.bonusActionDpr||0,reactionDpr:+m.reactionDpr||0,reactionDefense:+m.reactionDefense||0,reactionNegate:!!m.reactionNegate,reactionControl:!!m.reactionControl,legendaryDpr:+m.legendaryDpr||0,mythicDpr:+m.mythicDpr||0};
+  // legendaryDprDetail is the monster's actual one-round legendary-action
+  // usage plan (name/damage/cost/isSave per entry, budget-correct — see
+  // enrich_action_dpr.py's compute_legendary_dpr) rather than every option
+  // it has. The sim below consumes it directly instead of guessing.
+  const legendaryDprDetail=Array.isArray(m.legendaryDprDetail)?m.legendaryDprDetail:[];
+  return{atkBonus,numAtks,dmgPerAtk,bestAttackDmg,saveDC,legAct,legRes,aoeType,aoeDmg,aoeTargets,aoeFreq,res,imm,condImm,bonusActionDpr:+m.bonusActionDpr||0,reactionDpr:+m.reactionDpr||0,reactionDefense:+m.reactionDefense||0,reactionNegate:!!m.reactionNegate,reactionControl:!!m.reactionControl,legendaryDpr:+m.legendaryDpr||0,mythicDpr:+m.mythicDpr||0,legendaryDprDetail};
 }
 function allM(){return[...MDB,...HB]}
 
@@ -5006,14 +5011,42 @@ const NEAR_ENV_PAIRS=[
 const NEAR_ENV=new Set(NEAR_ENV_PAIRS.map(p=>p.slice().sort().join("|")));
 function isNearEnv(a,b){return NEAR_ENV.has([a,b].sort().join("|"));}
 
+// Canonical D&D lore pairings that no type/family/environment/source tag
+// captures — e.g. githyanki famously ride red dragons, but a humanoid and a
+// dragon share no type, no family, and (per the actual data) barely any
+// environment tags either, so the tag-based scoring below always misses
+// these on its own. Matched by monster NAME, either direction. Small,
+// hand-curated, deliberately not exhaustive — extend as specific misses
+// come up rather than trying to encode all of D&D lore up front.
+const CANON_PAIRINGS=[
+  [/githyanki/i,/red dragon/i],
+  [/githzerai/i,/\bslaad\b/i],
+  [/\bdrow\b/i,/\bspider\b/i],
+  [/\bkobold\b/i,/\bdragon\b/i],
+  [/\bhobgoblin\b/i,/\b(goblin|bugbear)\b/i],
+  [/\borc\b/i,/\bworg\b/i],
+  [/\byuan-ti\b/i,/\b(snake|serpent)\b/i],
+  [/mind flayer|illithid/i,/intellect devourer/i],
+  [/frost giant/i,/\bwinter wolf\b/i],
+  [/fire giant/i,/\bhell hound\b/i],
+];
+function canonPairingBonus(seed,c){
+  const sn=(seed.name||"").toLowerCase(),cn=(c.name||"").toLowerCase();
+  for(const[a,b]of CANON_PAIRINGS){
+    if((a.test(sn)&&b.test(cn))||(b.test(sn)&&a.test(cn)))return 2;
+  }
+  return 0;
+}
+
 // Score a candidate against the seed's theme. Higher = more thematic.
 // Family is worth most (goblinoid + hobgoblin = great match), then type,
-// then environment, then same source book. Environment scores per seed tag —
-// an exact match on that tag is worth 1, a "near" match (mountain↔hill,
-// arctic↔mountain, coastal↔underwater, etc.) is worth 0.5 — summed and
-// capped at 2 so environment alone can equal but never beat a type match.
-// THEME_MIN_SCORE (above) is the bar callers filter against: family or type
-// match alone already clears it; environment alone needs either two exact
+// then a canonical lore pairing (githyanki/red dragon), then environment,
+// then same source book. Environment scores per seed tag — an exact match
+// on that tag is worth 1, a "near" match (mountain↔hill, arctic↔mountain,
+// coastal↔underwater, etc.) is worth 0.5 — summed and capped at 2 so
+// environment alone can equal but never beat a type match. THEME_MIN_SCORE
+// (above) is the bar callers filter against: family, type, or a canonical
+// pairing alone already clears it; environment alone needs either two exact
 // overlaps, four near-matches, or some mix that adds up to 2.
 function seedThemeScore(c,seed){
   let score=0;
@@ -5022,6 +5055,7 @@ function seedThemeScore(c,seed){
   const st=(seed.type||"").split(/[\s(]/)[0].toLowerCase();
   const ct=(c.type||"").split(/[\s(]/)[0].toLowerCase();
   if(st&&ct&&st===ct)score+=2;
+  score+=canonPairingBonus(seed,c);
   const se=_arr(seed.environment),ce=_arr(c.environment);
   let envScore=0;
   for(const e of se){
@@ -5695,6 +5729,7 @@ function buildCombat(){
         bonusActionDpr:rs.bonusActionDpr,reactionDpr:rs.reactionDpr,
         reactionDefense:rs.reactionDefense,reactionNegate:rs.reactionNegate,reactionControl:rs.reactionControl,
         legendaryDpr:rs.legendaryDpr,mythicDpr:rs.mythicDpr,
+        legendaryDprDetail:rs.legendaryDprDetail,legendaryPlanQueue:null,legendaryPlanRound:-1,
         regenPerTurn:+m.regenPerTurn||0,regenNegatedBy:m.regenNegatedBy||[],
         bonusActionHeal:+m.bonusActionHeal||0,
         isHealer:!!m.isHealer,healerHealPerRound:+m.healerHealPerRound||0,
@@ -5771,6 +5806,15 @@ function runOne(intel){
     monsters.forEach(m=>{
       if(!m.isDead){
         m.legendaryActionsLeft=m.legendaryActions;
+        // Refill this round's legendary-action queue from the real usage
+        // plan (legendaryDprDetail — already budget-correct: e.g. a dragon's
+        // plan is [Tail Attack, Wing Attack], not "cost-1 action x3"). Shuffle
+        // so the order it fires in isn't deterministic across every round.
+        m.legendaryPlanQueue=(m.legendaryDprDetail||[]).slice();
+        for(let i=m.legendaryPlanQueue.length-1;i>0;i--){
+          const j=Math.floor(Math.random()*(i+1));
+          [m.legendaryPlanQueue[i],m.legendaryPlanQueue[j]]=[m.legendaryPlanQueue[j],m.legendaryPlanQueue[i]];
+        }
         m.reactionUsedThisRound=false;
         m.healedAllyThisRound=false;
         if(m.stunnedRounds>0)m.stunnedRounds--;
@@ -6159,38 +6203,42 @@ function runOne(intel){
       }
 
       // ── LEGENDARY ACTIONS after each PC turn ──
+      // Consumes the monster's real per-round usage plan (legendaryPlanQueue,
+      // refilled each round from legendaryDprDetail) instead of a flattened
+      // average-per-charge guess. This respects each option's actual cost
+      // (a 2-cost "Wing Attack" only fires once, not split into two 1-cost
+      // triggers), includes genuinely non-damaging options (Detect, Command
+      // Ally) instead of assuming every legendary use deals damage, and uses
+      // the SPECIFIC option's real mechanic (isSave) instead of a coinflip.
       if(a.isPC){
         monsters.forEach(m=>{
-          if(!m.isDead&&m.legendaryActionsLeft>0&&!m.stunned){
-            m.legendaryActionsLeft--;
+          if(!m.isDead&&m.legendaryPlanQueue&&m.legendaryPlanQueue.length&&!m.stunned){
+            const opt=m.legendaryPlanQueue.shift();
+            m.legendaryActionsLeft=Math.max(0,(m.legendaryActionsLeft||0)-(opt.cost||1));
             const apc=party.filter(p=>!p.isDown&&!p.isDead);if(!apc.length)return;
+            if(!opt.damage||opt.damage<=0){
+              rd.actions.push({t:"legendary",s:`★ ${m.name} legendary → ${opt.name} (no damage).`});
+              return;
+            }
             const lt=apc[Math.floor(Math.random()*apc.length)];
-            // Prefer enriched per-charge legendary damage when available.
-            // m.legendaryDpr already accounts for 3 charges/round and optimal
-            // leg action selection, so divide by total charges for per-use dmg.
-            const totalCharges=m.legendaryActions||3;
-            const perChargeDpr=m.legendaryDpr>0?m.legendaryDpr/totalCharges:(m.bestAttackDmg||m.dmgPerAtk)*0.85;
-            const dmg=Math.round(perChargeDpr*(0.75+Math.random()*0.5));
-            // Leg actions that reference main attacks use atkBonus hit roll;
-            // enriched DPR may represent save-based damage. Split 50/50.
-            const useSave=m.legendaryDpr>0&&Math.random()<0.4;
+            const dmg=Math.round(opt.damage*(0.75+Math.random()*0.5));
             let fd;
-            if(useSave){
+            if(opt.isSave){
               const mDC=m.saveDC||14;
               const saveBonus=(lt.saves?.dex||Math.floor(((lt.dex||10)-10)/2));
               const saved=d20()+saveBonus>=mDC;
               fd=saved?Math.floor(dmg/2):dmg;
               if(lt.physResist)fd=Math.floor(fd/2);
               applyDmg(lt,fd,party,rd);
-              rd.actions.push({t:"legendary",s:`★ ${m.name} legendary AoE → ${lt.name}: ${saved?"saved":"failed"} ${fd}dmg.`});
+              rd.actions.push({t:"legendary",s:`★ ${m.name} legendary (${opt.name}) → ${lt.name}: ${saved?"saved":"failed"} ${fd}dmg.`});
             } else {
               const roll=d20();
               if(roll+m.atkBonus>=lt.ac||roll===20){
                 fd=lt.physResist?Math.floor(dmg/2):dmg;
                 applyDmg(lt,fd,party,rd);
-                rd.actions.push({t:"legendary",s:`★ ${m.name} legendary → ${lt.name}: ${fd}dmg. (${Math.max(0,lt.hp)}/${lt.maxHP})`});
+                rd.actions.push({t:"legendary",s:`★ ${m.name} legendary (${opt.name}) → ${lt.name}: ${fd}dmg. (${Math.max(0,lt.hp)}/${lt.maxHP})`});
               } else{
-                rd.actions.push({t:"legendary",s:`★ ${m.name} legendary → ${lt.name}: miss.`});
+                rd.actions.push({t:"legendary",s:`★ ${m.name} legendary (${opt.name}) → ${lt.name}: miss.`});
               }
             }
           }

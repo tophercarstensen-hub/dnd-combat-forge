@@ -171,18 +171,50 @@ def classify_reaction(action: dict) -> dict:
 # ---- Legendary action economy ----
 
 def legendary_cost(action: dict) -> int:
-    """How many charges this leg action costs (default 1)."""
-    text = (action.get("name") or "") + " " + (action.get("desc") or "")
-    m = re.search(r"Costs\s+(\d+)\s+Action", text, re.I)
+    """How many charges this leg action costs (default 1).
+
+    Stat blocks render this two ways depending on source/era: older-style
+    "Wing Attack (Costs 2 Actions)" and newer MPMM-style "Attack (2 Actions)"
+    with no "Costs" word at all. Matching only the first form silently read
+    every MPMM-sourced 2-cost legendary action as cost 1, which let the
+    greedy picker below use it 3x/round instead of the 1x its real budget
+    allows (confirmed for real: Githyanki Supreme Commander's "Attack (2
+    Actions)" — one Silver Greatsword swing — parsed as 93 legendary DPR/rd,
+    i.e. 3 full attacks, when the real stat block allows exactly one).
+    """
+    name = action.get("name") or ""
+    m = re.search(r"\(\s*(?:Costs\s+)?(\d+)\s+Actions?\s*\)", name, re.I)
     if m:
         return int(m.group(1))
     return 1
 
 
+def is_save_based(action: dict) -> bool:
+    """True if this specific legendary action's own text imposes a saving
+    throw (Wing Attack: 'DC 22 Dexterity saving throw'). False for actions
+    that just reference a regular attack-roll action ('makes a tail
+    attack') — those hit via to-hit roll, not a save."""
+    return bool(re.search(r"\bDC\s*\d+\b[^.]{0,30}saving throw", action.get("desc") or "", re.I))
+
+
 def compute_legendary_dpr(leg_actions: list, main_actions: list | None = None,
                           leg_uses_per_round: int = 3) -> tuple[float, list]:
-    """Pick the best-damage per-charge action, fill charges greedily.
-    Returns (avg_dpr, detail_list)."""
+    """Build one round's realistic legendary-action usage and return
+    (total_dpr, plan) where `plan` is the actual ordered sequence of
+    {name, damage, cost, isSave} entries a monster uses that round — not
+    every option it has, just the ones actually spent.
+
+    Round-robin, not greedy-repeat: try each distinct option once (highest
+    damage-per-charge first) before ever repeating one. A dragon with Tail
+    Attack (cost 1) and Wing Attack (cost 2) should spend its 3-point budget
+    on ONE of each (using both signature options), not "Tail Attack x3" just
+    because Tail Attack has the higher per-charge ratio — the old
+    greedy-repeat approach picked the single best-ratio option and drained
+    the whole budget into it every round, which no real DM plays and which
+    silently doubled-to-tripled a legendary monster's effective damage.
+    Leftover budget after one pass of each option repeats the best-fitting
+    remaining option(s), same as before.
+    """
     if not leg_actions:
         return 0.0, []
     analyzed = []
@@ -194,18 +226,29 @@ def compute_legendary_dpr(leg_actions: list, main_actions: list | None = None,
             "damage": dmg,
             "cost": cost,
             "dpc": dmg / cost if cost else dmg,
+            "isSave": is_save_based(a),
         })
-    # Greedy: pick highest damage-per-charge that fits remaining budget
+    ordered = sorted(analyzed, key=lambda x: -x["dpc"])
+
     remaining = leg_uses_per_round
     total = 0.0
-    analyzed.sort(key=lambda x: -x["dpc"])
-    for a in analyzed:
-        if a["cost"] > remaining: continue
-        uses = remaining // a["cost"]
-        total += uses * a["damage"]
-        remaining -= uses * a["cost"]
-        if remaining <= 0: break
-    return total, analyzed
+    plan = []
+    # Pass 1: one use of each distinct option, best-ratio first.
+    for a in ordered:
+        if a["cost"] <= remaining:
+            total += a["damage"]
+            remaining -= a["cost"]
+            plan.append({"name": a["name"], "damage": round(a["damage"], 1), "cost": a["cost"], "isSave": a["isSave"]})
+    # Pass 2: any leftover budget repeats the best-fitting option(s).
+    while remaining > 0:
+        fit = [a for a in ordered if a["cost"] <= remaining]
+        if not fit:
+            break
+        pick = fit[0]
+        total += pick["damage"]
+        remaining -= pick["cost"]
+        plan.append({"name": pick["name"], "damage": round(pick["damage"], 1), "cost": pick["cost"], "isSave": pick["isSave"]})
+    return total, plan
 
 
 # ---- Main ----
@@ -249,16 +292,16 @@ def enrich_monster(m: dict) -> dict:
     m["reactionNegate"] = rx_negate
     m["reactionControl"] = rx_control
 
-    # Legendary DPR (can reference main actions by name)
+    # Legendary DPR (can reference main actions by name). legendaryDprDetail
+    # is the actual per-round usage PLAN (round-robin fill — see
+    # compute_legendary_dpr), not a list of every option the monster has;
+    # the sim consumes it directly as "this round's legendary actions."
     main_actions = _as_list(m.get("actions"))
-    leg_dpr, leg_detail = compute_legendary_dpr(
+    leg_dpr, leg_plan = compute_legendary_dpr(
         _as_list(m.get("legendaryActions")), main_actions=main_actions
     )
     m["legendaryDpr"] = round(leg_dpr, 1)
-    m["legendaryDprDetail"] = [
-        {"name": d["name"], "damage": round(d["damage"], 1), "cost": d["cost"]}
-        for d in leg_detail
-    ]
+    m["legendaryDprDetail"] = leg_plan
 
     # Mythic actions — treat like bonus/leg hybrid. Add their summed damage once/round.
     myth_total = 0.0
