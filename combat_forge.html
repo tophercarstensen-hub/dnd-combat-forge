@@ -3394,13 +3394,6 @@ function generateEncounter(){
   // ACTUAL picked boss's CR (steep CR→XP curve means even a modest CR gap is
   // a real power drop) with a party-level-based fallback for templates where
   // no boss has been picked yet when the lt group is built.
-  function ltCRBand(bossM){
-    const bossCR=bossM?bossM.crNum??0:0;
-    if(bossCR>0){
-      return{minCR:Math.max(0,bossCR*0.35),maxCR:Math.max(1,bossCR*0.65)};
-    }
-    return{minCR:Math.max(0,avgLvl/3),maxCR:Math.max(1,avgLvl*0.75)};
-  }
   function buildPool(poolTag,bossM){
     const all=allM().filter(m=>matchM(m,q,type,env,RSRC));
     const fallback=all.length?all:allM();
@@ -3725,6 +3718,27 @@ function generateEncounter(){
 }
 
 // ── Iterative-refinement helpers ──
+// Lieutenant CR band — a real step below the boss, not just "whatever's in
+// the browse slider minus legendary." Scales relative to the ACTUAL picked
+// boss's CR (steep CR→XP curve means even a modest CR gap is a real power
+// drop) with a party-level-based fallback for templates where no boss has
+// been picked yet. Top-level (not just generateEncounter()'s local
+// buildPool) so runSeedGenerationCore() — the engine behind both the manual
+// Seed Monster flow and the auto Themed Boss path — can apply the same
+// restriction. Without this, a boss picked well above its planned XP share
+// (a wide tolerance-band widen letting e.g. a CR21 Lich through against a
+// ~14k XP target) left the lieutenant/grunt slots filled against their
+// stale pre-boss-pick target shares instead of scaled to the boss that
+// actually got chosen -- confirmed live: Lich (CR21) + Wight (CR3) + Bone
+// Naga (CR4), nowhere near "a real step below the boss."
+function ltCRBand(bossM){
+  const bossCR=bossM?bossM.crNum??0:0;
+  if(bossCR>0){
+    return{minCR:Math.max(0,bossCR*0.35),maxCR:Math.max(1,bossCR*0.65)};
+  }
+  const avgLvl=PCS.length?Math.round(PCS.reduce((s,p)=>s+p.level,0)/PCS.length):5;
+  return{minCR:Math.max(0,avgLvl/3),maxCR:Math.max(1,avgLvl*0.75)};
+}
 // Extract the family tag from a 5e type string: "humanoid (goblinoid)" → "goblinoid".
 function monsterFamily(m){
   const t=(m&&m.type)||"";
@@ -5221,7 +5235,19 @@ function runSeedGenerationCore(seed,role,encType,themedPool,diff,logFn,allowBoss
       return;
     }
     const tgtXP=targetXP(g);
-    const pool=themedPool.filter(m=>!used.has(m.slug));
+    let pool=themedPool.filter(m=>!used.has(m.slug));
+    // Lieutenant slots: constrain to a real step below the ACTUAL boss's CR,
+    // not just whatever the pre-planned XP share happens to land near. The
+    // XP-proximity fill alone goes stale the moment the boss itself lands
+    // outside its own target share (e.g. a wide tolerance-band widen let a
+    // CR21 Lich through against a ~14k XP target — the "lt" slot's target
+    // never adjusted for that, so it filled from monsters near the ORIGINAL
+    // low target instead of scaled to the boss that actually got picked).
+    if((g.pool||"main")==="lt"&&role==="boss"){
+      const{minCR,maxCR}=ltCRBand(seed);
+      const crFiltered=pool.filter(m=>{const c=m.crNum??0;return c>=minCR&&c<=maxCR;});
+      if(crFiltered.length)pool=crFiltered;
+    }
     if(!pool.length){enc.push(null);return;}
     const tol=Math.max(tgtXP*0.5,1);
     let inBand=pool.filter(m=>Math.abs((m.xp||0)-tgtXP)<=tol);
@@ -5656,8 +5682,20 @@ function resolveMonsterHP(m){
     }
   }
   if(HP_MODE==="roll"&&m.hpFormula){
-    const rolled=rollDiceFormula(m.hpFormula);
-    if(rolled!==null)return Math.max(1,rolled);
+    // Cache the roll on the monster object so every caller — the encounter
+    // card display AND buildCombat(), which resolves HP fresh for every one
+    // of the 1000 Monte Carlo iterations — sees the SAME rolled value for
+    // the whole sim run, instead of the sim silently re-rolling on every
+    // iteration while the card kept showing the first roll. "Rolled" means
+    // "the DM rolled HP once for this encounter" — combat-tactical RNG
+    // (attack rolls, targeting, spell outcomes) still varies across the
+    // 1000 runs; the HP itself shouldn't. Cleared by setHPMode() re-selecting
+    // Rolled, which is the deliberate "reroll" gesture.
+    if(m._rolledHP==null){
+      const rolled=rollDiceFormula(m.hpFormula);
+      m._rolledHP=rolled!==null?Math.max(1,rolled):(m.hp||10);
+    }
+    return m._rolledHP;
   }
   return m.hp||10;
 }
