@@ -1,5 +1,10 @@
 # Combat Forge Changelog
 
+## v17.22 (2026-09-01)
+### HP mode accuracy and visibility
+- **HP formula parsing bug fixed.** Max HP mode and Rolled HP mode both silently dropped a monster's flat HP bonus whenever the source formula had a space before the sign (`"19d12 + 133"` instead of `"19d12+133"`) — checked against the live DB: **84.8% of monsters with an HP formula (5,155 of 6,080) were affected.** Max mode was often computing *less* HP than Avg mode; Rolled mode's samples clustered far below the real average. Adult Red Dragon (`19d12 + 133`, true average 256): Max was returning 228 instead of 361, Rolled was sampling 96–157 instead of ~217–267.
+- **HP mode is now visible.** Switching Avg/Max/Rolled previously only affected the simulator internally with no visible confirmation anywhere. The encounter monster cards and the full stat block panel now show the mode-adjusted HP with a `[Max]`/`[Rolled]` tag. Rolled values are cached per monster so they don't silently reroll on unrelated re-renders — only selecting Rolled (or clicking it again while already active) rerolls.
+
 ## v17.21 (2026-09-01)
 ### Legendary action accuracy, canon lore pairings
 - **Legendary actions were dealing roughly full-turn damage up to 3x/round.** A cost-parsing bug read every newer-style "(N Actions)" legendary option (no "Costs" word, used by MPMM-era stat blocks) as costing 1 instead of its real cost, and the DPR calculator drained the whole budget into whichever single option had the best damage ratio instead of using each distinct option once. Combined, a Githyanki Supreme Commander's one legendary greatsword swing was firing 3 times a round (93 DPR instead of the correct 31); an Adult Red Dragon was Tail-Attacking 3x and never using Wing Attack (51 instead of 32). The sim now consumes each monster's real per-round legendary plan directly — correct costs, genuinely non-damaging options (Detect, Command Ally), and the right attack-roll-vs-save mechanic per option.
